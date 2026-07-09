@@ -7,10 +7,10 @@
    1. Design System / CSS Variables
    -------------------------------------------------------------------------- */
 :root {
-    /* Brand Colors */
-    --color-primary: #4D3E8C;
-    --color-primary-light: #6B5BB3;
-    --color-primary-dark: #2D1B69;
+    /* Brand Colors - 钢蓝色调 */
+    --color-primary: #5B8EAA;
+    --color-primary-light: #7BA7C0;
+    --color-primary-dark: #3D6B85;
 
     /* Role Group Colors (Analyst / Diplomat / Sentinel / Explorer) */
     --color-analyst: #8B5CF6;
@@ -19,19 +19,19 @@
     --color-explorer: #FACC15;
 
     /* Card & Accent Colors */
-    --color-card-bg: linear-gradient(135deg, #5B4BA8 0%, #4D3E8C 50%, #2D1B69 100%);
-    --color-card-bg-solid: #4D3E8C;
+    --color-card-bg: linear-gradient(135deg, #7BA7C0 0%, #5B8EAA 50%, #3D6B85 100%);
+    --color-card-bg-solid: #5B8EAA;
     --color-badge: #FBBF24;
-    --color-accent: #06B6D4;
+    --color-accent: #F0A868;
 
-    /* Neutral Colors */
-    --color-bg: #F7F6FB;
+    /* Neutral Colors - 暖白底色 */
+    --color-bg: #FBF8F4;
     --color-surface: #FFFFFF;
-    --color-surface-alt: #F0EEF7;
-    --color-text: #1E1B2E;
-    --color-text-muted: #6B6786;
+    --color-surface-alt: #F5F0EB;
+    --color-text: #3D3552;
+    --color-text-muted: #8B8499;
     --color-text-inverse: #FFFFFF;
-    --color-border: #E4E0F0;
+    --color-border: #E8E0D8;
 
     /* Functional Colors */
     --color-success: #22C55E;
@@ -71,10 +71,10 @@
     --radius-xl: 32px;
     --radius-pill: 999px;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(45, 27, 105, 0.08);
-    --shadow-md: 0 4px 16px rgba(45, 27, 105, 0.12);
-    --shadow-lg: 0 12px 40px rgba(45, 27, 105, 0.18);
+    /* Shadows - 柔和钢蓝阴影 */
+    --shadow-sm: 0 1px 3px rgba(91, 142, 170, 0.08);
+    --shadow-md: 0 4px 16px rgba(91, 142, 170, 0.12);
+    --shadow-lg: 0 12px 40px rgba(91, 142, 170, 0.18);
 
     /* Layout */
     --container-max: 1140px;
@@ -210,10 +210,10 @@ p { margin-bottom: 1em; }
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.92);
+    background: linear-gradient(180deg, #FBF8F4 0%, #F5F0EB 100%);
     backdrop-filter: saturate(180%) blur(12px);
     -webkit-backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     height: var(--header-height);
 }
 
@@ -250,11 +250,12 @@ p { margin-bottom: 1em; }
 }
 
 .nav-links a {
-    color: var(--color-text);
+    color: #6B6378;
     font-weight: var(--fw-medium);
     font-size: var(--fs-body);
     position: relative;
     padding: 4px 0;
+    transition: color var(--transition-fast);
 }
 
 .nav-links a::after {
@@ -268,9 +269,9 @@ p { margin-bottom: 1em; }
     transition: width var(--transition-base);
 }
 
-.nav-links a:hover::after,
-.nav-links a.active::after {
-    width: 100%;
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--color-primary);
 }
 
 .nav-toggle {
@@ -283,7 +284,7 @@ p { margin-bottom: 1em; }
 .nav-toggle span {
     width: 22px;
     height: 2px;
-    background: var(--color-text);
+    background: #6B6378;
     border-radius: 2px;
     transition: var(--transition-base);
 }
@@ -307,16 +308,16 @@ p { margin-bottom: 1em; }
 }
 
 .btn-primary {
-    background: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
     color: var(--color-text-inverse);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 12px rgba(91, 142, 170, 0.30);
 }
 
 .btn-primary:hover {
-    background: var(--color-primary-light);
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     color: var(--color-text-inverse);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 8px 24px rgba(91, 142, 170, 0.40);
 }
 
 .btn-primary:active {
@@ -387,19 +388,36 @@ p { margin-bottom: 1em; }
    -------------------------------------------------------------------------- */
 .hero {
     text-align: center;
-    padding: 64px 20px 48px;
-    background: radial-gradient(ellipse at top, rgba(107, 91, 179, 0.12), transparent 70%);
+    padding: 80px 20px 48px;
+    background: linear-gradient(175deg, #F5F0EB 0%, #FBF8F4 50%, #F0EBF5 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(123, 167, 192, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
 }
 
 .hero-slogan {
     font-size: var(--fs-hero);
     font-weight: var(--fw-black);
-    line-height: 1.2;
-    margin-bottom: 16px;
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary), var(--color-analyst));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    line-height: 1.25;
+    margin-bottom: 40px;
+    color: var(--color-primary-dark);
+    letter-spacing: 0.02em;
 }
 
 .hero-subtitle {
@@ -420,13 +438,19 @@ p { margin-bottom: 1em; }
    -------------------------------------------------------------------------- */
 .test-entry-card {
     max-width: 420px;
-    margin: 48px auto 0;
+    margin: 0 auto;
     text-align: center;
     background: var(--color-surface);
     border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 8px 32px rgba(91, 142, 170, 0.12), 0 2px 8px rgba(240, 168, 104, 0.08);
     padding: 40px 32px;
-    border: 1px solid var(--color-border);
+    border: 1px solid rgba(232, 224, 216, 0.6);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.test-entry-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(91, 142, 170, 0.18), 0 4px 12px rgba(240, 168, 104, 0.12);
 }
 
 .test-entry-icon {
@@ -434,12 +458,13 @@ p { margin-bottom: 1em; }
     height: 80px;
     margin: 0 auto 20px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-analyst));
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary), var(--color-accent));
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
     color: white;
+    box-shadow: 0 4px 16px rgba(91, 142, 170, 0.30);
 }
 
 .test-entry-meta {
@@ -652,17 +677,24 @@ p { margin-bottom: 1em; }
 }
 
 .scale-dot.selected {
-    transform: scale(1.3);
+    transform: scale(1.35);
     box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
+    animation: dot-bounce 200ms ease;
+}
+
+@keyframes dot-bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1.35); }
 }
 
 /* Dot sizes vary: edge dots largest, middle smallest */
-.scale-dot.pos-1 { width: 28px; height: 28px; background: var(--scale-1); }
-.scale-dot.pos-2 { width: 22px; height: 22px; background: var(--scale-2); }
-.scale-dot.pos-3 { width: 18px; height: 18px; background: var(--scale-3); }
-.scale-dot.pos-4 { width: 18px; height: 18px; background: var(--scale-4); }
-.scale-dot.pos-5 { width: 22px; height: 22px; background: var(--scale-5); }
-.scale-dot.pos-6 { width: 28px; height: 28px; background: var(--scale-6); }
+.scale-dot.pos-1 { width: 36px; height: 36px; background: var(--scale-1); }
+.scale-dot.pos-2 { width: 28px; height: 28px; background: var(--scale-2); }
+.scale-dot.pos-3 { width: 20px; height: 20px; background: var(--scale-3); }
+.scale-dot.pos-4 { width: 20px; height: 20px; background: var(--scale-4); }
+.scale-dot.pos-5 { width: 28px; height: 28px; background: var(--scale-5); }
+.scale-dot.pos-6 { width: 36px; height: 36px; background: var(--scale-6); }
 
 .scale-hint {
     display: flex;
@@ -1419,8 +1451,8 @@ body[data-role="explorer"] .dimension-bar-fill.side-b { background: linear-gradi
    -------------------------------------------------------------------------- */
 .site-footer {
     margin-top: auto;
-    background: var(--color-primary-dark);
-    color: rgba(255, 255, 255, 0.7);
+    background: linear-gradient(180deg, #FBF8F4 0%, #F5F0EB 100%);
+    color: #6B6378;
     padding: 48px 0 32px;
 }
 
@@ -1435,12 +1467,12 @@ body[data-role="explorer"] .dimension-bar-fill.side-b { background: linear-gradi
 .footer-logo {
     font-size: var(--fs-h3);
     font-weight: var(--fw-black);
-    color: var(--color-text-inverse);
+    color: var(--color-primary);
 }
 
 .footer-slogan {
     font-size: var(--fs-small);
-    color: rgba(255, 255, 255, 0.5);
+    color: #9B9398;
 }
 
 .footer-nav {
@@ -1451,19 +1483,20 @@ body[data-role="explorer"] .dimension-bar-fill.side-b { background: linear-gradi
 }
 
 .footer-nav a {
-    color: rgba(255, 255, 255, 0.7);
+    color: #6B6378;
     font-size: var(--fs-small);
+    transition: color var(--transition-fast);
 }
 
 .footer-nav a:hover {
-    color: var(--color-text-inverse);
+    color: var(--color-primary);
 }
 
 .footer-copy {
     font-size: var(--fs-small);
-    color: rgba(255, 255, 255, 0.4);
+    color: #B0A8AE;
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
     width: 100%;
 }
 
@@ -1652,5 +1685,526 @@ body[data-role="explorer"] .dimension-bar-fill.side-b { background: linear-gradi
     body {
         background: white;
         color: black;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   23. Phase 6 - New Components
+   -------------------------------------------------------------------------- */
+
+/* ---------- 23.1 Referral Card (home.html) ---------- */
+.referral-card {
+    max-width: 480px;
+    margin: 24px auto 0;
+    padding: 24px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    color: var(--color-text-inverse);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.referral-card__mascot {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.referral-card__mascot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.referral-card__mascot--error {
+    display: none;
+}
+
+.referral-card__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.referral-card__text {
+    font-size: var(--fs-body);
+    font-weight: var(--fw-bold);
+    margin-bottom: 4px;
+}
+
+.referral-card__text strong {
+    font-size: 1.2em;
+}
+
+.referral-card__type-name {
+    font-weight: var(--fw-medium);
+    opacity: 0.9;
+}
+
+.referral-card__hint {
+    font-size: var(--fs-small);
+    opacity: 0.85;
+    margin-bottom: 12px;
+}
+
+.referral-card__cta {
+    margin-top: 12px;
+}
+
+.referral-card__cta--visible {
+    animation: ct-fade-in 0.4s ease;
+}
+
+.referral-card__cta .btn {
+    width: 100%;
+}
+
+.referral-card__countdown {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--fs-small);
+    opacity: 0.9;
+    margin-top: 8px;
+}
+
+.referral-card__countdown-num {
+    font-size: 1.5em;
+    font-weight: var(--fw-bold);
+    min-width: 1.2em;
+    text-align: center;
+    animation: ct-pulse 1s ease infinite;
+}
+
+.referral-card__countdown--hidden {
+    display: none;
+}
+
+@keyframes ct-fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ct-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* ---------- 23.2 FAQ Search Hidden State ---------- */
+.faq-item--hidden {
+    display: none;
+}
+
+.faq-no-result {
+    padding: 24px;
+    font-size: var(--fs-small);
+}
+
+/* ---------- 23.3 Help Form (help.html) ---------- */
+.help-form {
+    max-width: 600px;
+    margin: 48px auto 0;
+    padding: 32px;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.help-form__title {
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-bold);
+    margin-bottom: 8px;
+}
+
+.help-form__desc {
+    color: var(--color-text-muted);
+    font-size: var(--fs-small);
+    margin-bottom: 24px;
+}
+
+.help-form__field {
+    margin-bottom: 20px;
+}
+
+.help-form__label {
+    display: block;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    margin-bottom: 8px;
+    color: var(--color-text);
+}
+
+.help-form__optional {
+    color: var(--color-text-muted);
+    font-weight: var(--fw-regular);
+}
+
+.help-form__required {
+    color: var(--color-danger);
+    margin-left: 2px;
+}
+
+.help-form__input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    font-size: var(--fs-body);
+    transition: border-color var(--transition-fast);
+}
+
+.help-form__input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.help-form__textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    font-size: var(--fs-body);
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color var(--transition-fast);
+}
+
+.help-form__textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.help-form__counter {
+    display: block;
+    text-align: right;
+    font-size: var(--fs-small);
+    color: var(--color-text-muted);
+    margin-top: 4px;
+}
+
+.help-form__success {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--color-success-bg, #ECFDF5);
+    color: var(--color-success, #059669);
+    border-radius: var(--radius-md);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    margin-top: 16px;
+}
+
+.help-form__error {
+    padding: 12px 16px;
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+    border-radius: var(--radius-md);
+    font-size: var(--fs-small);
+    margin-top: 16px;
+}
+
+/* ---------- 23.4 Settings Data Clear Items ---------- */
+.data-clear-list-title {
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+
+.data-clear-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: var(--fs-small);
+    color: var(--color-text-muted);
+}
+
+.data-clear-item:last-child {
+    border-bottom: none;
+}
+
+.data-clear-item::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-danger);
+    flex-shrink: 0;
+}
+
+.data-clear-item__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.data-clear-item__desc {
+    display: block;
+    font-weight: var(--fw-medium);
+    color: var(--color-text);
+    font-size: var(--fs-body);
+}
+
+.data-clear-item__meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.data-clear-item__key {
+    font-family: var(--font-mono, 'SF Mono', 'Fira Code', monospace);
+    font-size: 0.8em;
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+.data-clear-item__ttl {
+    font-size: var(--fs-small);
+    color: var(--color-text-muted);
+}
+
+.data-clear-item__status {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.data-clear-item__status--done {
+    color: var(--color-success, #059669);
+    animation: ct-check-pop 0.3s ease;
+}
+
+@keyframes ct-check-pop {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* ---------- 23.5 Career Feedback (result.html) ---------- */
+.career-feedback__btn {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: var(--fs-small);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.career-feedback__btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.career-feedback__options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.career-feedback__option {
+    text-align: center;
+}
+
+.career-feedback__close {
+    width: 100%;
+    color: var(--color-text-muted);
+    font-size: var(--fs-small);
+}
+
+/* ---------- 23.6 Report Feedback Text Area ---------- */
+.feedback-text-area {
+    position: relative;
+    margin-top: 16px;
+}
+
+.feedback-text-area .feedback-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color var(--transition-fast);
+}
+
+.feedback-text-area .feedback-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.feedback-text-counter {
+    display: block;
+    text-align: right;
+    font-size: var(--fs-small);
+    color: var(--color-text-muted);
+    margin-top: 4px;
+}
+
+.feedback-success-msg {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--color-success-bg, #ECFDF5);
+    color: var(--color-success, #059669);
+    border-radius: var(--radius-md);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    margin-top: 16px;
+}
+
+/* ---------- 23.7 Report Contact Section ---------- */
+.report-contact {
+    margin-top: 48px;
+    padding: 32px;
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, var(--color-accent-bg, #F5F0EB) 100%);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.report-contact__title {
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-bold);
+    margin-bottom: 8px;
+}
+
+.report-contact__desc {
+    color: var(--color-text-muted);
+    font-size: var(--fs-small);
+    margin-bottom: 20px;
+}
+
+.report-contact__wechat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--color-surface);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+}
+
+.report-contact__wechat-label {
+    font-size: var(--fs-small);
+    color: var(--color-text-muted);
+}
+
+.report-contact__wechat-id {
+    font-weight: var(--fw-bold);
+    color: var(--color-primary);
+    font-size: var(--fs-body);
+    cursor: pointer;
+    user-select: all;
+    -webkit-user-select: all;
+    -webkit-touch-callout: default;
+}
+
+.report-contact__wechat-hint {
+    font-size: var(--fs-small);
+    color: var(--color-text-muted);
+}
+
+.report-contact__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ---------- 23.8 Toast Component ---------- */
+.ct-toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(30, 27, 46, 0.92);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    max-width: 90vw;
+    text-align: center;
+}
+
+.ct-toast--visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- 23.9 Button Text Variant ---------- */
+.btn-text {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: var(--fs-small);
+    cursor: pointer;
+    padding: 8px 12px;
+    transition: color var(--transition-fast);
+}
+
+.btn-text:hover {
+    color: var(--color-primary);
+}
+
+/* ---------- 23.10 Responsive Adjustments ---------- */
+@media (max-width: 768px) {
+    .referral-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .referral-card__mascot {
+        width: 64px;
+        height: 64px;
+    }
+
+    .career-item {
+        flex-wrap: wrap;
+    }
+
+    .career-feedback__btn {
+        order: 4;
+        margin-left: auto;
+    }
+
+    .report-contact {
+        padding: 24px 16px;
+    }
+
+    .report-contact__actions {
+        flex-direction: column;
+    }
+
+    .report-contact__actions .btn {
+        width: 100%;
     }
 }

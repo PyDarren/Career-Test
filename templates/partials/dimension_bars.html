@@ -1,100 +1,41 @@
 {% comment %}
-    四维度倾向条组件 (Dimension Bars)
-    展示 EI / SN / TF / JP 四个维度的倾向比例
-    模板变量:
-      - dimensions: 包含四个维度对象的列表
-        每个维度对象包含:
-          - label: 维度标签 (如 "外向 E / 内向 I")
-          - pole_a: A 端字母 (如 "E")
-          - pole_b: B 端字母 (如 "I")
-          - percent_a: A 端百分比 (0-100)
-          - percent_b: B 端百分比 (0-100)
+    四维度倾向条组件 (Dimension Bars) — BEM
+    展示 EI / SN / TF / JP 四个维度的倾向比例。
+
+    模板变量：
+      - dimensions: dict，键为维度代码（EI/SN/TF/JP），值为维度数据对象：
+          {
+            'EI': {
+              'pole_a': 'E', 'pole_b': 'I',
+              'percentage': 67,      # 主导极占比 (0-100)
+              'label': 'E', 'strength': 'moderate'
+            }, ...
+          }
 {% endcomment %}
 
-<section class="dimension-bars" aria-label="性格维度倾向">
-    {% for dim in dimensions %}
+<section class="dimension-bars">
+    <h3 class="dimension-bars__title">四维度倾向</h3>
+
+    {% if dimensions %}
+    {% for dim_key, dim_data in dimensions.items %}
     <div class="dimension-bar">
-        <div class="dimension-bar-header">
-            <div class="dimension-bar-labels">
-                <span class="dimension-bar-pole-a">{{ dim.pole_a|default:"?" }}</span>
-                <span class="dimension-bar-pole-b">{{ dim.pole_b|default:"?" }}</span>
-            </div>
-            <span class="dimension-bar-percent">
-                {{ dim.percent_a|default:50 }}% / {{ dim.percent_b|default:50 }}%
-            </span>
+        <div class="dimension-bar__labels">
+            <span class="dimension-bar__label-a">{{ dim_data.pole_a }}</span>
+            <span class="dimension-bar__label-b">{{ dim_data.pole_b }}</span>
         </div>
-        <div class="dimension-bar-track">
-            {% if dim.percent_a > dim.percent_b %}
-                <div class="dimension-bar-fill side-a"
-                     style="width: {{ dim.percent_a|default:50 }}%;"
-                     role="progressbar"
-                     aria-valuenow="{{ dim.percent_a|default:50 }}"
-                     aria-valuemin="0"
-                     aria-valuemax="100"></div>
-            {% else %}
-                <div class="dimension-bar-fill side-b"
-                     style="width: {{ dim.percent_b|default:50 }}%;"
-                     role="progressbar"
-                     aria-valuenow="{{ dim.percent_b|default:50 }}"
-                     aria-valuemin="0"
-                     aria-valuemax="100"></div>
-            {% endif %}
+        <div class="dimension-bar__track">
+            <div class="dimension-bar__fill"
+                 role="progressbar"
+                 aria-valuenow="{{ dim_data.percentage }}"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 style="width: {{ dim_data.percentage }}%;"></div>
         </div>
+        <span class="dimension-bar__percent">{{ dim_data.percentage }}%</span>
     </div>
     {% endfor %}
-
-    {% comment %} 默认占位 - 当没有传入 dimensions 时显示 {% endcomment %}
-    {% if not dimensions %}
-    <div class="dimension-bar">
-        <div class="dimension-bar-header">
-            <div class="dimension-bar-labels">
-                <span class="dimension-bar-pole-a">E 外向</span>
-                <span class="dimension-bar-pole-b">I 内向</span>
-            </div>
-            <span class="dimension-bar-percent">— % / — %</span>
-        </div>
-        <div class="dimension-bar-track">
-            <div class="dimension-bar-fill side-a" style="width: 50%;"></div>
-        </div>
-    </div>
-
-    <div class="dimension-bar">
-        <div class="dimension-bar-header">
-            <div class="dimension-bar-labels">
-                <span class="dimension-bar-pole-a">S 实感</span>
-                <span class="dimension-bar-pole-b">N 直觉</span>
-            </div>
-            <span class="dimension-bar-percent">— % / — %</span>
-        </div>
-        <div class="dimension-bar-track">
-            <div class="dimension-bar-fill side-b" style="width: 50%;"></div>
-        </div>
-    </div>
-
-    <div class="dimension-bar">
-        <div class="dimension-bar-header">
-            <div class="dimension-bar-labels">
-                <span class="dimension-bar-pole-a">T 思考</span>
-                <span class="dimension-bar-pole-b">F 情感</span>
-            </div>
-            <span class="dimension-bar-percent">— % / — %</span>
-        </div>
-        <div class="dimension-bar-track">
-            <div class="dimension-bar-fill side-a" style="width: 50%;"></div>
-        </div>
-    </div>
-
-    <div class="dimension-bar">
-        <div class="dimension-bar-header">
-            <div class="dimension-bar-labels">
-                <span class="dimension-bar-pole-a">J 判断</span>
-                <span class="dimension-bar-pole-b">P 知觉</span>
-            </div>
-            <span class="dimension-bar-percent">— % / — %</span>
-        </div>
-        <div class="dimension-bar-track">
-            <div class="dimension-bar-fill side-b" style="width: 50%;"></div>
-        </div>
-    </div>
+    {% else %}
+    {# 无维度数据时的占位 #}
+    <p class="text-muted">暂无维度数据</p>
     {% endif %}
 </section>

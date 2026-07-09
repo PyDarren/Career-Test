@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import logging
 import time
 from typing import Any, Callable
 
 from django.http import HttpRequest, HttpResponse, JsonResponse
+
+logger = logging.getLogger(__name__)
 
 # Fallback in-memory store used when Redis is unavailable (e.g. local dev).
 _local_rate_limit_store: dict[str, list[float]] = {}
@@ -194,3 +197,69 @@ class RateLimitMiddleware:
         allowed = count <= RATE_LIMIT_MAX_REQUESTS
         reset_at = now + RATE_LIMIT_WINDOW_SECONDS
         return allowed, remaining, reset_at
+
+
+class ExceptionMiddleware:
+    """Global exception handling middleware.
+
+    Catches :class:`APIError` raised inside views and returns a JSON
+    error response with the appropriate status code. Any unhandled
+    exception is caught, logged, and returned as a generic ``code=5001``
+    error so the front-end receives a consistent JSON payload instead
+    of a 500 HTML traceback.
+
+    Only JSON API paths (``/api/``) receive JSON error responses; other
+    paths fall through to Django's default error handling.
+    """
+
+    def __init__(self, get_response: Callable[[HttpRequest], HttpResponse]) -> None:
+        self.get_response = get_response
+
+    def __call__(self, request: HttpRequest) -> HttpResponse:
+        try:
+            return self.get_response(request)
+        except Exception as exc:
+            return self.process_exception(request, exc)
+
+    def process_exception(
+        self, request: HttpRequest, exception: Exception
+    ) -> HttpResponse | None:
+        """Convert exceptions into JSON error responses for API paths.
+
+        Args:
+            request: The incoming HTTP request.
+            exception: The raised exception.
+
+        Returns:
+            A :class:`~django.http.JsonResponse` for API paths, or
+            ``None`` to let Django's default handler take over.
+        """
+        from apps.common.responses import APIError, api_error_response
+
+        # Only intercept API paths
+        if not request.path.startswith('/api/'):
+            return None
+
+        # APIError → structured error response
+        if isinstance(exception, APIError):
+            logger.warning(
+                'APIError on %s %s: code=%s message=%s',
+                request.method, request.path,
+                exception.code, exception.message,
+            )
+            return api_error_response(exception)
+
+        # Unhandled exception → generic 5001 error
+        logger.error(
+            'Unhandled exception on %s %s: %s',
+            request.method, request.path, exception,
+            exc_info=True,
+        )
+        return JsonResponse(
+            {
+                'success': False,
+                'code': 'internal_error',
+                'message': '服务器内部错误，请稍后重试',
+            },
+            status=500,
+        )

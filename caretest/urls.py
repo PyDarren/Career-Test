@@ -16,6 +16,20 @@ from django.apps import apps
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
+from django.http import HttpResponse
+import os
+
+
+def _serve_robots_txt(request):
+    """Serve ``static/robots.txt`` at ``/robots.txt``."""
+    robots_path = os.path.join(settings.BASE_DIR, "static", "robots.txt")
+    try:
+        with open(robots_path, "r", encoding="utf-8") as f:
+            content = f.read()
+    except FileNotFoundError:
+        content = "User-agent: *\nAllow: /\n"
+    return HttpResponse(content, content_type="text/plain")
 
 urlpatterns = []
 
@@ -30,6 +44,11 @@ urlpatterns += [
     path("", include("apps.mbti_types.urls")),
     path("", include("apps.careers.urls")),
     path("", include("apps.payment.urls")),
+    # SEO files
+    path("sitemap.xml", TemplateView.as_view(
+        template_name="sitemap.xml", content_type="application/xml"
+    ), name="sitemap"),
+    path("robots.txt", _serve_robots_txt, name="robots"),
 ]
 
 if settings.DEBUG:

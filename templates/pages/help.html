@@ -3,14 +3,18 @@
 
 {% block title %}帮助中心 - {{ site_name|default:"职探" }}{% endblock %}
 
+{% block meta_description %}职探帮助中心 - 常见问题解答、在线留言客服支持。解答关于MBTI测评、深度报告、支付、数据隐私等常见问题。{% endblock %}
+
+{% block og_title %}帮助中心 - {{ site_name|default:"职探" }}{% endblock %}
+
+{% block og_description %}职探帮助中心 - 常见问题解答、在线留言客服支持。{% endblock %}
+
 {% block page_type %}help{% endblock %}
 
 {% block content %}
 <div class="help-page">
 
-    <h1 style="text-align:center; font-size: var(--fs-h1); font-weight: var(--fw-black); margin-bottom: 8px;">
-        帮助中心
-    </h1>
+    <h1 class="help-page__title">帮助中心</h1>
     <p class="text-center text-muted mb-4">找到你需要的答案</p>
 
     <!-- ============ Search Box ============ -->
@@ -25,17 +29,20 @@
             <input
                 type="search"
                 class="help-search-input"
+                id="faq-search-input"
                 placeholder="搜索问题..."
                 aria-label="搜索常见问题">
         </div>
     </section>
 
-    <!-- ============ FAQ List ============ -->
-    <section class="faq-list" aria-label="常见问题">
-
-        <article class="faq-item">
+    <!-- ============ FAQ List (from Django context faq_list) ============ -->
+    <section class="faq-list" id="faq-list" aria-label="常见问题">
+        {% for faq in faq_list %}
+        <article class="faq-item"
+                 data-search="{{ faq.question }} {{ faq.answer }} {{ faq.keywords }}"
+                 data-faq-id="{{ faq.id }}">
             <button class="faq-question" aria-expanded="false">
-                <span>测评是免费的吗？需要注册吗？</span>
+                <span>{{ faq.question }}</span>
                 <span class="faq-question-icon" aria-hidden="true">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -44,141 +51,15 @@
             </button>
             <div class="faq-answer">
                 <div class="faq-answer-inner">
-                    完全免费，无需注册。你可以直接打开网页开始测评，48 道题目约需 6-8 分钟。
-                    基础报告（性格类型 + 四维度 + 职业推荐）也完全免费。
-                    仅深度报告需要 2.99 元解锁，但这完全是可选的。
+                    {{ faq.answer }}
                 </div>
             </div>
         </article>
-
-        <article class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-                <span>测评结果准确吗？</span>
-                <span class="faq-question-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </span>
-            </button>
-            <div class="faq-answer">
-                <div class="faq-answer-inner">
-                    我们的测评基于 MBTI 人格理论，48 道题目经过心理学量表验证。
-                    虽然没有哪种性格测评能做到 100% 准确，但 MBTI 在职业匹配领域
-                    有广泛的应用和参考价值。建议你在自然、放松的状态下答题，
-                    以获得最贴近真实的结果。
-                </div>
-            </div>
-        </article>
-
-        <article class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-                <span>深度报告包含什么内容？</span>
-                <span class="faq-question-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </span>
-            </button>
-            <div class="faq-answer">
-                <div class="faq-answer-inner">
-                    深度报告包含 12 个章节的详细解析：性格概览、核心特质、思维方式、
-                    情感模式、社交风格、工作方式、领导风格、职业匹配、人际关系、
-                    成长建议、潜在盲区和行动计划。每章配有实际案例和可操作的建议。
-                </div>
-            </div>
-        </article>
-
-        <article class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-                <span>我可以重新测评吗？</span>
-                <span class="faq-question-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </span>
-            </button>
-            <div class="faq-answer">
-                <div class="faq-answer-inner">
-                    当然可以。你随时可以重新进行测评，我们建议在不同时间、不同心境下
-                    测评 2-3 次，如果结果一致则说明该类型较为稳定。如果结果有波动，
-                    说明你可能处于边界类型，建议参考深度报告中的边界类型分析。
-                </div>
-            </div>
-        </article>
-
-        <article class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-                <span>我的测评数据会被保存吗？</span>
-                <span class="faq-question-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </span>
-            </button>
-            <div class="faq-answer">
-                <div class="faq-answer-inner">
-                    你的测评进度会保存在浏览器本地（localStorage），方便你断线后继续答题。
-                    我们不会收集你的姓名、手机号等个人信息。你可以在「设置」页面随时
-                    清除所有本地数据。匿名统计数据仅用于改进测评质量，不关联个人身份。
-                </div>
-            </div>
-        </article>
-
-        <article class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-                <span>支付后能永久查看深度报告吗？</span>
-                <span class="faq-question-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </span>
-            </button>
-            <div class="faq-answer">
-                <div class="faq-answer-inner">
-                    是的。支付 2.99 元解锁深度报告后，报告将绑定你的浏览器设备，
-                    永久有效，可随时查看。如果你更换设备，可通过分享链接中的
-                    验证码在新设备上恢复访问。
-                </div>
-            </div>
-        </article>
-
-        <article class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-                <span>MBTI 类型会变化吗？</span>
-                <span class="faq-question-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </span>
-            </button>
-            <div class="faq-answer">
-                <div class="faq-answer-inner">
-                    MBTI 理论认为人的核心性格类型在成年后相对稳定，但并非一成不变。
-                    人的行为偏好会随着成长经历、环境变化而调整。如果你在较短时间内
-                    测评结果频繁变化，可能处于两个类型的边界区域，建议参考深度报告
-                    中的边界类型分析。
-                </div>
-            </div>
-        </article>
-
-        <article class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-                <span>支持哪些支付方式？</span>
-                <span class="faq-question-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </span>
-            </button>
-            <div class="faq-answer">
-                <div class="faq-answer-inner">
-                    目前支持微信支付和支付宝两种方式。支付过程在加密环境下完成，
-                    我们不会存储你的支付账户信息。如遇支付问题，请联系下方客服。
-                </div>
-            </div>
-        </article>
-
+        {% endfor %}
     </section>
+
+    {# 搜索无结果提示 #}
+    <p class="faq-no-result text-center text-muted" id="faq-no-result" hidden>未找到匹配的问题</p>
 
     <!-- ============ Customer Service Contact ============ -->
     <section class="help-contact">
@@ -188,10 +69,179 @@
             <strong>邮箱：</strong>support@zhitan.com<br>
             <strong>微信：</strong>zhitan_support
         </p>
-        <div class="mt-3">
-            <a href="mailto:support@zhitan.com" class="btn btn-primary">发送邮件</a>
-        </div>
+    </section>
+
+    <!-- ============ Online Message Form ============ -->
+    <section class="help-form">
+        <h2 class="help-form__title">在线留言</h2>
+        <p class="help-form__desc">提交你的问题，我们会尽快处理并回复</p>
+        <form id="help-message-form" class="help-form__body" novalidate>
+            <div class="help-form__field">
+                <label class="help-form__label" for="help-contact">微信号 / 手机号<span class="help-form__optional">（选填）</span></label>
+                <input type="text" id="help-contact" name="contact" class="help-form__input"
+                       placeholder="填写微信号或手机号方便我们联系你" maxlength="50">
+            </div>
+            <div class="help-form__field">
+                <label class="help-form__label" for="help-message">问题描述<span class="help-form__required">*</span></label>
+                <textarea id="help-message" name="message" class="help-form__textarea"
+                          placeholder="请详细描述你的问题（最多500字）" maxlength="500" required
+                          rows="4"></textarea>
+                <span class="help-form__counter" id="help-message-counter">0 / 500</span>
+            </div>
+            <div class="help-form__field">
+                <label class="help-form__label" for="help-order">订单号<span class="help-form__optional">（选填）</span></label>
+                <input type="text" id="help-order" name="order_no" class="help-form__input"
+                       placeholder="如有支付订单，请填写订单号" maxlength="64">
+            </div>
+            <div class="help-form__actions">
+                <button type="submit" class="btn btn-primary btn-block" id="help-submit-btn">提交留言</button>
+            </div>
+            <p class="help-form__success" id="help-form-success" hidden>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="M4 9L7 12L14 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                留言已提交，我们会尽快处理
+            </p>
+            <p class="help-form__error" id="help-form-error" hidden></p>
+        </form>
     </section>
 
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+    'use strict';
+
+    /* ---------- FAQ 实时搜索过滤 ---------- */
+    var searchInput = document.getElementById('faq-search-input');
+    var faqList = document.getElementById('faq-list');
+    var noResultEl = document.getElementById('faq-no-result');
+
+    if (searchInput && faqList) {
+        var faqItems = faqList.querySelectorAll('.faq-item');
+
+        searchInput.addEventListener('input', function () {
+            var keyword = searchInput.value.trim().toLowerCase();
+            var visibleCount = 0;
+
+            faqItems.forEach(function (item) {
+                if (!keyword) {
+                    item.classList.remove('faq-item--hidden');
+                    visibleCount++;
+                    return;
+                }
+                var searchText = (item.dataset.search || '').toLowerCase();
+                if (searchText.indexOf(keyword) !== -1) {
+                    item.classList.remove('faq-item--hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('faq-item--hidden');
+                }
+            });
+
+            if (noResultEl) {
+                noResultEl.hidden = visibleCount > 0;
+            }
+        });
+    }
+
+    /* ---------- 在线留言表单提交 ---------- */
+    var form = document.getElementById('help-message-form');
+    if (!form) return;
+
+    var submitBtn = document.getElementById('help-submit-btn');
+    var successEl = document.getElementById('help-form-success');
+    var errorEl = document.getElementById('help-form-error');
+    var messageInput = document.getElementById('help-message');
+    var counterEl = document.getElementById('help-message-counter');
+
+    /* 字数计数 */
+    if (messageInput && counterEl) {
+        messageInput.addEventListener('input', function () {
+            counterEl.textContent = messageInput.value.length + ' / 500';
+        });
+    }
+
+    function getCSRFToken() {
+        var meta = document.querySelector('meta[name="csrf-token"]');
+        if (meta && meta.content) return meta.content;
+        var match = document.cookie.match(/csrftoken=([^;]+)/);
+        return match ? decodeURIComponent(match[1]) : '';
+    }
+
+    function getUUID() {
+        try {
+            return localStorage.getItem('ct_uuid') || '';
+        } catch (e) {
+            return '';
+        }
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var message = (document.getElementById('help-message').value || '').trim();
+        var contact = (document.getElementById('help-contact').value || '').trim();
+        var orderNo = (document.getElementById('help-order').value || '').trim();
+
+        if (!message) {
+            showError('请填写问题描述');
+            return;
+        }
+        if (message.length > 500) {
+            showError('问题描述不能超过 500 字');
+            return;
+        }
+
+        if (successEl) successEl.hidden = true;
+        if (errorEl) errorEl.hidden = true;
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = '提交中...';
+        }
+
+        fetch('/api/customer-service/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({
+                message: message,
+                contact: contact,
+                order_no: orderNo,
+                uuid: getUUID()
+            })
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            if (data.success) {
+                if (successEl) successEl.hidden = false;
+                form.reset();
+                if (counterEl) counterEl.textContent = '0 / 500';
+            } else {
+                showError(data.message || '提交失败，请稍后重试');
+            }
+        })
+        .catch(function () {
+            showError('网络错误，请稍后重试');
+        })
+        .finally(function () {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '提交留言';
+            }
+        });
+    });
+
+    function showError(msg) {
+        if (errorEl) {
+            errorEl.textContent = msg;
+            errorEl.hidden = false;
+        }
+    }
+})();
+</script>
 {% endblock %}

@@ -1,59 +1,54 @@
 {% comment %}
-    人格认证卡片组件 (Certification Card)
-    可复用组件，用于结果页和分享卡片
-    模板变量:
-      - type_code: MBTI 类型代码 (如 "INTJ")
-      - type_name: 类型名称 (如 "建筑师")
-      - type_slogan: 类型标语
-      - role_group: 角色组 (analyst/diplomat/sentinel/explorer)
-      - rarity: 稀有度百分比
-      - famous_people: 名人列表
-      - best_partners: 最佳搭档类型列表
+    人格认证卡片组件 (Certification Card) — BEM
+    可复用组件，用于结果页与分享卡片。
+
+    模板变量（由 ResultView 传入上下文）：
+      - type_config: MBTIType 模型实例，含 type_code / type_name / type_slogan /
+                     role_group / rarity / rarity_label / famous_people(JSON) / mascot_url
+      - has_paid:    bool，是否已购买深度报告
+      - report_url: str，已购买时指向 /report/<order_no>/
 {% endcomment %}
 
-<article class="cert-card" data-role="{{ role_group|default:'analyst' }}">
-    <span class="cert-ribbon">已认证</span>
+<article class="cert-card" data-role="{{ type_config.role_group|default:'analyst' }}">
 
-    <div class="cert-badge">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M7 0L8.5 5.5L14 7L8.5 8.5L7 14L5.5 8.5L0 7L5.5 5.5L7 0Z" fill="currentColor"/>
-        </svg>
-        认证人格
-    </div>
-
-    <!-- 3D 吉祥物占位 -->
-    <div class="cert-mascot" aria-label="人格吉祥物">
-        {% if mascot_url %}
-            <img src="{{ mascot_url }}" alt="{{ type_name }}吉祥物" loading="lazy">
+    {# ---------- 人偶图片 ---------- #}
+    <div class="cert-card__mascot">
+        {% if type_config.mascot_url %}
+            <img src="{{ type_config.mascot_url }}"
+                 alt="{{ type_config.type_code }}吉祥物"
+                 loading="lazy">
         {% else %}
-            <span>3D 吉祥物</span>
+            <span class="cert-card__mascot-placeholder">3D 吉祥物</span>
         {% endif %}
     </div>
 
-    <!-- MBTI 类型代码 -->
-    <h2 class="cert-type-code">{{ type_code|default:"????" }}</h2>
-    <p class="cert-type-name">{{ type_name|default:"你的类型" }}</p>
-    <p class="cert-type-slogan">{{ type_slogan|default:"探索你的职业性格" }}</p>
+    {# ---------- 类型主体信息 ---------- #}
+    <div class="cert-card__body">
+        <h2 class="cert-card__type-code">{{ type_config.type_code }}</h2>
+        <p class="cert-card__type-name">{{ type_config.type_name }}</p>
+        <p class="cert-card__slogan">{{ type_config.type_slogan }}</p>
 
-    <!-- 统计信息 -->
-    <div class="cert-stats">
-        <div class="cert-stat-row">
-            <span class="cert-stat-label">稀有度</span>
-            <span class="cert-stat-value">{{ rarity|default:"—" }}%</span>
+        <div class="cert-card__meta">
+            <span class="cert-card__rarity">
+                稀有度: {{ type_config.rarity }}% ({{ type_config.rarity_label }})
+            </span>
         </div>
 
-        {% if famous_people %}
-        <div class="cert-stat-row">
-            <span class="cert-stat-label">同类名人</span>
-            <span class="cert-stat-value">{{ famous_people|join:" · " }}</span>
-        </div>
-        {% endif %}
-
-        {% if best_partners %}
-        <div class="cert-stat-row">
-            <span class="cert-stat-label">最佳搭档</span>
-            <span class="cert-stat-value">{{ best_partners|join:" / " }}</span>
+        {% if type_config.famous_people %}
+        <div class="cert-card__famous">
+            代表人物: {{ type_config.famous_people|join:", " }}
         </div>
         {% endif %}
     </div>
+
+    {# ---------- 操作按钮 ---------- #}
+    <div class="cert-card__actions">
+        <button type="button" class="btn btn-outline btn-sm" id="btn-share">分享</button>
+        {% if has_paid %}
+        <a href="{{ report_url }}" class="btn btn-primary btn-sm">查看报告</a>
+        {% else %}
+        <button type="button" class="btn btn-primary btn-sm" id="btn-unlock">解锁深度报告 ¥2.99</button>
+        {% endif %}
+    </div>
+
 </article>

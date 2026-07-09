@@ -1,0 +1,770 @@
+[
+  {
+    "model": "assessment.question",
+    "pk": 1,
+    "fields": {
+      "question_order": 1,
+      "dimension": "EI",
+      "facet": "社交能量",
+      "facet_order": 1,
+      "text_a": "参加团队活动后我会感到精力充沛",
+      "text_b": "社交活动后我需要独处来恢复精力",
+      "pole_a": "E",
+      "pole_b": "I",
+      "is_reverse": false,
+      "display_order": 1
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 2,
+    "fields": {
+      "question_order": 2,
+      "dimension": "EI",
+      "facet": "社交能量",
+      "facet_order": 1,
+      "text_a": "我喜欢在人群中与人交流获取能量",
+      "text_b": "长时间与人相处后我感到电量耗尽",
+      "pole_a": "E",
+      "pole_b": "I",
+      "is_reverse": false,
+      "display_order": 6
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 3,
+    "fields": {
+      "question_order": 3,
+      "dimension": "EI",
+      "facet": "社交能量",
+      "facet_order": 1,
+      "text_a": "会议结束后我倾向于继续与人讨论",
+      "text_b": "会议结束后我需要安静地独处一会儿",
+      "pole_a": "E",
+      "pole_b": "I",
+      "is_reverse": false,
+      "display_order": 9
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 4,
+    "fields": {
+      "question_order": 4,
+      "dimension": "EI",
+      "facet": "社交能量",
+      "facet_order": 1,
+      "text_a": "独处一段时间能让我重新充满能量",
+      "text_b": "和同事聊天互动会让我更有活力",
+      "pole_a": "I",
+      "pole_b": "E",
+      "is_reverse": true,
+      "display_order": 13
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 5,
+    "fields": {
+      "question_order": 5,
+      "dimension": "EI",
+      "facet": "注意力焦点",
+      "facet_order": 2,
+      "text_a": "我的注意力容易被周围的人和事吸引",
+      "text_b": "我的注意力常沉浸在内心思考之中",
+      "pole_a": "E",
+      "pole_b": "I",
+      "is_reverse": false,
+      "display_order": 18
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 6,
+    "fields": {
+      "question_order": 6,
+      "dimension": "EI",
+      "facet": "注意力焦点",
+      "facet_order": 2,
+      "text_a": "我更关注外部世界正在发生的事情",
+      "text_b": "我更关注自己内心涌现的想法和感受",
+      "pole_a": "E",
+      "pole_b": "I",
+      "is_reverse": false,
+      "display_order": 21
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 7,
+    "fields": {
+      "question_order": 7,
+      "dimension": "EI",
+      "facet": "注意力焦点",
+      "facet_order": 2,
+      "text_a": "我倾向于通过行动与外部世界互动",
+      "text_b": "我倾向于在内心消化和理解事物",
+      "pole_a": "E",
+      "pole_b": "I",
+      "is_reverse": false,
+      "display_order": 25
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 8,
+    "fields": {
+      "question_order": 8,
+      "dimension": "EI",
+      "facet": "注意力焦点",
+      "facet_order": 2,
+      "text_a": "我习惯在内心反复琢磨各种想法和念头",
+      "text_b": "我喜欢观察并回应外部环境的变化",
+      "pole_a": "I",
+      "pole_b": "E",
+      "is_reverse": true,
+      "display_order": 30
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 9,
+    "fields": {
+      "question_order": 9,
+      "dimension": "EI",
+      "facet": "表达方式",
+      "facet_order": 3,
+      "text_a": "我习惯边说边整理自己的思路想法",
+      "text_b": "我喜欢在内心想清楚后再开口表达",
+      "pole_a": "E",
+      "pole_b": "I",
+      "is_reverse": false,
+      "display_order": 33
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 10,
+    "fields": {
+      "question_order": 10,
+      "dimension": "EI",
+      "facet": "表达方式",
+      "facet_order": 3,
+      "text_a": "我倾向于主动分享自己的想法观点",
+      "text_b": "我倾向于先在心里酝酿之后再表达",
+      "pole_a": "E",
+      "pole_b": "I",
+      "is_reverse": false,
+      "display_order": 37
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 11,
+    "fields": {
+      "question_order": 11,
+      "dimension": "EI",
+      "facet": "表达方式",
+      "facet_order": 3,
+      "text_a": "在团队讨论时我会积极主动发言",
+      "text_b": "在团队讨论时我更愿意倾听思考",
+      "pole_a": "E",
+      "pole_b": "I",
+      "is_reverse": false,
+      "display_order": 42
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 12,
+    "fields": {
+      "question_order": 12,
+      "dimension": "EI",
+      "facet": "表达方式",
+      "facet_order": 3,
+      "text_a": "在表达前我需要充分时间整理思绪",
+      "text_b": "我习惯即时把自己的想法说出来",
+      "pole_a": "I",
+      "pole_b": "E",
+      "is_reverse": true,
+      "display_order": 45
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 13,
+    "fields": {
+      "question_order": 13,
+      "dimension": "SN",
+      "facet": "信息焦点",
+      "facet_order": 1,
+      "text_a": "我注重收集具体详实的数据和细节",
+      "text_b": "我更关注事物背后蕴含的整体含义",
+      "pole_a": "S",
+      "pole_b": "N",
+      "is_reverse": false,
+      "display_order": 2
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 14,
+    "fields": {
+      "question_order": 14,
+      "dimension": "SN",
+      "facet": "信息焦点",
+      "facet_order": 1,
+      "text_a": "我倾向于关注眼前的实际具体情况",
+      "text_b": "我倾向于设想未来发展的各种可能",
+      "pole_a": "S",
+      "pole_b": "N",
+      "is_reverse": false,
+      "display_order": 5
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 15,
+    "fields": {
+      "question_order": 15,
+      "dimension": "SN",
+      "facet": "信息焦点",
+      "facet_order": 1,
+      "text_a": "我做事看重经过验证的事实信息",
+      "text_b": "我做事看重新颖独特的发展可能性",
+      "pole_a": "S",
+      "pole_b": "N",
+      "is_reverse": false,
+      "display_order": 10
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 16,
+    "fields": {
+      "question_order": 16,
+      "dimension": "SN",
+      "facet": "信息焦点",
+      "facet_order": 1,
+      "text_a": "我更愿意探索事物潜在的发展可能",
+      "text_b": "我更愿意确认已知的细节和事实",
+      "pole_a": "N",
+      "pole_b": "S",
+      "is_reverse": true,
+      "display_order": 14
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 17,
+    "fields": {
+      "question_order": 17,
+      "dimension": "SN",
+      "facet": "学习偏好",
+      "facet_order": 2,
+      "text_a": "我喜欢通过动手实践来学习新技能",
+      "text_b": "我喜欢通过理解原理和概念来学习",
+      "pole_a": "S",
+      "pole_b": "N",
+      "is_reverse": false,
+      "display_order": 17
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 18,
+    "fields": {
+      "question_order": 18,
+      "dimension": "SN",
+      "facet": "学习偏好",
+      "facet_order": 2,
+      "text_a": "我偏好按部就班地逐步掌握知识",
+      "text_b": "我偏好跳跃式地建立知识体系框架",
+      "pole_a": "S",
+      "pole_b": "N",
+      "is_reverse": false,
+      "display_order": 22
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 19,
+    "fields": {
+      "question_order": 19,
+      "dimension": "SN",
+      "facet": "学习偏好",
+      "facet_order": 2,
+      "text_a": "我重视从实际经验中总结出方法",
+      "text_b": "我重视从抽象理论中推导出结论",
+      "pole_a": "S",
+      "pole_b": "N",
+      "is_reverse": false,
+      "display_order": 26
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 20,
+    "fields": {
+      "question_order": 20,
+      "dimension": "SN",
+      "facet": "学习偏好",
+      "facet_order": 2,
+      "text_a": "我习惯先把握住抽象的理论框架",
+      "text_b": "我习惯先从具体操作入手来学习",
+      "pole_a": "N",
+      "pole_b": "S",
+      "is_reverse": true,
+      "display_order": 29
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 21,
+    "fields": {
+      "question_order": 21,
+      "dimension": "SN",
+      "facet": "想象倾向",
+      "facet_order": 3,
+      "text_a": "我做事注重脚踏实地的可落实性",
+      "text_b": "我做事喜欢突破常规寻找新思路",
+      "pole_a": "S",
+      "pole_b": "N",
+      "is_reverse": false,
+      "display_order": 34
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 22,
+    "fields": {
+      "question_order": 22,
+      "dimension": "SN",
+      "facet": "想象倾向",
+      "facet_order": 3,
+      "text_a": "我更愿意去优化现有的方法流程",
+      "text_b": "我更愿意构思出全新的解决方案",
+      "pole_a": "S",
+      "pole_b": "N",
+      "is_reverse": false,
+      "display_order": 38
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 23,
+    "fields": {
+      "question_order": 23,
+      "dimension": "SN",
+      "facet": "想象倾向",
+      "facet_order": 3,
+      "text_a": "我倾向于用具体事例来说明问题",
+      "text_b": "我倾向于用比喻和联想表达观点",
+      "pole_a": "S",
+      "pole_b": "N",
+      "is_reverse": false,
+      "display_order": 41
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 24,
+    "fields": {
+      "question_order": 24,
+      "dimension": "SN",
+      "facet": "想象倾向",
+      "facet_order": 3,
+      "text_a": "我的思维常跳跃到各种新奇想法上",
+      "text_b": "我的思维常聚焦在具体可行做法上",
+      "pole_a": "N",
+      "pole_b": "S",
+      "is_reverse": true,
+      "display_order": 46
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 25,
+    "fields": {
+      "question_order": 25,
+      "dimension": "TF",
+      "facet": "决策依据",
+      "facet_order": 1,
+      "text_a": "我做决定时主要依据逻辑分析推理",
+      "text_b": "我做决定时主要考虑价值观和感受",
+      "pole_a": "T",
+      "pole_b": "F",
+      "is_reverse": false,
+      "display_order": 4
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 26,
+    "fields": {
+      "question_order": 26,
+      "dimension": "TF",
+      "facet": "决策依据",
+      "facet_order": 1,
+      "text_a": "我重视决策的客观合理性和一致性",
+      "text_b": "我重视决策对人的影响和团队和谐",
+      "pole_a": "T",
+      "pole_b": "F",
+      "is_reverse": false,
+      "display_order": 7
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 27,
+    "fields": {
+      "question_order": 27,
+      "dimension": "TF",
+      "facet": "决策依据",
+      "facet_order": 1,
+      "text_a": "我习惯权衡利弊之后才做出选择",
+      "text_b": "我习惯衡量是否符合自己内心价值",
+      "pole_a": "T",
+      "pole_b": "F",
+      "is_reverse": false,
+      "display_order": 12
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 28,
+    "fields": {
+      "question_order": 28,
+      "dimension": "TF",
+      "facet": "决策依据",
+      "facet_order": 1,
+      "text_a": "我倾向于依据信念和感受来做决定",
+      "text_b": "我倾向于依据事实和推理来做决定",
+      "pole_a": "F",
+      "pole_b": "T",
+      "is_reverse": true,
+      "display_order": 16
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 29,
+    "fields": {
+      "question_order": 29,
+      "dimension": "TF",
+      "facet": "冲突处理",
+      "facet_order": 2,
+      "text_a": "面对分歧我倾向于就事论事地讨论",
+      "text_b": "面对分歧我倾向于先照顾各方感受",
+      "pole_a": "T",
+      "pole_b": "F",
+      "is_reverse": false,
+      "display_order": 19
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 30,
+    "fields": {
+      "question_order": 30,
+      "dimension": "TF",
+      "facet": "冲突处理",
+      "facet_order": 2,
+      "text_a": "我习惯直接而坦率地指出问题所在",
+      "text_b": "我习惯委婉表达以维护彼此关系",
+      "pole_a": "T",
+      "pole_b": "F",
+      "is_reverse": false,
+      "display_order": 24
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 31,
+    "fields": {
+      "question_order": 31,
+      "dimension": "TF",
+      "facet": "冲突处理",
+      "facet_order": 2,
+      "text_a": "我认为对事不对人更有利于解决冲突",
+      "text_b": "我认为维护关系比争论对错更重要",
+      "pole_a": "T",
+      "pole_b": "F",
+      "is_reverse": false,
+      "display_order": 28
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 32,
+    "fields": {
+      "question_order": 32,
+      "dimension": "TF",
+      "facet": "冲突处理",
+      "facet_order": 2,
+      "text_a": "在处理矛盾时我优先考虑他人情绪",
+      "text_b": "在处理矛盾时我优先厘清事实对错",
+      "pole_a": "F",
+      "pole_b": "T",
+      "is_reverse": true,
+      "display_order": 31
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 33,
+    "fields": {
+      "question_order": 33,
+      "dimension": "TF",
+      "facet": "评价标准",
+      "facet_order": 3,
+      "text_a": "我评价他人时倾向用统一客观标准",
+      "text_b": "我评价他人时倾向结合其个人处境",
+      "pole_a": "T",
+      "pole_b": "F",
+      "is_reverse": false,
+      "display_order": 36
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 34,
+    "fields": {
+      "question_order": 34,
+      "dimension": "TF",
+      "facet": "评价标准",
+      "facet_order": 3,
+      "text_a": "我认为公平意味着对所有人一视同仁",
+      "text_b": "我认为公平意味着因人而异地关怀",
+      "pole_a": "T",
+      "pole_b": "F",
+      "is_reverse": false,
+      "display_order": 40
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 35,
+    "fields": {
+      "question_order": 35,
+      "dimension": "TF",
+      "facet": "评价标准",
+      "facet_order": 3,
+      "text_a": "我倾向于保持客观中立的判断立场",
+      "text_b": "我倾向于设身处地地去共情他人",
+      "pole_a": "T",
+      "pole_b": "F",
+      "is_reverse": false,
+      "display_order": 43
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 36,
+    "fields": {
+      "question_order": 36,
+      "dimension": "TF",
+      "facet": "评价标准",
+      "facet_order": 3,
+      "text_a": "我习惯站在对方角度去理解其感受",
+      "text_b": "我习惯保持客观立场来评判是非",
+      "pole_a": "F",
+      "pole_b": "T",
+      "is_reverse": true,
+      "display_order": 48
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 37,
+    "fields": {
+      "question_order": 37,
+      "dimension": "JP",
+      "facet": "时间管理",
+      "facet_order": 1,
+      "text_a": "我喜欢按计划表有条理地安排时间",
+      "text_b": "我喜欢随情况灵活地来安排时间",
+      "pole_a": "J",
+      "pole_b": "P",
+      "is_reverse": false,
+      "display_order": 3
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 38,
+    "fields": {
+      "question_order": 38,
+      "dimension": "JP",
+      "facet": "时间管理",
+      "facet_order": 1,
+      "text_a": "我习惯提前规划好我的工作日程",
+      "text_b": "我习惯走一步看一步地推进工作",
+      "pole_a": "J",
+      "pole_b": "P",
+      "is_reverse": false,
+      "display_order": 8
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 39,
+    "fields": {
+      "question_order": 39,
+      "dimension": "JP",
+      "facet": "时间管理",
+      "facet_order": 1,
+      "text_a": "我倾向于尽早完成任务以避免拖延",
+      "text_b": "我倾向于在临近截止时更有灵感",
+      "pole_a": "J",
+      "pole_b": "P",
+      "is_reverse": false,
+      "display_order": 11
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 40,
+    "fields": {
+      "question_order": 40,
+      "dimension": "JP",
+      "facet": "时间管理",
+      "facet_order": 1,
+      "text_a": "我更喜欢弹性自由地来安排时间",
+      "text_b": "我更喜欢有明确计划地管理时间",
+      "pole_a": "P",
+      "pole_b": "J",
+      "is_reverse": true,
+      "display_order": 15
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 41,
+    "fields": {
+      "question_order": 41,
+      "dimension": "JP",
+      "facet": "任务执行",
+      "facet_order": 2,
+      "text_a": "我习惯按清单逐步地去完成任务",
+      "text_b": "我习惯根据兴趣灵活地切换任务",
+      "pole_a": "J",
+      "pole_b": "P",
+      "is_reverse": false,
+      "display_order": 20
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 42,
+    "fields": {
+      "question_order": 42,
+      "dimension": "JP",
+      "facet": "任务执行",
+      "facet_order": 2,
+      "text_a": "我倾向于一件件事做完再做下一件",
+      "text_b": "我倾向于同时并行推进多件事情",
+      "pole_a": "J",
+      "pole_b": "P",
+      "is_reverse": false,
+      "display_order": 23
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 43,
+    "fields": {
+      "question_order": 43,
+      "dimension": "JP",
+      "facet": "任务执行",
+      "facet_order": 2,
+      "text_a": "我喜欢按明确的步骤来推进工作",
+      "text_b": "我喜欢根据情况随时去调整做法",
+      "pole_a": "J",
+      "pole_b": "P",
+      "is_reverse": false,
+      "display_order": 27
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 44,
+    "fields": {
+      "question_order": 44,
+      "dimension": "JP",
+      "facet": "任务执行",
+      "facet_order": 2,
+      "text_a": "我偏好在执行过程中保持开放灵活",
+      "text_b": "我偏好按既定方案有条不紊地执行",
+      "pole_a": "P",
+      "pole_b": "J",
+      "is_reverse": true,
+      "display_order": 32
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 45,
+    "fields": {
+      "question_order": 45,
+      "dimension": "JP",
+      "facet": "秩序偏好",
+      "facet_order": 3,
+      "text_a": "我喜欢工作环境保持得井然有序",
+      "text_b": "我能够适应相对随性的工作环境",
+      "pole_a": "J",
+      "pole_b": "P",
+      "is_reverse": false,
+      "display_order": 35
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 46,
+    "fields": {
+      "question_order": 46,
+      "dimension": "JP",
+      "facet": "秩序偏好",
+      "facet_order": 3,
+      "text_a": "我倾向于为事物建立清晰的结构",
+      "text_b": "我倾向于保持开放灵活的处理方式",
+      "pole_a": "J",
+      "pole_b": "P",
+      "is_reverse": false,
+      "display_order": 39
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 47,
+    "fields": {
+      "question_order": 47,
+      "dimension": "JP",
+      "facet": "秩序偏好",
+      "facet_order": 3,
+      "text_a": "我喜欢明确规则和边界来开展工作",
+      "text_b": "我喜欢宽松自由的空间来开展工作",
+      "pole_a": "J",
+      "pole_b": "P",
+      "is_reverse": false,
+      "display_order": 44
+    }
+  },
+  {
+    "model": "assessment.question",
+    "pk": 48,
+    "fields": {
+      "question_order": 48,
+      "dimension": "JP",
+      "facet": "秩序偏好",
+      "facet_order": 3,
+      "text_a": "我更能适应灵活宽松的工作方式",
+      "text_b": "我更能适应结构清晰的工作方式",
+      "pole_a": "P",
+      "pole_b": "J",
+      "is_reverse": true,
+      "display_order": 47
+    }
+  }
+]

@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="职探 - 八分钟，看见你的职业性格。免注册、免费测、8分钟出结果的MBTI职业性格测评。">
+    <meta name="description" content="{% block meta_description %}职探 - 八分钟，看见你的职业性格。免注册、免费测、8分钟出结果的MBTI职业性格测评。{% endblock %}">
     <meta name="theme-color" content="#4D3E8C">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
     <title>{% block title %}{{ site_name|default:"职探" }} - MBTI职业性格测评{% endblock %}</title>
+
     {% load static %}
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    {# ---------- Open Graph ---------- #}
+    <meta property="og:title" content="{% block og_title %}{{ site_name|default:"职探" }} - MBTI职业性格测评{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}职探 - 八分钟，看见你的职业性格。免注册、免费测、8分钟出结果的MBTI职业性格测评。{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ site_name|default:"职探" }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{% static 'images/qr/product_qr.png' %}{% endblock %}">
+
+    {# ---------- JSON-LD Structured Data ---------- #}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "{{ site_name|default:"职探" }}",
+      "description": "MBTI职业性格测评 - 八分钟，看见你的职业性格。免注册、免费测、8分钟出结果。",
+      "url": "{{ request.build_absolute_uri }}",
+      "applicationCategory": "EducationApplication",
+      "operatingSystem": "Web"
+    }
+    </script>
+
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
