@@ -4,9 +4,9 @@
 
 | 项目 | 说明 |
 |------|------|
-| 文档版本 | v1.1 |
+| 文档版本 | v1.2 |
 | 创建日期 | 2026-07-09 |
-| 关联文档 | PRD.md v3.4 |
+| 关联文档 | PRD.md v3.5 |
 | 技术栈 | Django 5.0 + MySQL 8.0 + Redis 7 + Nginx |
 | 文档状态 | 评审稿 |
 
@@ -28,6 +28,7 @@
 - [安全设计](#安全设计)
 - [监控与告警](#监控与告警)
 - [关键技术点](#关键技术点)
+- [支撑系统设计](#支撑系统设计)
 
 ---
 
@@ -655,6 +656,13 @@ ALIPAY = {
 | POST | `/payment/alipay/notify/` | 支付宝回调 | 签名验证 | JSON |
 | GET | `/report/<order_no>/` | 深度报告页 | 订单状态校验 | HTML |
 | GET | `/api/stats/completed-count/` | 已完成测评人数 | 无 | JSON |
+| GET | `/api/order/status/<order_no>/` | 查询订单支付状态 | 无 | JSON |
+| GET | `/api/history/<uuid>/` | 获取用户测评历史 | 无 | JSON |
+| POST | `/api/feedback/` | 提交用户反馈 | CSRF | JSON |
+| POST | `/api/customer-service/` | 提交客服留言 | CSRF | JSON |
+| POST | `/api/report/recover/` | 凭订单号找回报告 | CSRF | JSON |
+| GET | `/help/` | 帮助中心 | 无 | HTML |
+| GET | `/settings/` | 设置页（数据清除） | 无 | HTML |
 
 ### 核心接口详细设计
 
@@ -2477,4 +2485,583 @@ class ReportRenderer:
         "content": "虽然你可能表面上看起来很难对付，但你实际上非常乐于接受并支持变革和创新。你的 {{cog_auxiliary}} 辅助功能使你能够跳出概念简单理论化的困境，将想法落实为能对世界产生真正影响的行动。"
     }
 ]
+```
+
+---
+
+## 支撑系统设计
+
+本章节覆盖核心测评流程之外但工程实现所需的支撑模块：统一错误处理、Celery 定时任务、前端埋点方案、LocalStorage 管理规范、新增接口设计。
+
+### 统一 API 错误响应格式
+
+所有 `/api/` 开头的 JSON 接口遵循统一错误响应结构，前端通过 `code` 字段做差异化处理：
+
+```python
+# apps/common/responses.py
+
+from django.http import JsonResponse
+
+class APIError(Exception):
+    """统一 API 错误基类"""
+    def __init__(self, code, message, http_status=400, extra=None):
+        self.code = code
+        self.message = message
+        self.http_status = http_status
+        self.extra = extra or {}
+
+def api_error_response(api_error: APIError):
+    return JsonResponse({
+        'success': False,
+        'code': api_error.code,
+        'message': api_error.message,
+        'extra': api_error.extra,
+    }, status=api_error.http_status)
+
+def api_success_response(data, extra=None):
+    return JsonResponse({
+        'success': True,
+        'code': 0,
+        'data': data,
+        'extra': extra or {},
+    })
+```
+
+| code | 含义 | 触发场景 | 前端处理 |
+|------|------|---------|---------|
+| 0 | 成功 | 正常响应 | 正常处理 data |
+| 1001 | 参数缺失/格式错误 | 请求体缺少必填字段 | 提示"请求异常，请刷新重试" |
+| 1002 | 答案数据不合法 | answers 数组长度 ≠ 48 或 position 不在 1–6 | 提示"答题数据异常，请重新测评" |
+| 1003 | UUID 格式不合法 | uuid 不符合 UUID4 格式 | 前端重新生成 UUID |
+| 2001 | 订单不存在 | order_no 在数据库中未找到 | 提示"订单不存在，请确认订单号" |
+| 2002 | 订单已过期 | 订单状态为 expired 或创建超 15 分钟 | 提示"订单已过期，请重新发起支付" |
+| 2003 | 订单已支付 | 重复创建支付请求 | 直接跳转报告页 |
+| 3001 | 反馈提交频率超限 | 同一用户同一结果页已提交过反馈 | 提示"已收到你的反馈，感谢" |
+| 4001 | 评分服务降级中 | Redis 不可用或评分引擎异常 | 前端切换降级评分模式 |
+| 5001 | 服务器内部错误 | 未捕获异常 | 提示"服务暂时不可用，请稍后重试" |
+
+```python
+# apps/common/middleware.py
+
+import logging
+from django.http import JsonResponse
+from .responses import APIError, api_error_response
+
+logger = logging.getLogger('careertest.api')
+
+class ExceptionMiddleware:
+    """全局异常捕获中间件，将未处理异常转为统一 JSON 响应"""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        try:
+            return self.get_response(request)
+        except APIError as e:
+            return api_error_response(e)
+        except Exception as e:
+            logger.exception(f'Unhandled exception: {e}')
+            return api_error_response(
+                APIError(5001, '服务暂时不可用，请稍后重试', 500)
+            )
+```
+
+### Celery 定时任务
+
+```python
+# careertest/celery.py
+
+from celery import Celery
+from django.conf import settings
+
+app = Celery('careertest')
+app.config_from_object(settings, namespace='CELERY')
+app.autodiscover_tasks()
+
+@app.on_after_configure.connect
+def setup_scheduled_tasks(sender, **kwargs):
+    from celery.schedules import crontab
+
+    # 每分钟检查过期订单
+    sender.add_periodic_task(
+        60.0,
+        'expire_pending_orders',
+        name='expire-pending-orders',
+    )
+
+    # 每天凌晨 2:00 清理过期测评记录
+    sender.add_periodic_task(
+        crontab(hour=2, minute=0),
+        'cleanup_old_assessments',
+        name='cleanup-old-assessments',
+    )
+
+    # 每天凌晨 3:00 生成日报数据
+    sender.add_periodic_task(
+        crontab(hour=3, minute=0),
+        'generate_daily_stats',
+        name='generate-daily-stats',
+    )
+
+    # 每小时刷新已完成测评人数缓存
+    sender.add_periodic_task(
+        3600.0,
+        'refresh_completed_count',
+        name='refresh-completed-count',
+    )
+```
+
+```python
+# apps/stats/tasks.py
+
+from celery import shared_task
+from django.utils import timezone
+from datetime import timedelta
+from django.core.cache import cache
+from apps.payment.models import Order
+from apps.assessment.models import Assessment
+
+@shared_task
+def expire_pending_orders():
+    """将超时未支付订单标记为 expired"""
+    expired = Order.objects.filter(
+        status='pending',
+        expires_at__lt=timezone.now(),
+    )
+    count = expired.update(status='expired')
+    if count:
+        logger.info(f'Expired {count} pending orders')
+
+@shared_task
+def cleanup_old_assessments():
+    """清理超过 30 天的测评记录（仅保留类型代码用于统计）"""
+    cutoff = timezone.now() - timedelta(days=30)
+    Assessment.objects.filter(
+        created_at__lt=cutoff
+    ).exclude(
+        orders__status='paid'  # 保留有付费订单的测评
+    ).delete()
+
+@shared_task
+def refresh_completed_count():
+    """刷新已完成测评人数缓存"""
+    count = Assessment.objects.count()
+    cache.set('stats:completed_count', count, 3600)
+
+@shared_task
+def generate_daily_stats():
+    """生成日报数据，写入 stats_daily 表"""
+    today = timezone.now().date()
+    # 聚合当天数据：UV、完成数、付费数、收入等
+    ...
+```
+
+| 任务 | 频率 | 说明 |
+|------|------|------|
+| `expire_pending_orders` | 每分钟 | 将超时（15 分钟）的 pending 订单标记为 expired |
+| `cleanup_old_assessments` | 每天 02:00 | 清理 30 天前的未付费测评记录（付费记录依法保留） |
+| `refresh_completed_count` | 每小时 | 刷新 Redis 中已完成测评人数缓存 |
+| `generate_daily_stats` | 每天 03:00 | 聚合前一天的 UV/完成率/付费数/收入，写入日报表 |
+
+### 前端埋点方案
+
+```python
+# apps/common/tracking.py
+
+"""
+前端埋点方案：通过统一事件上报接口收集用户行为数据，
+用于计算 PRD 中定义的过程指标（完成率、中断率、分享率等）。
+"""
+
+TRACKING_EVENTS = {
+    # 页面访问
+    'page_view':        {'path': 'str', 'ref': 'str(optional)'},
+    # 测评行为
+    'assessment_start': {},
+    'assessment_answer': {'question_idx': 'int', 'position': 'int', 'time_spent': 'int(ms)'},
+    'assessment_pause':  {'question_idx': 'int'},
+    'assessment_resume':  {'question_idx': 'int', 'via': 'continue|restart'},
+    'assessment_submit':  {'total_time': 'int(s)', 'answer_count': 'int'},
+    # 结果行为
+    'result_view':       {'mbti_type': 'str'},
+    'career_click':      {'career_id': 'str', 'match_score': 'int'},
+    'career_feedback':   {'career_id': 'str', 'feedback_type': 'str'},
+    'share_click':       {'mbti_type': 'str'},
+    'share_success':     {'mbti_type': 'str'},
+    # 支付行为
+    'payment_click':     {'mbti_type': 'str'},
+    'payment_success':   {'order_no': 'str', 'amount': 'str', 'method': 'str'},
+    'payment_fail':      {'order_no': 'str', 'reason': 'str'},
+    # 报告行为
+    'report_view':       {'order_no': 'str'},
+    'report_scroll':     {'chapter': 'int'},
+    'report_feedback':   {'rating': 'up|down'},
+    # 回流行为
+    'referral_landing': {'ref_type': 'str', 'ref_mbti': 'str(optional)'},
+}
+```
+
+```python
+# apps/stats/views.py
+
+class TrackingView(View):
+    """前端埋点上报接口 POST /api/track/"""
+
+    def post(self, request):
+        data = json.loads(request.body)
+        events = data.get('events', [])
+
+        for event in events:
+            event_name = event.get('name')
+            event_data = event.get('data', {})
+            uuid = data.get('uuid')
+
+            # 写入 tracking 表或 Redis（高频事件先入 Redis，低频事件直接入库）
+            if event_name in ('assessment_answer',):  # 高频事件
+                cache.lpush(
+                    f'track:{uuid}',
+                    json.dumps({
+                        'name': event_name,
+                        'data': event_data,
+                        'ts': int(time.time()),
+                    })
+                )
+            else:  # 低频事件直接入库
+                TrackingEvent.objects.create(
+                    uuid=uuid,
+                    event_name=event_name,
+                    event_data=event_data,
+                )
+
+        return JsonResponse({'success': True})
+```
+
+```javascript
+// 前端埋点 SDK（tracking.js）
+
+const Tracker = {
+    queue: [],
+
+    track(eventName, data = {}) {
+        const uuid = localStorage.getItem('user_uuid') || 'anonymous';
+        this.queue.push({
+            name: eventName,
+            data: data,
+            ts: Date.now(),
+        });
+        // 批量上报：每 5 条或页面隐藏时发送
+        if (this.queue.length >= 5) {
+            this.flush();
+        }
+    },
+
+    flush() {
+        if (this.queue.length === 0) return;
+        const uuid = localStorage.getItem('user_uuid') || 'anonymous';
+        const events = this.queue.splice(0);
+
+        // 使用 sendBeacon 确保页面关闭时也能上报
+        if (navigator.sendBeacon) {
+            const blob = new Blob(
+                [JSON.stringify({uuid, events})],
+                {type: 'application/json'}
+            );
+            navigator.sendBeacon('/api/track/', blob);
+        } else {
+            fetch('/api/track/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({uuid, events}),
+                keepalive: true,
+            });
+        }
+    },
+
+    init() {
+        // 页面隐藏时批量上报
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) this.flush();
+        });
+        // 页面卸载前上报
+        window.addEventListener('beforeunload', () => this.flush());
+    }
+};
+```
+
+| 指标 | 所需埋点事件 | 计算公式 |
+|------|-------------|---------|
+| 测评完成率 | `assessment_start` / `assessment_submit` | submit_count / start_count |
+| 答题中断率 | `assessment_pause` + `assessment_answer` 时间分布 | pause_count / start_count |
+| 付费转化率 | `result_view` / `payment_click` / `payment_success` | payment_success / result_view |
+| 分享率 | `result_view` / `share_click` | share_click / result_view |
+| 分享回流率 | `referral_landing` / `page_view` | referral_landing / page_view |
+| 平均答题时长 | `assessment_start.ts` / `assessment_submit.ts` | (submit_ts - start_ts) / submit_count |
+| 职业推荐点击率 | `result_view` / `career_click` | career_click / result_view |
+
+### LocalStorage 管理规范
+
+```python
+# 前端 LocalStorage 存储键名规范
+# 所有键名以 'ct_' 前缀避免与其他网站冲突
+
+LOCALSTORAGE_KEYS = {
+    'ct_uuid': {
+        'value': '用户 UUID（随机生成）',
+        'ttl': '永久（除非用户手动清除）',
+        'size': '36 bytes',
+    },
+    'ct_assessment_progress': {
+        'value': '答题进度（answers + currentIdx + timestamp）',
+        'ttl': '7 天（超时自动清除）',
+        'size': '~2 KB',
+    },
+    'ct_last_result': {
+        'value': '最近一次测评结果缓存（mbti_type + dimensions）',
+        'ttl': '会话级（关闭浏览器后清除）',
+        'size': '~4 KB',
+    },
+    'ct_paid_reports': {
+        'value': '已购报告订单号列表 [{order_no, mbti_type, paid_at}]',
+        'ttl': '永久（90 天后由前端标记过期）',
+        'size': '~1 KB',
+    },
+    'ct_referrer_type': {
+        'value': '分享来源参数（ref + type + name）',
+        'ttl': '会话级',
+        'size': '~200 bytes',
+    },
+    'ct_settings': {
+        'value': '用户设置（如隐私声明已读标记）',
+        'ttl': '永久',
+        'size': '~100 bytes',
+    },
+}
+```
+
+| 键名 | 写入时机 | 读取时机 | 清除时机 |
+|------|---------|---------|---------|
+| `ct_uuid` | 首次访问时生成 | 所有 API 请求时携带 | 用户手动清除或数据清除功能 |
+| `ct_assessment_progress` | 每 5 题自动保存 | 进入答题页时检查恢复 | 完成测评或选择重新开始或超 7 天 |
+| `ct_last_result` | 评分成功后写入 | 返回结果页时读取 | 关闭浏览器或数据清除功能 |
+| `ct_paid_reports` | 支付成功后写入 | 访问报告页前检查 | 超过 90 天的记录标记过期 |
+| `ct_referrer_type` | 从分享链接进入时写入 | 首页加载时读取引导卡片 | 会话结束 |
+
+### 新增接口详细设计
+
+#### GET `/api/order/status/<order_no>/` — 订单状态查询
+
+```python
+# apps/payment/views.py
+
+class OrderStatusView(View):
+    def get(self, request, order_no):
+        order = get_object_or_404(Order, order_no=order_no)
+        return JsonResponse({
+            'order_no': order.order_no,
+            'status': order.status,  # pending / paid / expired / failed
+            'amount': str(order.amount),
+            'payment_method': order.payment_method,
+            'created_at': order.created_at.isoformat(),
+            'paid_at': order.paid_at.isoformat() if order.paid_at else None,
+        })
+```
+
+前端轮询逻辑（每 2 秒查询一次，持续 2 分钟后超时）：
+
+```javascript
+const PaymentPoller = {
+    start(orderNo, onSuccess, onTimeout) {
+        this.orderNo = orderNo;
+        this.attempts = 0;
+        this.maxAttempts = 60;  // 2 分钟 / 2 秒 = 60 次
+        this.timer = setInterval(() => this.poll(onSuccess, onTimeout), 2000);
+    },
+
+    async poll(onSuccess, onTimeout) {
+        this.attempts++;
+        try {
+            const res = await fetch(`/api/order/status/${this.orderNo}/`);
+            const data = await res.json();
+            if (data.status === 'paid') {
+                this.stop();
+                onSuccess(data);
+            } else if (data.status === 'expired' || data.status === 'failed') {
+                this.stop();
+                onTimeout(data);
+            }
+        } catch (e) {
+            console.error('Poll error:', e);
+        }
+        if (this.attempts >= this.maxAttempts) {
+            this.stop();
+            onTimeout({status: 'timeout'});
+        }
+    },
+
+    stop() {
+        clearInterval(this.timer);
+    }
+};
+```
+
+#### GET `/api/history/<uuid>/` — 测评历史
+
+```python
+# apps/assessment/views.py
+
+class HistoryView(View):
+    def get(self, request, uuid):
+        assessments = Assessment.objects.filter(
+            uuid=uuid
+        ).order_by('-created_at')[:3]  # 最多保留 3 条
+
+        history = []
+        for a in assessments:
+            history.append({
+                'assessment_id': a.id,
+                'mbti_type': a.mbti_type_code,
+                'created_at': a.created_at.isoformat(),
+                'dimensions': json.loads(a.dimension_scores),
+            })
+
+        return JsonResponse({
+            'history': history,
+            'count': len(history),
+        })
+```
+
+#### POST `/api/feedback/` — 用户反馈
+
+```python
+# apps/stats/views.py
+
+class FeedbackView(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        uuid = data['uuid']
+
+        # 防重复：同一用户同一 assessment 只能提交 1 次反馈
+        existing = Feedback.objects.filter(
+            uuid=uuid,
+            assessment_id=data.get('assessment_id'),
+        ).exists()
+        if existing:
+            return api_error_response(
+                APIError(3001, '已收到你的反馈，感谢')
+            )
+
+        Feedback.objects.create(
+            uuid=uuid,
+            assessment_id=data.get('assessment_id'),
+            order_no=data.get('order_no'),
+            mbti_type=data.get('mbti_type'),
+            feedback_type=data.get('type'),  # career_mismatch / career_partial / report_rating / report_text
+            career_id=data.get('career_id'),
+            rating=data.get('rating'),  # up / down
+            content=data.get('content', '')[:200],  # 限制 200 字
+        )
+
+        return api_success_response({'submitted': True})
+```
+
+#### POST `/api/report/recover/` — 凭订单号找回报告
+
+```python
+# apps/payment/views.py
+
+class ReportRecoverView(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        order_no = data.get('order_no')
+
+        try:
+            order = Order.objects.get(order_no=order_no, status='paid')
+        except Order.DoesNotExist:
+            return api_error_response(
+                APIError(2001, '订单不存在或未支付')
+            )
+
+        # 检查是否在有效期内
+        if order.paid_at:
+            days_since = (timezone.now() - order.paid_at).days
+            if days_since > 90:
+                return api_error_response(
+                    APIError(2002, '报告已过期，需重新测评并购买')
+                )
+
+        # 返回新 UUID 关联的 assessment_id，前端重新写入 localStorage
+        return api_success_response({
+            'order_no': order.order_no,
+            'assessment_id': order.assessment_id,
+            'mbti_type': order.assessment.mbti_type_code,
+            'report_url': f'/report/{order.order_no}/',
+        })
+```
+
+### 数据库表补充
+
+新增支撑功能所需的数据表：
+
+```sql
+-- 用户反馈表
+CREATE TABLE feedback (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    uuid VARCHAR(36) NOT NULL,
+    assessment_id BIGINT,
+    order_no VARCHAR(64),
+    mbti_type VARCHAR(4) NOT NULL,
+    feedback_type ENUM('career_mismatch', 'career_partial', 'report_rating', 'report_text') NOT NULL,
+    career_id VARCHAR(20),
+    rating ENUM('up', 'down'),
+    content TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_uuid (uuid),
+    INDEX idx_assessment (assessment_id),
+    INDEX idx_career (career_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 客服留言表
+CREATE TABLE customer_service_message (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    uuid VARCHAR(36),
+    contact VARCHAR(100),          -- 微信号或手机号（选填）
+    message TEXT NOT NULL,         -- 问题描述（必填，限 500 字）
+    order_no VARCHAR(64),          -- 相关订单号（选填）
+    status ENUM('pending', 'replied', 'closed') DEFAULT 'pending',
+    reply TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    replied_at DATETIME,
+    INDEX idx_uuid (uuid),
+    INDEX idx_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 前端埋点事件表（低频事件直接入库）
+CREATE TABLE tracking_event (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    uuid VARCHAR(36) NOT NULL,
+    event_name VARCHAR(50) NOT NULL,
+    event_data JSON,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_uuid (uuid),
+    INDEX idx_event (event_name),
+    INDEX idx_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 日报统计表
+CREATE TABLE stats_daily (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL UNIQUE,
+    uv INT DEFAULT 0,
+    pv INT DEFAULT 0,
+    assessment_starts INT DEFAULT 0,
+    assessment_completes INT DEFAULT 0,
+    payment_clicks INT DEFAULT 0,
+    payment_successes INT DEFAULT 0,
+    revenue DECIMAL(10,2) DEFAULT 0,
+    share_clicks INT DEFAULT 0,
+    referral_visits INT DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uk_date (date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
