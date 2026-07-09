@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% load common_tags %}
+
+{% block title %}深度报告 - {{ site_name|default:"职探" }}{% endblock %}
+
+{% block page_type %}report{% endblock %}
+
+{% block content %}
+<div class="report-page">
+
+    <!-- ============ Chapter Navigation Sidebar ============ -->
+    <aside class="report-sidebar">
+        <p class="report-nav-title">章节导航</p>
+        <nav class="report-nav" aria-label="报告章节">
+            {% for chapter in report_chapters|default:"性格概览,核心特质,思维方式,情感模式,社交风格,工作方式,领导风格,职业匹配,人际关系,成长建议,潜在盲区,行动计划"|split:"," %}
+            <a href="#chapter-{{ forloop.counter }}"
+               class="{% if forloop.first %}active{% endif %}">
+                <span class="report-nav-num">{{ forloop.counter }}</span>
+                {{ chapter }}
+            </a>
+            {% endfor %}
+        </nav>
+    </aside>
+
+    <!-- ============ Report Content ============ -->
+    <article class="report-content">
+
+        {% for chapter in report_chapters|default:"性格概览,核心特质,思维方式,情感模式,社交风格,工作方式,领导风格,职业匹配,人际关系,成长建议,潜在盲区,行动计划"|split:"," %}
+        <section class="report-chapter" id="chapter-{{ forloop.counter }}">
+            <h2 class="report-chapter-title">
+                <span class="report-nav-num" style="display:inline-flex;margin-right:8px;">{{ forloop.counter }}</span>
+                {{ chapter }}
+            </h2>
+            <div class="report-chapter-body">
+                <p>
+                    这是「{{ chapter }}」章节的占位内容。深度报告将在此处详细解析你的
+                    {{ result_type_code|default:"INTJ" }} 型性格在该维度上的表现。
+                </p>
+                <h4>核心要点</h4>
+                <p>
+                    深度报告的内容将由后端根据用户的具体 MBTI 类型动态生成，
+                    包含该类型在各个方面的详细分析和个性化建议。
+                </p>
+                <h4>详细分析</h4>
+                <p>
+                    报告内容基于 MBTI 人格理论和职业心理学研究，结合实际案例和数据，
+                    为你提供可操作的建议和指导。每个章节都包含理论解析、实际案例和行动建议。
+                </p>
+                <p>
+                    此处为模板占位文本，实际内容将在后端渲染时填充。
+                    渲染时将传入 <code>report_chapters</code> 上下文变量，
+                    包含每个章节的标题和正文内容。
+                </p>
+            </div>
+        </section>
+        {% endfor %}
+
+        <!-- ============ Feedback Section ============ -->
+        <section class="feedback-section">
+            <h3 class="feedback-title">这份报告对你有帮助吗？</h3>
+            <p class="feedback-desc">
+                你的反馈将帮助我们改进报告质量，为更多用户提供更好的体验。
+            </p>
+            <div class="feedback-buttons">
+                <button class="feedback-btn" data-rating="positive">
+                    <span style="font-size:1.25rem;">👍</span>
+                    有帮助
+                </button>
+                <button class="feedback-btn" data-rating="negative">
+                    <span style="font-size:1.25rem;">👎</span>
+                    没帮助
+                </button>
+            </div>
+            <textarea
+                class="feedback-input"
+                placeholder="告诉我们哪里可以改进（选填）"
+                maxlength="500"></textarea>
+            <div class="mt-2">
+                <button class="btn btn-primary feedback-submit">提交反馈</button>
+            </div>
+        </section>
+
+    </article>
+
+</div>
+{% endblock %}

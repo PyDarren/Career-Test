@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}测评中 - {{ site_name|default:"职探" }}{% endblock %}
+
+{% block page_type %}assessment{% endblock %}
+
+{% block content %}
+<div class="assessment-page">
+
+    <!-- ============ Progress Bar ============ -->
+    <section class="progress-bar-wrapper" aria-label="测评进度">
+        <div class="container">
+            <div class="progress-text">
+                <span><span class="progress-current">0</span>/48</span>
+                <span class="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Question Area ============ -->
+    <section class="assessment-content">
+        <article class="question-area">
+            <p class="question-text" id="question-text">
+                <!-- JS 将动态填充题目内容 -->
+                在社交聚会中，你更倾向于...
+            </p>
+        </article>
+
+        <!-- ============ Scale Selector ============ -->
+        <div id="scale-selector-container">
+            {% include "partials/scale_selector.html" with text_a="主动与陌生人交谈，认识新朋友" text_b="和熟悉的朋友待在一起，较少主动社交" name="answer" %}
+        </div>
+
+        <!-- ============ Back Link ============ -->
+        <div class="assessment-back">
+            <a href="{% url 'home' %}" class="btn btn-outline btn-sm">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                返回首页
+            </a>
+        </div>
+    </section>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    /* 选择后自动前进的占位逻辑 */
+    window.onScaleSelect = function (value) {
+        // TODO: 记录答案并自动跳转到下一题
+        if (window.CareTest && window.CareTest.Assessment) {
+            var mod = window.CareTest.Assessment;
+            mod.recordAnswer(mod.currentQuestion, value);
+            // 短暂延迟后前进
+            setTimeout(function () {
+                mod.currentQuestion++;
+                mod.updateProgress();
+                // TODO: 加载下一题
+                if (mod.currentQuestion >= mod.totalQuestions) {
+                    mod.submit();
+                    window.location.href = "{% url 'result' %}";
+                }
+            }, 300);
+        }
+    };
+</script>
+{% endblock %}

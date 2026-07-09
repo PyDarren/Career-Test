@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ site_name|default:"职探" }} - 八分钟，看见你的职业性格{% endblock %}
+
+{% block page_type %}home{% endblock %}
+
+{% block content %}
+<!-- ============ Hero Section ============ -->
+<section class="hero">
+    <div class="container">
+        <h1 class="hero-slogan">八分钟，看见你的职业性格</h1>
+        <p class="hero-subtitle">免注册 · 免费测 · 8分钟出结果</p>
+        <div class="hero-actions">
+            <a href="{% url 'assessment' %}" class="btn btn-primary btn-lg">立即开始测评</a>
+            <a href="{% url 'result' %}" class="btn btn-outline btn-lg">查看示例报告</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Test Entry Card ============ -->
+<section class="container">
+    <article class="test-entry-card">
+        <div class="test-entry-icon" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 3L21 12L30 12L23 17L26 26L18 21L10 26L13 17L6 12L15 12L18 3Z"
+                      fill="currentColor"/>
+            </svg>
+        </div>
+        <span class="test-entry-meta">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M7 4V7L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            48 题 · 6-8 分钟
+        </span>
+        <h2 class="card-title">MBTI 职业性格测评</h2>
+        <p class="test-entry-desc">
+            基于 MBTI 人格理论，48 道精选题目，6-8 分钟完成。
+            免注册、免费测，立即获取你的职业性格类型和职业推荐。
+        </p>
+        <a href="{% url 'assessment' %}" class="btn btn-primary btn-block">开始测评</a>
+    </article>
+</section>
+
+<!-- ============ Usage Flow ============ -->
+<section class="usage-flow">
+    <div class="container">
+        <h2 class="section-title">如何使用</h2>
+        <div class="flow-steps">
+            <div class="flow-step">
+                <div class="flow-step-num">1</div>
+                <p class="flow-step-title">开始测评</p>
+                <p class="flow-step-desc">无需注册，直接开始答题</p>
+            </div>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <div class="flow-step">
+                <div class="flow-step-num">2</div>
+                <p class="flow-step-title">完成答题</p>
+                <p class="flow-step-desc">48题，约8分钟完成</p>
+            </div>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <div class="flow-step">
+                <div class="flow-step-num">3</div>
+                <p class="flow-step-title">查看结果</p>
+                <p class="flow-step-desc">免费获取性格类型报告</p>
+            </div>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <div class="flow-step">
+                <div class="flow-step-num">4</div>
+                <p class="flow-step-title">分享/深度</p>
+                <p class="flow-step-desc">一键分享或解锁深度报告</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Features Highlight ============ -->
+<section class="container" style="padding: 64px 20px;">
+    <h2 class="section-title">为什么选择职探</h2>
+    <div class="row">
+        <div class="col">
+            <article class="card text-center">
+                <div class="test-entry-icon" style="width:56px;height:56px;font-size:1.5rem;margin-bottom:12px;" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h3 class="card-title">免注册</h3>
+                <p class="text-muted">无需手机号、无需登录，打开即测</p>
+            </article>
+        </div>
+        <div class="col">
+            <article class="card text-center">
+                <div class="test-entry-icon" style="width:56px;height:56px;font-size:1.5rem;margin-bottom:12px;" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3 class="card-title">8分钟</h3>
+                <p class="text-muted">48道精选题，快速但不敷衍</p>
+            </article>
+        </div>
+        <div class="col">
+            <article class="card text-center">
+                <div class="test-entry-icon" style="width:56px;height:56px;font-size:1.5rem;margin-bottom:12px;" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 12L9 18L21 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 class="card-title">免费测</h3>
+                <p class="text-muted">基础报告完全免费，深度仅2.99元</p>
+            </article>
+        </div>
+    </div>
+</section>
+{% endblock %}

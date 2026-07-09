@@ -1,0 +1,59 @@
+{% comment %}
+    人格认证卡片组件 (Certification Card)
+    可复用组件，用于结果页和分享卡片
+    模板变量:
+      - type_code: MBTI 类型代码 (如 "INTJ")
+      - type_name: 类型名称 (如 "建筑师")
+      - type_slogan: 类型标语
+      - role_group: 角色组 (analyst/diplomat/sentinel/explorer)
+      - rarity: 稀有度百分比
+      - famous_people: 名人列表
+      - best_partners: 最佳搭档类型列表
+{% endcomment %}
+
+<article class="cert-card" data-role="{{ role_group|default:'analyst' }}">
+    <span class="cert-ribbon">已认证</span>
+
+    <div class="cert-badge">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 0L8.5 5.5L14 7L8.5 8.5L7 14L5.5 8.5L0 7L5.5 5.5L7 0Z" fill="currentColor"/>
+        </svg>
+        认证人格
+    </div>
+
+    <!-- 3D 吉祥物占位 -->
+    <div class="cert-mascot" aria-label="人格吉祥物">
+        {% if mascot_url %}
+            <img src="{{ mascot_url }}" alt="{{ type_name }}吉祥物" loading="lazy">
+        {% else %}
+            <span>3D 吉祥物</span>
+        {% endif %}
+    </div>
+
+    <!-- MBTI 类型代码 -->
+    <h2 class="cert-type-code">{{ type_code|default:"????" }}</h2>
+    <p class="cert-type-name">{{ type_name|default:"你的类型" }}</p>
+    <p class="cert-type-slogan">{{ type_slogan|default:"探索你的职业性格" }}</p>
+
+    <!-- 统计信息 -->
+    <div class="cert-stats">
+        <div class="cert-stat-row">
+            <span class="cert-stat-label">稀有度</span>
+            <span class="cert-stat-value">{{ rarity|default:"—" }}%</span>
+        </div>
+
+        {% if famous_people %}
+        <div class="cert-stat-row">
+            <span class="cert-stat-label">同类名人</span>
+            <span class="cert-stat-value">{{ famous_people|join:" · " }}</span>
+        </div>
+        {% endif %}
+
+        {% if best_partners %}
+        <div class="cert-stat-row">
+            <span class="cert-stat-label">最佳搭档</span>
+            <span class="cert-stat-value">{{ best_partners|join:" / " }}</span>
+        </div>
+        {% endif %}
+    </div>
+</article>

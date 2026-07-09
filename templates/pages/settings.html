@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}设置 - {{ site_name|default:"职探" }}{% endblock %}
+
+{% block page_type %}settings{% endblock %}
+
+{% block content %}
+<div class="settings-page">
+
+    <h1 style="font-size: var(--fs-h1); font-weight: var(--fw-black); margin-bottom: 24px;">
+        设置
+    </h1>
+
+    <!-- ============ Data Clearing Section ============ -->
+    <section class="settings-section">
+        <h2 class="settings-section-title">数据管理</h2>
+        <p class="settings-section-desc">
+            管理你在本设备上存储的测评数据。清除数据后不可恢复，请谨慎操作。
+        </p>
+
+        <h3 style="font-size: var(--fs-body); font-weight: var(--fw-bold); margin-bottom: 12px;">
+            清除数据将删除以下内容：
+        </h3>
+        <ul class="data-clear-list">
+            <li>测评进度（已答题目记录）</li>
+            <li>测评答案明细（48 道题的选择记录）</li>
+            <li>性格类型结果（MBTI 类型代码）</li>
+            <li>已解锁的深度报告访问权限</li>
+            <li>匿名用户标识（用于统计的本地 ID）</li>
+            <li>个性化设置偏好</li>
+        </ul>
+
+        <p class="text-muted" style="font-size: var(--fs-small); margin-bottom: 20px;">
+            注意：清除数据后，你需要重新进行测评才能获取结果。
+            如已购买深度报告，清除后将无法在同一设备恢复，需联系客服处理。
+        </p>
+
+        <button class="btn btn-danger btn-block" id="clear-data-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 5H13M6 5V3C6 2.5 6.5 2 7 2H9C9.5 2 10 2.5 10 3V5M5 5L5.5 13C5.5 13.5 6 14 6.5 14H9.5C10 14 10.5 13.5 10.5 13L11 5"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            清除我的数据
+        </button>
+    </section>
+
+    <!-- ============ About Section ============ -->
+    <section class="settings-section">
+        <h2 class="settings-section-title">关于</h2>
+        <p class="settings-section-desc">
+            {{ site_name|default:"职探" }} - 八分钟，看见你的职业性格
+        </p>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size: var(--fs-small); color: var(--color-text-muted);">
+            <p>版本：1.0.0</p>
+            <p>基于 MBTI 人格理论</p>
+            <p>
+                <a href="{% url 'help' %}">帮助中心</a>
+                &nbsp;·&nbsp;
+                <a href="{% url 'about' %}">关于我们</a>
+            </p>
+        </div>
+    </section>
+
+</div>
+
+<!-- ============ Confirmation Modal ============ -->
+<div class="modal-overlay" id="clear-data-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+        <div class="modal-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M14 8V15M14 18V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </div>
+        <h3 class="modal-title" id="modal-title">确认清除数据？</h3>
+        <p class="modal-desc">
+            此操作将永久删除你的所有测评数据和报告访问权限，且不可恢复。
+            确定要继续吗？
+        </p>
+        <div class="modal-actions">
+            <button class="btn btn-outline modal-cancel">取消</button>
+            <button class="btn btn-danger modal-confirm">确认清除</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

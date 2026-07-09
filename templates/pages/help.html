@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}帮助中心 - {{ site_name|default:"职探" }}{% endblock %}
+
+{% block page_type %}help{% endblock %}
+
+{% block content %}
+<div class="help-page">
+
+    <h1 style="text-align:center; font-size: var(--fs-h1); font-weight: var(--fw-black); margin-bottom: 8px;">
+        帮助中心
+    </h1>
+    <p class="text-center text-muted mb-4">找到你需要的答案</p>
+
+    <!-- ============ Search Box ============ -->
+    <section class="help-search">
+        <div class="help-search-box">
+            <span class="help-search-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M14 14L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </span>
+            <input
+                type="search"
+                class="help-search-input"
+                placeholder="搜索问题..."
+                aria-label="搜索常见问题">
+        </div>
+    </section>
+
+    <!-- ============ FAQ List ============ -->
+    <section class="faq-list" aria-label="常见问题">
+
+        <article class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+                <span>测评是免费的吗？需要注册吗？</span>
+                <span class="faq-question-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    完全免费，无需注册。你可以直接打开网页开始测评，48 道题目约需 6-8 分钟。
+                    基础报告（性格类型 + 四维度 + 职业推荐）也完全免费。
+                    仅深度报告需要 2.99 元解锁，但这完全是可选的。
+                </div>
+            </div>
+        </article>
+
+        <article class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+                <span>测评结果准确吗？</span>
+                <span class="faq-question-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    我们的测评基于 MBTI 人格理论，48 道题目经过心理学量表验证。
+                    虽然没有哪种性格测评能做到 100% 准确，但 MBTI 在职业匹配领域
+                    有广泛的应用和参考价值。建议你在自然、放松的状态下答题，
+                    以获得最贴近真实的结果。
+                </div>
+            </div>
+        </article>
+
+        <article class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+                <span>深度报告包含什么内容？</span>
+                <span class="faq-question-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    深度报告包含 12 个章节的详细解析：性格概览、核心特质、思维方式、
+                    情感模式、社交风格、工作方式、领导风格、职业匹配、人际关系、
+                    成长建议、潜在盲区和行动计划。每章配有实际案例和可操作的建议。
+                </div>
+            </div>
+        </article>
+
+        <article class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+                <span>我可以重新测评吗？</span>
+                <span class="faq-question-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    当然可以。你随时可以重新进行测评，我们建议在不同时间、不同心境下
+                    测评 2-3 次，如果结果一致则说明该类型较为稳定。如果结果有波动，
+                    说明你可能处于边界类型，建议参考深度报告中的边界类型分析。
+                </div>
+            </div>
+        </article>
+
+        <article class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+                <span>我的测评数据会被保存吗？</span>
+                <span class="faq-question-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    你的测评进度会保存在浏览器本地（localStorage），方便你断线后继续答题。
+                    我们不会收集你的姓名、手机号等个人信息。你可以在「设置」页面随时
+                    清除所有本地数据。匿名统计数据仅用于改进测评质量，不关联个人身份。
+                </div>
+            </div>
+        </article>
+
+        <article class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+                <span>支付后能永久查看深度报告吗？</span>
+                <span class="faq-question-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    是的。支付 2.99 元解锁深度报告后，报告将绑定你的浏览器设备，
+                    永久有效，可随时查看。如果你更换设备，可通过分享链接中的
+                    验证码在新设备上恢复访问。
+                </div>
+            </div>
+        </article>
+
+        <article class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+                <span>MBTI 类型会变化吗？</span>
+                <span class="faq-question-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    MBTI 理论认为人的核心性格类型在成年后相对稳定，但并非一成不变。
+                    人的行为偏好会随着成长经历、环境变化而调整。如果你在较短时间内
+                    测评结果频繁变化，可能处于两个类型的边界区域，建议参考深度报告
+                    中的边界类型分析。
+                </div>
+            </div>
+        </article>
+
+        <article class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+                <span>支持哪些支付方式？</span>
+                <span class="faq-question-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    目前支持微信支付和支付宝两种方式。支付过程在加密环境下完成，
+                    我们不会存储你的支付账户信息。如遇支付问题，请联系下方客服。
+                </div>
+            </div>
+        </article>
+
+    </section>
+
+    <!-- ============ Customer Service Contact ============ -->
+    <section class="help-contact">
+        <h2 class="help-contact-title">没有找到答案？</h2>
+        <p class="help-contact-info">联系我们的客服团队，工作日 9:00-18:00 内回复</p>
+        <p class="help-contact-info">
+            <strong>邮箱：</strong>support@zhitan.com<br>
+            <strong>微信：</strong>zhitan_support
+        </p>
+        <div class="mt-3">
+            <a href="mailto:support@zhitan.com" class="btn btn-primary">发送邮件</a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% load common_tags %}
+
+{% block title %}你的性格类型 - {{ site_name|default:"职探" }}{% endblock %}
+
+{% block page_type %}result{% endblock %}
+
+{% block content %}
+<div class="result-page">
+
+    <!-- ============ Certification Card ============ -->
+    {% include "partials/cert_card.html" with type_code=result_type_code|default:"INTJ" type_name=result_type_name|default:"建筑师" type_slogan=result_type_slogan|default:"富有想象力的战略思考者" role_group=result_role_group|default:"analyst" rarity=result_rarity|default:"2" famous_people=result_famous_people best_partners=result_best_partners %}
+
+    <!-- ============ Dimension Bars ============ -->
+    <section class="result-section">
+        <h2 class="result-section-title">性格维度</h2>
+        {% include "partials/dimension_bars.html" with dimensions=result_dimensions %}
+    </section>
+
+    <!-- ============ Rarity Stats ============ -->
+    <section class="result-section">
+        <h2 class="result-section-title">稀有度统计</h2>
+        <div class="card">
+            <p class="text-muted">
+                你的性格类型在人群中占比约
+                <strong class="gradient-text" style="font-size: var(--fs-h2);">
+                    {{ result_rarity|default:"2" }}%
+                </strong>
+            </p>
+            <p class="text-muted mt-2" style="font-size: var(--fs-small);">
+                这意味着每 100 人中约有 {{ result_rarity|default:"2" }} 人与你有相同的性格类型。
+            </p>
+        </div>
+    </section>
+
+    <!-- ============ Famous People ============ -->
+    <section class="result-section">
+        <h2 class="result-section-title">同类名人</h2>
+        <div class="famous-people">
+            {% for person in result_famous_people|default:"伊隆·马斯克,尼古拉·特斯拉,弗里达·卡罗,沃伦·巴菲特"|split:"," %}
+            <figure class="famous-person">
+                <div class="famous-person-avatar">{{ person|slice:":1" }}</div>
+                <figcaption class="famous-person-name">{{ person }}</figcaption>
+            </figure>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ============ Best Partners ============ -->
+    <section class="result-section">
+        <h2 class="result-section-title">最佳搭档</h2>
+        <p class="text-muted mb-3">在工作和亲密关系中，以下类型与你的契合度最高：</p>
+        <div class="best-partners">
+            {% for partner in result_best_partners|default:"ENFP,ENTP,ENFJ"|split:"," %}
+            <span class="partner-chip">{{ partner }}</span>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ============ Career Recommendations ============ -->
+    <section class="result-section">
+        <h2 class="result-section-title">职业推荐</h2>
+        <div class="career-list">
+            {% for career in result_careers|default:"数据科学家,产品经理,投资分析师,战略顾问,软件架构师"|split:"," %}
+            <article class="career-item">
+                <div class="career-item-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M7 10L9 12L13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div style="flex:1;">
+                    <div class="career-item-name">{{ career }}</div>
+                    <div class="career-item-match">匹配度 {{ forloop.counter|add:'90' }}%</div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ============ Share Button ============ -->
+    <section class="result-section text-center">
+        <button class="btn btn-outline btn-lg" id="share-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <circle cx="4" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="14" cy="4" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="14" cy="14" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M6 8L12 5M6 10L12 13" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            分享我的结果
+        </button>
+    </section>
+
+    <!-- ============ Paywall CTA ============ -->
+    <section class="paywall-cta">
+        <h2 class="paywall-title">解锁深度报告</h2>
+        <p class="paywall-desc">
+            12 章深度解析你的性格优势、职业路径、人际关系与发展建议
+        </p>
+        <p class="paywall-price">2.99<small>元</small></p>
+        <a href="{% url 'report' %}" class="btn btn-accent btn-lg btn-block">立即解锁</a>
+        <p style="font-size: var(--fs-small); color: rgba(255,255,255,0.5); margin-top: 12px;">
+            一次性付费 · 永久查看 · 无需注册
+        </p>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('share-btn')?.addEventListener('click', function () {
+        if (navigator.share) {
+            navigator.share({
+                title: '我的MBTI职业性格',
+                text: '我的性格类型是 {{ result_type_code|default:"INTJ" }} - {{ result_type_name|default:"建筑师" }}',
+                url: window.location.href
+            });
+        } else {
+            // Fallback: 复制链接
+            navigator.clipboard?.writeText(window.location.href);
+            alert('链接已复制，快去分享吧！');
+        }
+    });
+</script>
+{% endblock %}
