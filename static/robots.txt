@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-
-Disallow: /api/
-Disallow: /report/
-Disallow: /payment/
-
-Sitemap: /sitemap.xml

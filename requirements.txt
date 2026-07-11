@@ -1,8 +1,0 @@
-Django==5.0.6
-mysqlclient==2.2.4
-redis==5.0.7
-django-redis==5.4.0
-celery==5.4.0
-cryptography==42.0.8
-Pillow==10.4.0
-PyMySQL==1.1.1
