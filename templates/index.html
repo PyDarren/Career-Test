@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="专业MBTI职业性格测试 — 96.5%复测一致性，万字级深度报告，荣格八维理论支撑。免登录，打开即测，10分钟发现你的职业天赋。">
+    <title>职业测评 · 发现你的职业天赋 | Career Test</title>
+
+    <!-- 复用 16personalities 本地资源 -->
+    <link rel="stylesheet" href="16p-assets/css/styles-core.css" />
+    <link rel="stylesheet" href="16p-assets/css/styles-fonts.css" />
+    <link rel="stylesheet" href="16p-assets/css/homepage.css" />
+    <link rel="stylesheet" href="assets/css/career-home.css" />
+    <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,440..770;1,440..770&display=swap">
+    <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,700..800;1,700..800&display=swap">
+    <link rel="icon" type="image/svg+xml" href="16p-assets/images/system/logo.svg">
+
+    <style>[v-cloak] {display: none !important;}</style>
+</head>
+<body class="">
+    <div class="g-wrp" id="main-app">
+
+        <!-- ============== 顶部导航栏 ============== -->
+        <div class="navbar navbar--sticky" id="js-navbar" data-testid="top-nav" ref="navbar">
+
+            <app-logo class="logo">
+                <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+                    <img src="16p-assets/images/system/logo.svg" width="32" height="32" alt="Career Test Logo">
+                    <span style="font-family:'Red Hat Display',sans-serif;font-weight:800;font-size:18px;color:#33A474;">Career Test</span>
+                </a>
+            </app-logo>
+
+            <nav class="sp-nav__topmiddle middle-section items--4 anonymous">
+                <ul>
+                    <li class="">
+                        <a href="#be-understood" class="link--quiz">开始测评</a>
+                    </li>
+                    <li class="">
+                        <a href="#understand-others" class="">人格类型</a>
+                    </li>
+                    <li class="">
+                        <a href="#core-features" class="">核心优势</a>
+                    </li>
+                    <li class="">
+                        <a href="#testimonials" class="">用户评价</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="right-section">
+                <a href="#be-understood" class="sp-action sp-button button--purple button--md button--pill button--auto test-button tw-hidden medium:tw-flex">
+                    <span class="button__text">开始测试</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ============== 主内容 ============== -->
+        <main class="q-hm">
+
+            <!-- Hero 主视觉区 -->
+            <section id="be-understood" class="hero">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 60" preserveAspectRatio="none" class="angular-1920-1 hero__shape dark:tw-bg-blue" aria-hidden="true">
+                    <path d="m0 20 420 40L800 0l750 60 370-45V0H0z" class="dark:tw-fill-ds-dark-2"></path>
+                </svg>
+
+                <div class="hero__text p-lg">
+                    <h1 id="main-content" tabindex="-1">发现你的职业天赋</h1>
+                    <p class="p-lg">仅需 10 分钟，获得"精准得不可思议"的人格分析与职业匹配报告，了解你是谁以及为何如此行事。</p>
+
+                    <a href="#go" class="sp-action sp-button button--purple button--lg button--pill button--auto button--icon-rt">
+                        <span class="button__text">立即开始测评</span>
+                        <span class="sp-icon size--inherit color--inherit icon--rotatable icon--dir-rt icon--arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 48 48" style="display:block;">
+                                <path style="fill:white !important;" d="M23.296875,3.421875 L22.63125,4.0875 C22.190625,4.528125 22.190625,5.240625 22.63125,5.68125 L39.365625,22.40625 L4.125,22.40625 C3.50625,22.40625 3,22.9125 3,23.53125 L3,24.46875 C3,25.0875 3.50625,25.59375 4.125,25.59375 L39.365625,25.59375 L22.63125,42.328125 C22.190625,42.76875 22.190625,43.48125 22.63125,43.921875 L23.296875,44.5875 C23.7375,45.028125 24.45,45.028125 24.890625,44.5875 L44.68125,24.796875 C45.121875,24.35625 45.121875,23.64375 44.68125,23.203125 L24.890625,3.421875 C24.440625,2.98125 23.7375,2.98125 23.296875,3.421875 Z"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- 山脉装饰场景图 -->
+            <div class="scene">
+                <img width="377" height="201"
+                     srcset="16p-assets/images/homepage/header-mountains-mobile.svg 768w, 16p-assets/images/homepage/header-mountains-desktop.svg 1600w"
+                     sizes="(max-width: 768px) 100vw, 100vw"
+                     src="16p-assets/images/homepage/header-mountains-desktop.svg"
+                     alt="群山与营地场景装饰图">
+            </div>
+
+            <!-- 统计数据 -->
+            <dl id="metrics" class="metrics sp-wrap metrics--en">
+                <div class="metric">
+                    <dt class="metric__value font-head h1 text--blue">96.5%</dt>
+                    <dd class="metric__label p-sm">复测一致性</dd>
+                </div>
+                <div class="metric">
+                    <dt class="metric__value font-head h1 text--yellow">12 章</dt>
+                    <dd class="metric__label p-sm">深度报告内容</dd>
+                </div>
+                <div class="metric">
+                    <dt class="metric__value font-head h1 text--green">16 种</dt>
+                    <dd class="metric__label p-sm">人格类型覆盖</dd>
+                </div>
+                <div class="metric">
+                    <dt class="metric__value font-head h1 text--purple">2.99 元</dt>
+                    <dd class="metric__label p-sm">深度报告价格</dd>
+                </div>
+            </dl>
+
+            <!-- ============== 核心优势展示区 ============== -->
+            <section id="core-features" class="resource resource--shaded resource--types dark:tw-bg-ds-medium">
+
+                <svg class="resource__shape resource__shape--top angular-1920-1" viewBox="0 0 1920 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="m0 20 420 40L800 0l750 60 370-45V0H0z" fill-rule="evenodd"/>
+                </svg>
+
+                <div class="resource__inner sp-wrap">
+                    <div class="resource__scene resource__scene--right resource__scene--white flex-center dark:tw-bg-ds-dark-2">
+                        <img width="300" height="140" src="16p-assets/images/teams/communication.svg" loading="lazy" alt="职业性格分析示意图">
+                    </div>
+                    <div class="resource__text">
+                        <p class="resource__tag text--green p-tn text-bold tw-uppercase">核心优势</p>
+                        <h2 class="section__title">为什么选择我们</h2>
+                        <p class="resource__subtitle p-md">基于荣格八维理论与 MBTI 单量表架构，60 道精心设计的强制选择题，精准定位你的职业性格类型。免费获取人格认证卡，深度报告涵盖 12 章节万字解读。</p>
+                        <div class="core-features__list">
+                            <div class="core-feature">
+                                <span class="core-feature__icon text--purple">●</span>
+                                <div>
+                                    <strong>96.5% 复测一致性</strong>
+                                    <p>6 点量表强制选择架构，消除中间选项模糊性</p>
+                                </div>
+                            </div>
+                            <div class="core-feature">
+                                <span class="core-feature__icon text--blue">●</span>
+                                <div>
+                                    <strong>万字级深度报告</strong>
+                                    <p>12 章节解读：人格特征、优势劣势、职业匹配等</p>
+                                </div>
+                            </div>
+                            <div class="core-feature">
+                                <span class="core-feature__icon text--green">●</span>
+                                <div>
+                                    <strong>荣格八维理论</strong>
+                                    <p>深度解析 Ni/Ne/Si/Se/Ti/Te/Fi/Fe 认知功能栈</p>
+                                </div>
+                            </div>
+                            <div class="core-feature">
+                                <span class="core-feature__icon text--yellow">●</span>
+                                <div>
+                                    <strong>免登录即用</strong>
+                                    <p>打开即测，免费获取 3D 黏土风格人格认证卡</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <svg class="resource__shape resource__shape--bottom angular-1920-4 dark:tw-bg-ds-dark-2" viewBox="0 0 1920 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="m0 30 290 50L803 0l937 50 180-50H0z" fill-rule="evenodd" class="dark:tw-fill-ds-medium"/>
+                </svg>
+            </section>
+
+            <!-- ============== 人格类型介绍 ============== -->
+            <section id="understand-others" class="resource">
+                <div class="resource__inner sp-wrap">
+                    <div class="resource__scene resource__scene--left flex-center dark:tw-bg-ds-medium">
+                        <img width="300" height="140"
+                             src="16p-assets/images/teams/type-interactions.svg"
+                             loading="lazy"
+                             alt="16种人格类型互动示意图">
+                    </div>
+                    <div class="resource__text">
+                        <p class="resource__tag text--blue p-tn text-bold tw-uppercase">人格类型</p>
+                        <h2 class="section__title">理解他人，理解自己</h2>
+                        <p class="resource__subtitle p-md">覆盖分析家、外交家、守护者、探险家四大组共 16 种人格类型。在免费类型描述中，你将了解不同人格类型的驱动力、灵感来源与担忧，帮助你建立更有意义的人际关系。</p>
+                        <div class="resource__actions">
+                            <a href="#go" class="sp-action sp-button button--blue button--md button--pill button--auto">
+                                <span class="button__text">查看人格类型</span>
+                            </a>
+                            <a href="#go" class="sp-action sp-link link--unstyled font-caps">探索理论</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== 用户评价轮播区 ============== -->
+            <section id="testimonials" class="resource resource--centered resource--shaded resource--testimonials flex-center dark:tw-bg-ds-medium">
+
+                <svg class="resource__shape upper angular-1920-2 dark:tw-bg-ds-dark-2" preserveAspectRatio="none" width="1920" height="110" viewBox="0 0 1920 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="m520 90 900-90 500 110V0H0z" fill="#FFF" fill-rule="evenodd" class="dark:tw-fill-ds-medium"/>
+                </svg>
+
+                <div class="testimonials__quote testimonials__quote--top flex-center">
+                    <svg viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg" title="Quote icon" aria-hidden="true">
+                        <path d="m17.04 19.52-6.46-4.22 1.16-11.04 5.54-2.78.86 5.1-4.4.58 2.005 3.376L20 13.38l-2.96 6.14zm-10.6 0L0 15.3 1.14 4.26 6.7 1.48l.86 5.1-4.4.58 2.305 3.883L9.42 13.38l-2.98 6.14z" fill="#FFF" fill-rule="nonzero"/>
+                    </svg>
+                </div>
+
+                <svg class="testimonials__star testimonials__star--1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true">
+                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/>
+                </svg>
+                <svg class="testimonials__star testimonials__star--2 testimonials__star--smaller" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true">
+                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/>
+                </svg>
+                <svg class="testimonials__star testimonials__star--3 testimonials__star--smaller" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true">
+                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/>
+                </svg>
+                <svg class="testimonials__star testimonials__star--4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true">
+                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/>
+                </svg>
+                <svg class="testimonials__star testimonials__star--5 testimonials__star--smaller" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true">
+                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/>
+                </svg>
+                <svg class="testimonials__star testimonials__star--6 testimonials__star--smaller" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" aria-hidden="true">
+                    <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/>
+                </svg>
+
+                <div class="resource__inner sp-wrap flex-center">
+                    <p class="resource__tag text--yellow p-tn text-bold tw-uppercase">用户评价</p>
+                    <h2 class="section__title text--bal">看看大家怎么说</h2>
+                    <p class="p-sm tw-text-gray-rgb-12 sp-wrap tw-mb-20 tw-text-center dark:tw-text-ds-text -tw-mt-30 medium:tw-mb-40">
+                        真实用户的测评反馈，分享他们发现自我的故事。
+                    </p>
+                </div>
+
+                <!-- 证言轮播 -->
+                <testimonial-carousel class="testimonials__carousel tw-w-full" aria-title="用户评价">
+                    <div class="testimonial sp-card card--purple card--md has--hover has--color">
+                        <div class="card__inner">
+                            <hr class="card__line" aria-hidden="true">
+                            <div class="card__body">
+                                <div class="card__text">
+                                    <div class="user">
+                                        <div class="user__photo">
+                                            <img src="16p-assets/images/testimonials/9a36c734fd5153a751507032b8c5e6ef.webp" width="60" height="60" loading="lazy" alt="林同学头像">
+                                            <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
+                                                <div class="testimonials__quote flex-center">
+                                                    <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="m17.04 19.52-6.46-4.22 1.16-11.04 5.54-2.78.86 5.1-4.4.58 2.005 3.376L20 13.38l-2.96 6.14zm-10.6 0L0 15.3 1.14 4.26 6.7 1.48l.86 5.1-4.4.58 2.305 3.883L9.42 13.38l-2.98 6.14z" fill="#FFF" fill-rule="nonzero"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="user__info">
+                                            <div class="user__name font-head h7">林同学</div>
+                                            <div class="user__personality">
+                                                <div class="user__personality--nice p-tn tw-uppercase tw-font-bold">建筑师</div>
+                                                <div class="user__personality--code p-tn">(INTJ-A)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment p-sm">测试结果精准得让人吃惊！深度报告里的职业匹配分析帮我坚定了转行的信心，现在在新领域工作半年，确实如报告所说如鱼得水。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial sp-card card--green card--md has--hover has--color">
+                        <div class="card__inner">
+                            <hr class="card__line" aria-hidden="true">
+                            <div class="card__body">
+                                <div class="card__text">
+                                    <div class="user">
+                                        <div class="user__photo">
+                                            <img src="16p-assets/images/testimonials/380acfc6f7efc4b7f32c520f33ad93d2.webp" width="60" height="60" loading="lazy" alt="王女士头像">
+                                            <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
+                                                <div class="testimonials__quote flex-center">
+                                                    <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="m17.04 19.52-6.46-4.22 1.16-11.04 5.54-2.78.86 5.1-4.4.58 2.005 3.376L20 13.38l-2.96 6.14zm-10.6 0L0 15.3 1.14 4.26 6.7 1.48l.86 5.1-4.4.58 2.305 3.883L9.42 13.38l-2.98 6.14z" fill="#FFF" fill-rule="nonzero"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="user__info">
+                                            <div class="user__name font-head h7">王女士</div>
+                                            <div class="user__personality">
+                                                <div class="user__personality--nice p-tn tw-uppercase tw-font-bold">竞选者</div>
+                                                <div class="user__personality--code p-tn">(ENFP-T)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment p-sm">荣格八维的解读非常深入，之前做过很多 MBTI 测试都觉得太笼统，这个报告真正解释了"为什么"，而不只是"是什么"。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial sp-card card--blue card--md has--hover has--color">
+                        <div class="card__inner">
+                            <hr class="card__line" aria-hidden="true">
+                            <div class="card__body">
+                                <div class="card__text">
+                                    <div class="user">
+                                        <div class="user__photo">
+                                            <img src="16p-assets/images/testimonials/c5afeb9270c5b0b88d3e5b1c9abbd9b2.webp" width="60" height="60" loading="lazy" alt="张同学头像">
+                                            <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
+                                                <div class="testimonials__quote flex-center">
+                                                    <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="m17.04 19.52-6.46-4.22 1.16-11.04 5.54-2.78.86 5.1-4.4.58 2.005 3.376L20 13.38l-2.96 6.14zm-10.6 0L0 15.3 1.14 4.26 6.7 1.48l.86 5.1-4.4.58 2.305 3.883L9.42 13.38l-2.98 6.14z" fill="#FFF" fill-rule="nonzero"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="user__info">
+                                            <div class="user__name font-head h7">张同学</div>
+                                            <div class="user__personality">
+                                                <div class="user__personality--nice p-tn tw-uppercase tw-font-bold">守卫者</div>
+                                                <div class="user__personality--code p-tn">(ISFJ-A)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment p-sm">免费的人格认证卡就很有价值了，吉祥物设计特别可爱！深度报告的恋爱专题也很实用，帮我看清了和伴侣的相处模式。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial sp-card card--yellow card--md has--hover has--color">
+                        <div class="card__inner">
+                            <hr class="card__line" aria-hidden="true">
+                            <div class="card__body">
+                                <div class="card__text">
+                                    <div class="user">
+                                        <div class="user__photo">
+                                            <img src="16p-assets/images/testimonials/95fe2ca2636012c4f7388027d248d4c0.webp" width="60" height="60" loading="lazy" alt="陈先生头像">
+                                            <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
+                                                <div class="testimonials__quote flex-center">
+                                                    <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="m17.04 19.52-6.46-4.22 1.16-11.04 5.54-2.78.86 5.1-4.4.58 2.005 3.376L20 13.38l-2.96 6.14zm-10.6 0L0 15.3 1.14 4.26 6.7 1.48l.86 5.1-4.4.58 2.305 3.883L9.42 13.38l-2.98 6.14z" fill="#FFF" fill-rule="nonzero"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="user__info">
+                                            <div class="user__name font-head h7">陈先生</div>
+                                            <div class="user__personality">
+                                                <div class="user__personality--nice p-tn tw-uppercase tw-font-bold">企业家</div>
+                                                <div class="user__personality--code p-tn">(ESTP-A)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment p-sm">60 道题做起来很流畅，6 点量表比传统的二选一更细腻。报告的职业推荐部分命中率很高，推荐的三个方向都是我一直感兴趣的。</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial sp-card card--purple card--md has--hover has--color">
+                        <div class="card__inner">
+                            <hr class="card__line" aria-hidden="true">
+                            <div class="card__body">
+                                <div class="card__text">
+                                    <div class="user">
+                                        <div class="user__photo">
+                                            <img src="16p-assets/images/testimonials/8d5c9fc43aa1ca84f7bba2d26e4c3f43.webp" width="60" height="60" loading="lazy" alt="赵女士头像">
+                                            <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
+                                                <div class="testimonials__quote flex-center">
+                                                    <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="m17.04 19.52-6.46-4.22 1.16-11.04 5.54-2.78.86 5.1-4.4.58 2.005 3.376L20 13.38l-2.96 6.14zm-10.6 0L0 15.3 1.14 4.26 6.7 1.48l.86 5.1-4.4.58 2.305 3.883L9.42 13.38l-2.98 6.14z" fill="#FFF" fill-rule="nonzero"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="user__info">
+                                            <div class="user__name font-head h7">赵女士</div>
+                                            <div class="user__personality">
+                                                <div class="user__personality--nice p-tn tw-uppercase tw-font-bold">逻辑学家</div>
+                                                <div class="user__personality--code p-tn">(INTP-T)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment p-sm">免登录直接测，这点太方便了！深度报告 2.99 元的价格很良心，内容质量完全不输几百元的付费测评，推荐给了身边好几个朋友。</div>
+                            </div>
+                        </div>
+                    </div>
+                </testimonial-carousel>
+            </section>
+
+            <!-- ============== 底部 CTA ============== -->
+            <section id="go" class="cta">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 88" preserveAspectRatio="none" class="cta__shape cta__shape--top dark:tw-bg-ds-medium" aria-hidden="true">
+                    <path d="M1440 88H0v-4.2l247-22.3 192.2-55L661.3 36 900.4 0l351.8 62.2L1440 72.4z" class="dark:tw-fill-ds-dark-2"/>
+                    <path d="M1440 88H0v-4.2L441 44l224.9 25.3 250.2-25.1L1440 72.4z" class="dark:tw-fill-ds-dark-2"/>
+                </svg>
+
+                <img width="355" height="190"
+                     loading="lazy" class="cta__scene"
+                     srcset="16p-assets/images/homepage/footer-mobile.svg 768w, 16p-assets/images/homepage/footer-desktop.svg 1600w"
+                     sizes="(max-width: 768px) 100vw, 100vw"
+                     src="16p-assets/images/homepage/footer-desktop.svg"
+                     alt="篝火营地场景装饰图">
+
+                <h2 class="section__title">准备好发现你的职业天赋了吗？</h2>
+                <p class="cta__subtitle p-md">60 道题 · 约 8 分钟 · 免登录 · 打开即用</p>
+
+                <a href="#be-understood" class="sp-action sp-button button--purple button--lg button--pill button--auto button--icon-rt">
+                    <span class="button__text">立即开始测评</span>
+                    <span class="sp-icon size--inherit color--inherit icon--rotatable icon--dir-rt icon--arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 48 48" style="display:block;">
+                            <path style="fill:white !important;" d="M23.296875,3.421875 L22.63125,4.0875 C22.190625,4.528125 22.190625,5.240625 22.63125,5.68125 L39.365625,22.40625 L4.125,22.40625 C3.50625,22.40625 3,22.9125 3,23.53125 L3,24.46875 C3,25.0875 3.50625,25.59375 4.125,25.59375 L39.365625,25.59375 L22.63125,42.328125 C22.190625,42.76875 22.190625,43.48125 22.63125,43.921875 L23.296875,44.5875 C23.7375,45.028125 24.45,45.028125 24.890625,44.5875 L44.68125,24.796875 C45.121875,24.35625 45.121875,23.64375 44.68125,23.203125 L24.890625,3.421875 C24.440625,2.98125 23.7375,2.98125 23.296875,3.421875 Z"></path>
+                        </svg>
+                    </span>
+                </a>
+
+                <svg class="cta__shape cta__shape--bottom" viewBox="0 0 1920 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="m0 30 290 50L803 0l937 50 180-50H0z" fill="#33A474" fill-rule="evenodd" class="dark:tw-fill-ds-dark-2"/>
+                </svg>
+            </section>
+
+        </main>
+
+        <!-- ============== 页脚 ============== -->
+        <footer id="footer" class="footer--vue tw-bg-white tw-py-20 medium:tw-py-40 huge:tw-pt-60 tw-border-t tw-border-gray-03 tw-m-auto tw-mb-0 print:tw-hidden">
+            <nav role="navigation" aria-label="Footer" class="sp-wrap footer__links p-sm tw-mb-20 tw-grid tw-grid-cols-2 tw-gap-20 tw-border-b tw-border-gray-03 tw-pb-20 dark:tw-border-ds-medium medium:tw-mb-40 medium:tw-grid-cols-4 medium:tw-pb-40">
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">产品</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="#be-understood">免费测评</a></li>
+                        <li class="tw-mt-10"><a href="#go">深度报告</a></li>
+                        <li class="tw-mt-10"><a href="#go">人格认证卡</a></li>
+                        <li class="tw-mt-10"><a href="#testimonials">用户评价</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">资源</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="#understand-others">人格测试</a></li>
+                        <li class="tw-mt-10"><a href="#understand-others">人格类型</a></li>
+                        <li class="tw-mt-10"><a href="#core-features">核心优势</a></li>
+                        <li class="tw-mt-10"><a href="#core-features">理论框架</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">帮助</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="#">联系我们</a></li>
+                        <li class="tw-mt-10"><a href="#">常见问题</a></li>
+                        <li class="tw-mt-10"><a href="#">反馈问题</a></li>
+                        <li class="tw-mt-10"><a href="#">订单查询</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">关注我们</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="#">微信公众号</a></li>
+                        <li class="tw-mt-10"><a href="#">微博</a></li>
+                        <li class="tw-mt-10"><a href="#">QQ 群</a></li>
+                        <li class="tw-mt-10"><a href="#">邮箱订阅</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div id="copyright" class="sp-wrap tw-text-center p-sm">
+                <ul class="tw-list-none tw-p-0 tw-m-0 tw-flex tw-justify-center tw-gap-20 tw-flex-wrap">
+                    <li>&copy; 2026 Career Test. 保留所有权利</li>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">用户协议</a></li>
+                    <li><a href="#">无障碍声明</a></li>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- 轮播脚本 -->
+    <script src="assets/js/testimonials.js"></script>
+</body>
+</html>

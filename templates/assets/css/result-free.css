@@ -1,0 +1,994 @@
+/* ==========================================================================
+   Career Test 免费结果页样式
+   移动端优先，基于 16personalities 设计语言
+   ========================================================================== */
+
+/* ==========================================================================
+   1. 页面主体
+   ========================================================================== */
+body {
+    font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: #2d2d3a;
+    background: #f9f9f9;
+}
+
+.result-main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 0 60px;
+}
+
+.result-section__title {
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #2d2d3a;
+    margin-bottom: 16px;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   2. 人格类型展示区
+   ========================================================================== */
+.result-hero {
+    position: relative;
+    padding: 60px 20px 40px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.result-hero__bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #5a96b1 0%, #87699a 50%, #9B7ED8 100%);
+    z-index: 0;
+}
+
+.result-hero__bg::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #f9f9f9;
+    clip-path: polygon(0 100%, 100% 100%, 100% 40%, 75% 80%, 50% 30%, 25% 80%, 0 40%);
+}
+
+.result-hero__content {
+    position: relative;
+    z-index: 1;
+}
+
+.result-hero__label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+}
+
+.result-hero__code {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+}
+
+.result-hero__title {
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.result-hero__subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 20px;
+}
+
+.result-hero__segments {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.segment {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+}
+
+.segment--base {
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+
+.segment--sub1 {
+    background: rgba(245, 213, 71, 0.3);
+    color: #F5D547;
+}
+
+.segment--sub2 {
+    background: rgba(125, 211, 192, 0.3);
+    color: #7DD3C0;
+}
+
+.segment-divider {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   3. 一句话总结区
+   ========================================================================== */
+.result-summary {
+    padding: 0 20px;
+    margin-bottom: 32px;
+}
+
+.result-summary__card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    border-left: 4px solid #9B7ED8;
+}
+
+.result-summary__text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #2d2d3a;
+    margin: 0;
+}
+
+/* ==========================================================================
+   4. 基础雷达图区
+   ========================================================================== */
+.result-radar {
+    padding: 0 20px;
+    margin-bottom: 32px;
+}
+
+.result-radar__container {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#radarCanvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.result-radar__legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 20px;
+    margin-top: 16px;
+    width: 100%;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.legend-label {
+    font-size: 13px;
+    color: #636e72;
+}
+
+.legend-label strong {
+    color: #2d2d3a;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* ==========================================================================
+   5. 核心特质标签区
+   ========================================================================== */
+.result-traits {
+    padding: 0 20px;
+    margin-bottom: 32px;
+}
+
+.result-traits__cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.trait-tag {
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    font-weight: 600;
+    border-radius: 24px;
+    padding: 8px 16px;
+    background: color-mix(in srgb, var(--tag-color, #9B7ED8) 12%, #fff);
+    color: var(--tag-color, #9B7ED8);
+    border: 1.5px solid color-mix(in srgb, var(--tag-color, #9B7ED8) 30%, transparent);
+    transition: all 0.2s ease;
+}
+
+.trait-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--tag-color, #9B7ED8) 20%, transparent);
+}
+
+.trait-tag--lg { font-size: 16px; padding: 10px 20px; }
+.trait-tag--md { font-size: 14px; padding: 8px 16px; }
+.trait-tag--sm { font-size: 13px; padding: 6px 14px; }
+
+/* ==========================================================================
+   6. 社交建议模板区
+   ========================================================================== */
+.result-social-tips {
+    padding: 0 20px;
+    margin-bottom: 32px;
+}
+
+.result-social-tips__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-tip {
+    display: flex;
+    gap: 14px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.social-tip__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.social-tip__content strong {
+    display: block;
+    font-size: 15px;
+    color: #2d2d3a;
+    margin-bottom: 4px;
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+}
+
+.social-tip__content p {
+    margin: 0;
+    font-size: 13px;
+    color: #636e72;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   7. 人格认证卡生成区
+   ========================================================================== */
+.result-card-gen {
+    padding: 0 20px;
+    margin-bottom: 32px;
+}
+
+.card-preview-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* ===== 认证卡片（对齐算法文档 1.7 节设计规范） ===== */
+.cert-card {
+    width: 300px;
+    background: linear-gradient(160deg, #E8E0F0 0%, #FAF8FC 50%, #F5F0FA 100%);
+    border-radius: 28px;
+    box-shadow: 0 8px 32px rgba(155, 126, 216, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 缎带挂带 */
+.cert-card__ribbon {
+    position: absolute;
+    top: 0;
+    width: 28px;
+    height: 40px;
+    z-index: 1;
+}
+
+.cert-card__ribbon--left {
+    left: 50%;
+    margin-left: -34px;
+    background: #9B7ED8;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+
+.cert-card__ribbon--right {
+    left: 50%;
+    margin-left: 6px;
+    background: #7DD3C0;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+
+.cert-card__hole {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 0 0 8px 8px;
+    z-index: 2;
+}
+
+.cert-card__body {
+    padding: 52px 24px 24px;
+}
+
+/* 顶部标题 */
+.cert-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cert-card__title {
+    font-family: 'Nunito', 'PingFang SC', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2D2D3A;
+}
+
+.cert-card__verified {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #F5D547;
+    background: rgba(245, 213, 71, 0.15);
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+
+/* 编码 + 口号 */
+.cert-card__code-area {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.cert-card__code {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #9B7ED8 0%, #B8A4E0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+}
+
+.cert-card__slogan {
+    font-family: 'Nunito', 'PingFang SC', sans-serif;
+    font-size: 14px;
+    color: #636e72;
+    margin-top: 6px;
+}
+
+/* 吉祥物 */
+.cert-card__mascot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.cert-card__mascot svg {
+    width: 100px;
+    height: 120px;
+}
+
+.cert-card__mascot-label {
+    font-size: 11px;
+    color: #9B9BAB;
+    margin-top: -8px;
+}
+
+/* 底部信息区 */
+.cert-card__info {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cert-card__info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cert-card__info-label {
+    font-size: 12px;
+    color: #9B9BAB;
+    flex-shrink: 0;
+    min-width: 72px;
+}
+
+.cert-card__info-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2D2D3A;
+}
+
+.cert-card__info-value--sm {
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.cert-card__info-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: #9B7ED8;
+    background: rgba(155, 126, 216, 0.12);
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.cert-card__partners {
+    display: flex;
+    gap: 6px;
+}
+
+.partner-pill {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    background: #9B7ED8;
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+
+/* 昵称 + 二维码 */
+.cert-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid rgba(155, 126, 216, 0.15);
+}
+
+.cert-card__nickname {
+    font-family: 'Nunito', 'PingFang SC', sans-serif;
+    font-size: 13px;
+    color: #636e72;
+}
+
+.cert-card__qr {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* ===== 卡片控制区 ===== */
+.card-controls {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.card-controls__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-controls__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d2d3a;
+}
+
+.card-controls__input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #e7eae8;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    color: #2d2d3a;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.card-controls__input:focus {
+    border-color: #9B7ED8;
+}
+
+.template-picker {
+    display: flex;
+    gap: 10px;
+}
+
+.template-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px;
+    border: 2px solid #e7eae8;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    color: #636e72;
+    transition: all 0.2s;
+}
+
+.template-btn--active {
+    border-color: #9B7ED8;
+    background: rgba(155, 126, 216, 0.05);
+    color: #9B7ED8;
+}
+
+.template-swatch {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+}
+
+.card-controls__save {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #9B7ED8 0%, #B8A4E0 100%);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.card-controls__save:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(155, 126, 216, 0.3);
+}
+
+.card-controls__save:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   8. 分享按钮组
+   ========================================================================== */
+.result-share {
+    padding: 0 20px;
+    margin-bottom: 32px;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.share-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 20px;
+    border: none;
+    background: #fff;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    min-width: 80px;
+}
+
+.share-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.share-btn span {
+    font-size: 12px;
+    color: #636e72;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+}
+
+.share-hint {
+    text-align: center;
+    font-size: 12px;
+    color: #9B9BAB;
+    margin-top: 8px;
+}
+
+/* ==========================================================================
+   9. 免责声明
+   ========================================================================== */
+.result-disclaimer {
+    padding: 0 20px;
+    margin-bottom: 32px;
+}
+
+.disclaimer-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 12px;
+}
+
+.disclaimer-box svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.disclaimer-box p {
+    margin: 0;
+    font-size: 12px;
+    color: #9B9BAB;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   10. 深度报告预览引导区
+   ========================================================================== */
+.result-deep-cta {
+    padding: 0 20px;
+    margin-bottom: 32px;
+}
+
+.deep-cta__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.deep-cta__header .result-section__title {
+    padding: 0;
+    margin: 0;
+}
+
+.deep-cta__price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #9B7ED8;
+}
+
+.deep-cta__price::before {
+    content: '仅 ';
+    font-size: 14px;
+    font-weight: 400;
+    color: #9B9BAB;
+}
+
+/* 遮罩预览 */
+.deep-preview {
+    position: relative;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    margin-bottom: 16px;
+    max-height: 360px;
+}
+
+.deep-preview__content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.deep-preview__chapter {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.deep-preview__num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #9B7ED8;
+    flex-shrink: 0;
+    min-width: 28px;
+}
+
+.deep-preview__chapter h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2d2d3a;
+    margin: 0 0 4px;
+}
+
+.deep-preview__chapter p {
+    font-size: 13px;
+    color: #636e72;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.deep-preview__chapter--locked h3,
+.deep-preview__chapter--locked .deep-preview__num {
+    color: #b2bec3;
+}
+
+.deep-preview__locked-text {
+    color: #b2bec3 !important;
+    font-style: italic;
+}
+
+.deep-preview__mask {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.95) 40%, #fff 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 24px;
+}
+
+.deep-preview__mask-content {
+    text-align: center;
+}
+
+.deep-preview__mask-content svg {
+    margin-bottom: 8px;
+}
+
+.deep-preview__mask-content p {
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: #9B7ED8;
+    margin: 0;
+}
+
+.deep-preview__mask-sub {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    color: #9B9BAB !important;
+    margin-top: 4px !important;
+}
+
+/* CTA 按钮区 */
+.deep-cta__action {
+    text-align: center;
+}
+
+.deep-cta__features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.feature-pill {
+    font-size: 12px;
+    font-weight: 600;
+    color: #9B7ED8;
+    background: rgba(155, 126, 216, 0.08);
+    padding: 5px 12px;
+    border-radius: 16px;
+}
+
+.deep-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #9B7ED8 0%, #B8A4E0 100%);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.deep-cta__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(155, 126, 216, 0.3);
+}
+
+.deep-cta__note {
+    font-size: 12px;
+    color: #9B9BAB;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   11. 底部导航
+   ========================================================================== */
+.result-footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding: 20px;
+}
+
+.footer-nav__link {
+    font-size: 14px;
+    color: #636e72;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: #fff;
+    transition: all 0.2s;
+}
+
+.footer-nav__link:hover {
+    color: #9B7ED8;
+    background: rgba(155, 126, 216, 0.05);
+}
+
+/* ==========================================================================
+   12. 卡片模板变体
+   ========================================================================== */
+.cert-card[data-template="ocean"] {
+    background: linear-gradient(160deg, #D0E8F0 0%, #F0F8FA 50%, #E8F4F8 100%);
+}
+
+.cert-card[data-template="ocean"] .cert-card__code {
+    background: linear-gradient(135deg, #4A6FA5 0%, #6BA3C9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cert-card[data-template="ocean"] .cert-card__ribbon--left {
+    background: #4A6FA5;
+}
+
+.cert-card[data-template="ocean"] .partner-pill {
+    background: #4A6FA5;
+}
+
+.cert-card[data-template="sunset"] {
+    background: linear-gradient(160deg, #FDE8D0 0%, #FFF8F0 50%, #FFF4E8 100%);
+}
+
+.cert-card[data-template="sunset"] .cert-card__code {
+    background: linear-gradient(135deg, #E0A93A 0%, #F0C060 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cert-card[data-template="sunset"] .cert-card__ribbon--left {
+    background: #E0A93A;
+}
+
+.cert-card[data-template="sunset"] .partner-pill {
+    background: #E0A93A;
+}
+
+/* ==========================================================================
+   13. 响应式 — 桌面端
+   ========================================================================== */
+@media (min-width: 768px) {
+    .result-hero {
+        padding: 80px 20px 60px;
+    }
+
+    .result-hero__code {
+        font-size: 64px;
+    }
+
+    .result-hero__title {
+        font-size: 36px;
+    }
+
+    .result-main {
+        max-width: 600px;
+    }
+
+    .cert-card {
+        width: 340px;
+    }
+
+    .cert-card__code {
+        font-size: 48px;
+    }
+
+    .deep-preview {
+        max-height: 400px;
+    }
+}
+
+/* ==========================================================================
+   14. 动画
+   ========================================================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-hero__content,
+.result-summary,
+.result-radar,
+.result-traits,
+.result-social-tips,
+.result-card-gen,
+.result-share,
+.result-disclaimer,
+.result-deep-cta {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}

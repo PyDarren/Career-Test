@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="INTJ-A-C 战略师深度职业报告 — 12 章万字级分析，涵盖职业路径、协作指南、压力预警与成长计划。">
+    <title>深度报告 · INTJ-A-C 战略师 | Career Test</title>
+
+    <!-- 复用 16personalities 本地资源 -->
+    <link rel="stylesheet" href="16p-assets/css/styles-core.css" />
+    <link rel="stylesheet" href="16p-assets/css/styles-fonts.css" />
+    <link rel="stylesheet" href="16p-assets/css/homepage.css" />
+    <link rel="stylesheet" href="assets/css/deep-report.css" />
+    <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,440..770;1,440..770&display=swap">
+    <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,700..800;1,700..800&display=swap">
+    <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <link rel="icon" type="image/svg+xml" href="16p-assets/images/system/logo.svg">
+
+    <style>[v-cloak] {display: none !important;}</style>
+</head>
+<body class="page--report">
+    <div class="g-wrp" id="main-app">
+
+        <!-- ============== 顶部导航栏 ============== -->
+        <div class="navbar navbar--sticky" id="js-navbar" data-testid="top-nav">
+            <app-logo class="logo">
+                <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+                    <img src="16p-assets/images/system/logo.svg" width="32" height="32" alt="Career Test Logo">
+                    <span style="font-family:'Red Hat Display',sans-serif;font-weight:800;font-size:18px;color:#33A474;">Career Test</span>
+                </a>
+            </app-logo>
+            <nav class="sp-nav__topmiddle middle-section items--4 anonymous">
+                <ul>
+                    <li class=""><a href="index.html#be-understood" class="link--quiz">开始测评</a></li>
+                    <li class=""><a href="index.html#understand-others" class="">人格类型</a></li>
+                    <li class=""><a href="index.html#core-features" class="">核心优势</a></li>
+                    <li class=""><a href="index.html#testimonials" class="">用户评价</a></li>
+                </ul>
+            </nav>
+            <div class="right-section">
+                <a href="guide.html" class="sp-action sp-button button--purple button--md button--pill button--auto test-button tw-hidden medium:tw-flex">
+                    <span class="button__text">开始测试</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ============== 顶部导航栏（返回 + 目录 + 阅读进度条） ============== -->
+        <div class="report-navbar" id="reportNavbar">
+            <div class="report-navbar__inner">
+                <button class="report-navbar__btn" id="backBtn" aria-label="返回">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <span class="report-navbar__title">深度报告</span>
+                <button class="report-navbar__btn" id="tocToggle" aria-label="目录">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="report-navbar__progress">
+                <div class="report-navbar__progress-fill" id="readingProgress"></div>
+            </div>
+        </div>
+
+        <!-- ============== 浮动目录导航（抽屉式） ============== -->
+        <aside class="report-toc-drawer" id="tocDrawer">
+            <div class="report-toc-drawer__overlay" id="tocOverlay"></div>
+            <div class="report-toc-drawer__panel">
+                <div class="report-toc-drawer__header">
+                    <h3>报告目录</h3>
+                    <button class="report-toc-drawer__close" id="tocClose" aria-label="关闭">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <nav class="report-toc-drawer__nav">
+                    <a href="#chapter-1" class="toc-link" data-chapter="1">
+                        <span class="toc-link__num">01</span>
+                        <span class="toc-link__text">你的人格类型</span>
+                    </a>
+                    <a href="#chapter-2" class="toc-link" data-chapter="2">
+                        <span class="toc-link__num">02</span>
+                        <span class="toc-link__text">人格特征分析</span>
+                    </a>
+                    <a href="#chapter-3" class="toc-link" data-chapter="3">
+                        <span class="toc-link__num">03</span>
+                        <span class="toc-link__text">人口比例</span>
+                    </a>
+                    <a href="#chapter-4" class="toc-link" data-chapter="4">
+                        <span class="toc-link__num">04</span>
+                        <span class="toc-link__text">相同人格名人</span>
+                    </a>
+                    <a href="#chapter-5" class="toc-link" data-chapter="5">
+                        <span class="toc-link__num">05</span>
+                        <span class="toc-link__text">人格优势</span>
+                    </a>
+                    <a href="#chapter-6" class="toc-link" data-chapter="6">
+                        <span class="toc-link__num">06</span>
+                        <span class="toc-link__text">人格劣势</span>
+                    </a>
+                    <a href="#chapter-7" class="toc-link" data-chapter="7">
+                        <span class="toc-link__num">07</span>
+                        <span class="toc-link__text">成长建议</span>
+                    </a>
+                    <a href="#chapter-8" class="toc-link" data-chapter="8">
+                        <span class="toc-link__num">08</span>
+                        <span class="toc-link__text">荣格八维专项解读</span>
+                    </a>
+                    <a href="#chapter-9" class="toc-link" data-chapter="9">
+                        <span class="toc-link__num">09</span>
+                        <span class="toc-link__text">人格恋爱专题</span>
+                    </a>
+                    <a href="#chapter-10" class="toc-link" data-chapter="10">
+                        <span class="toc-link__num">10</span>
+                        <span class="toc-link__text">最佳恋爱对象</span>
+                    </a>
+                    <a href="#chapter-11" class="toc-link toc-link--highlight" data-chapter="11">
+                        <span class="toc-link__num">11</span>
+                        <span class="toc-link__text">深度职业专题</span>
+                    </a>
+                    <a href="#chapter-12" class="toc-link" data-chapter="12">
+                        <span class="toc-link__num">12</span>
+                        <span class="toc-link__text">合适的职业</span>
+                    </a>
+                </nav>
+                <div class="report-toc-drawer__modules">
+                    <p class="report-toc-drawer__modules-title">四大核心模块</p>
+                    <a href="#module-1" class="toc-module-link">
+                        <span class="toc-module-dot" style="background:#5a96b1"></span>
+                        职业发展路径
+                    </a>
+                    <a href="#module-2" class="toc-module-link">
+                        <span class="toc-module-dot" style="background:#87699a"></span>
+                        跨人格协作指南
+                    </a>
+                    <a href="#module-3" class="toc-module-link">
+                        <span class="toc-module-dot" style="background:#deb45c"></span>
+                        压力预警机制
+                    </a>
+                    <a href="#module-4" class="toc-module-link">
+                        <span class="toc-module-dot" style="background:#5ea67e"></span>
+                        个人成长行动计划
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="report-main">
+
+            <!-- ============== 报告标题区 ============== -->
+            <section class="report-header">
+                <div class="report-header__bg"></div>
+                <div class="report-header__content">
+                    <span class="report-header__badge">深度职业报告</span>
+                    <h1 class="report-header__code">INTJ-A-C</h1>
+                    <h2 class="report-header__title">战略师</h2>
+                    <p class="report-header__slogan">智慧的先锋 · 未来的建筑师</p>
+                    <div class="report-header__meta">
+                        <span>12 章</span>
+                        <span class="meta-divider">·</span>
+                        <span>约 15,000 字</span>
+                        <span class="meta-divider">·</span>
+                        <span>阅读约 30 分钟</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== 第 1 章：你的人格类型 ============== -->
+            <section class="report-chapter" id="chapter-1">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">01</span>
+                    <h2 class="chapter-marker__title">你的人格类型</h2>
+                </div>
+                <div class="chapter-body">
+                    <p class="chapter-lead">
+                        你的完整人格编码为 <strong>INTJ-A-C</strong>，这意味着你属于 MBTI 十六型人格中最稀有的
+                        <strong>"战略家"型</strong>。INTJ 仅占全球人口的约 2%，而你的 Sub1 维度（A，坚定型）
+                        和 Sub2 维度（C，职业导向型）进一步刻画了你在自信度与生活重心上的独特倾向。
+                    </p>
+                    <h3 class="sub-heading">编码三段解析</h3>
+                    <div class="code-breakdown">
+                        <div class="code-segment">
+                            <span class="code-segment__label">Base4</span>
+                            <span class="code-segment__value">INTJ</span>
+                            <span class="code-segment__desc">内向直觉 + 外向思考 + 内向情感 + 外向感觉</span>
+                        </div>
+                        <div class="code-segment">
+                            <span class="code-segment__label">Sub1</span>
+                            <span class="code-segment__value">A</span>
+                            <span class="code-segment__desc">Assured — 对自身判断高度自信，不易受外界动摇</span>
+                        </div>
+                        <div class="code-segment">
+                            <span class="code-segment__label">Sub2</span>
+                            <span class="code-segment__value">C</span>
+                            <span class="code-segment__desc">Career-driven — 职业成就感是核心驱动力</span>
+                        </div>
+                    </div>
+
+                    <!-- 插图 -->
+                    <figure class="chapter-figure">
+                        <div class="chapter-figure__placeholder" style="background:linear-gradient(135deg,#5a96b1,#87699a);">
+                            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="60" r="40" fill="rgba(255,255,255,0.15)"/><path d="M80 50 L80 80 M120 40 L120 80 M80 65 L120 65" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity="0.6"/><text x="100" y="105" text-anchor="middle" fill="#fff" font-size="10" font-family="Montserrat" opacity="0.6">INTJ 认知功能栈</text></svg>
+                        </div>
+                        <figcaption>图 1：INTJ-A-C 的认知功能栈结构 — Ni 为主导功能，Te 为辅助功能</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <!-- ============== 第 2 章：人格特征分析 ============== -->
+            <section class="report-chapter" id="chapter-2">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">02</span>
+                    <h2 class="chapter-marker__title">人格特征分析</h2>
+                </div>
+                <div class="chapter-body">
+                    <p>
+                        作为 INTJ-A-C 型人格，你的思维方式呈现出鲜明的<strong>系统性与前瞻性</strong>特征。
+                        你的主导功能 Ni（内向直觉）赋予你一种近乎"预知"的洞察力 — 你能够在纷繁复杂的信息中
+                        自动提炼出底层规律，预判事物的发展走向。这种能力使你在战略规划、趋势分析等领域
+                        具有天然优势。
+                    </p>
+                    <p>
+                        你的辅助功能 Te（外向思考）则驱动你将这些洞察<strong>转化为可执行的行动方案</strong>。
+                        与纯粹的理论家不同，你不满足于"理解世界"，更渴望"改造世界"。你天然倾向于
+                        建立高效的系统、优化流程、设定清晰的目标，并持续推进直至完成。
+                    </p>
+                    <h3 class="sub-heading">认知功能栈详解</h3>
+                    <div class="function-stack">
+                        <div class="function-item function-item--dominant">
+                            <span class="function-item__tag">主导</span>
+                            <span class="function-item__code">Ni</span>
+                            <span class="function-item__name">内向直觉</span>
+                            <p>你的核心武器。自动整合信息、预判未来、把握本质。你的"第六感"并非神秘主义，而是潜意识高速处理的结果。</p>
+                        </div>
+                        <div class="function-item function-item--auxiliary">
+                            <span class="function-item__tag">辅助</span>
+                            <span class="function-item__code">Te</span>
+                            <span class="function-item__name">外向思考</span>
+                            <p>你的执行引擎。将 Ni 的洞察转化为系统化方案，追求效率与秩序，善于组织资源达成目标。</p>
+                        </div>
+                        <div class="function-item function-item--tertiary">
+                            <span class="function-item__tag">第三</span>
+                            <span class="function-item__code">Fi</span>
+                            <span class="function-item__name">内向情感</span>
+                            <p>你的内在指南针。拥有深层的价值观体系，虽不外显但极为坚定。这是你"不可妥协"的底线。</p>
+                        </div>
+                        <div class="function-item function-item--inferior">
+                            <span class="function-item__tag">劣势</span>
+                            <span class="function-item__code">Se</span>
+                            <span class="function-item__name">外向感觉</span>
+                            <p>你的阿喀琉斯之踵。对当下感官体验的敏感度较低，在压力下可能出现过度放纵或脱离现实的情况。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== 第 3 章：人口比例 ============== -->
+            <section class="report-chapter" id="chapter-3">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">03</span>
+                    <h2 class="chapter-marker__title">人口比例</h2>
+                </div>
+                <div class="chapter-body">
+                    <p>
+                        INTJ 是十六型人格中<strong>最稀有的类型之一</strong>。根据大规模统计数据，INTJ 仅占
+                        全球人口的约 <strong>2%</strong>。加上 Sub1（A）和 Sub2（C）的细分后，
+                        INTJ-A-C 的预估比例仅为 <strong>0.54%</strong>，属于<strong>超稀有人格</strong>。
+                    </p>
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-card__value">2%</div>
+                            <div class="stat-card__label">INTJ 占全球人口</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__value">0.54%</div>
+                            <div class="stat-card__label">INTJ-A-C 细分占比</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__value">3:1</div>
+                            <div class="stat-card__label">男女比例</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__value">TOP 3</div>
+                            <div class="stat-card__label">稀有度排名</div>
+                        </div>
+                    </div>
+                    <figure class="chapter-figure">
+                        <div class="chapter-figure__placeholder" style="background:linear-gradient(135deg,#deb45c,#e17055);">
+                            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="80" width="20" height="30" fill="rgba(255,255,255,0.3)"/><rect x="50" y="60" width="20" height="50" fill="rgba(255,255,255,0.4)"/><rect x="80" y="40" width="20" height="70" fill="rgba(255,255,255,0.5)"/><rect x="110" y="20" width="20" height="90" fill="rgba(255,255,255,0.7)"/><rect x="140" y="70" width="20" height="40" fill="rgba(255,255,255,0.3)"/><rect x="170" y="85" width="20" height="25" fill="rgba(255,255,255,0.2)"/><text x="100" y="110" text-anchor="middle" fill="#fff" font-size="9" opacity="0.6">16型人格人口分布</text></svg>
+                        </div>
+                        <figcaption>图 2：十六型人格在全球人口中的占比分布，INTJ 位于最稀有梯队</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <!-- ============== 第 4 章：相同人格名人 ============== -->
+            <section class="report-chapter" id="chapter-4">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">04</span>
+                    <h2 class="chapter-marker__title">相同人格名人</h2>
+                </div>
+                <div class="chapter-body">
+                    <p>与你有相同人格编码的历史人物和当代名人包括：</p>
+                    <div class="famous-grid">
+                        <div class="famous-card">
+                            <div class="famous-card__avatar" style="background:#5a96b1">M</div>
+                            <strong>埃隆·马斯克</strong>
+                            <span>企业家 · SpaceX / Tesla 创始人</span>
+                        </div>
+                        <div class="famous-card">
+                            <div class="famous-card__avatar" style="background:#87699a">N</div>
+                            <strong>弗里德里希·尼采</strong>
+                            <span>哲学家 · 超人哲学创始人</span>
+                        </div>
+                        <div class="famous-card">
+                            <div class="famous-card__avatar" style="background:#deb45c">K</div>
+                            <strong>尼古拉·特斯拉</strong>
+                            <span>发明家 · 交流电系统先驱</span>
+                        </div>
+                        <div class="famous-card">
+                            <div class="famous-card__avatar" style="background:#5ea67e">F</div>
+                            <strong>弗里达·卡罗</strong>
+                            <span>艺术家 · 超现实主义画家</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== 第 5 章：人格优势 ============== -->
+            <section class="report-chapter" id="chapter-5">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">05</span>
+                    <h2 class="chapter-marker__title">人格优势</h2>
+                </div>
+                <div class="chapter-body">
+                    <div class="strength-list">
+                        <div class="strength-item">
+                            <div class="strength-item__icon" style="background:#5a96b1">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+                            </div>
+                            <div>
+                                <strong>战略思维</strong>
+                                <p>能在复杂局面中快速洞察本质，制定长远规划。天然具备"下棋者"视角。</p>
+                            </div>
+                        </div>
+                        <div class="strength-item">
+                            <div class="strength-item__icon" style="background:#87699a">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                            </div>
+                            <div>
+                                <strong>独立自主</strong>
+                                <p>不依赖外部认可，拥有内在驱动力。能在缺乏指导的情况下自主推进复杂项目。</p>
+                            </div>
+                        </div>
+                        <div class="strength-item">
+                            <div class="strength-item__icon" style="background:#deb45c">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            </div>
+                            <div>
+                                <strong>理性决策</strong>
+                                <p>在高压环境下保持冷静，基于数据和逻辑而非情绪做出判断。</p>
+                            </div>
+                        </div>
+                        <div class="strength-item">
+                            <div class="strength-item__icon" style="background:#5ea67e">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            </div>
+                            <div>
+                                <strong>高标准执行</strong>
+                                <p>对自己和他人有极高的质量要求，追求"做到最好"而非"做到就行"。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== 第 6 章：人格劣势 ============== -->
+            <section class="report-chapter" id="chapter-6">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">06</span>
+                    <h2 class="chapter-marker__title">人格劣势</h2>
+                </div>
+                <div class="chapter-body">
+                    <div class="weakness-list">
+                        <div class="weakness-item">
+                            <strong>情感表达不足</strong>
+                            <p>Fi 作为第三功能，使你的情感世界丰富但高度内化。他人可能认为你冷漠或不近人情，实际上你只是不善于表达。</p>
+                        </div>
+                        <div class="weakness-item">
+                            <strong>过度完美主义</strong>
+                            <p>Ni+Te 的组合可能让你陷入"分析瘫痪" — 在方案不够完美时迟迟不愿行动，错过最佳时机。</p>
+                        </div>
+                        <div class="weakness-item">
+                            <strong>忽视当下体验</strong>
+                            <p>Se 劣势功能使你容易忽略身体信号和感官享受，长期处于"脑力运转"模式可能导致倦怠。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== 第 7 章：成长建议 ============== -->
+            <section class="report-chapter" id="chapter-7">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">07</span>
+                    <h2 class="chapter-marker__title">成长建议</h2>
+                </div>
+                <div class="chapter-body">
+                    <p>基于你的认知功能栈，以下建议能帮助你实现更均衡的发展：</p>
+                    <div class="growth-plan">
+                        <div class="growth-phase">
+                            <div class="growth-phase__header">
+                                <span class="growth-phase__num">阶段一</span>
+                                <h4>觉察与接纳（1-4 周）</h4>
+                            </div>
+                            <ul>
+                                <li>每日记录 3 个"当下感官体验"，训练 Se 功能</li>
+                                <li>在对话中刻意增加情感表达，尝试说出"我感觉…"</li>
+                                <li>接受"不完美但完成"的方案，设定 80% 标准线</li>
+                            </ul>
+                        </div>
+                        <div class="growth-phase">
+                            <div class="growth-phase__header">
+                                <span class="growth-phase__num">阶段二</span>
+                                <h4>技能建设（5-8 周）</h4>
+                            </div>
+                            <ul>
+                                <li>学习非暴力沟通（NVC）四步法，提升关系质量</li>
+                                <li>每周进行 1 次有氧运动，强化身心连接</li>
+                                <li>在团队中主动承担"翻译者"角色，将你的战略视角转化为他人可理解的语言</li>
+                            </ul>
+                        </div>
+                        <div class="growth-phase">
+                            <div class="growth-phase__header">
+                                <span class="growth-phase__num">阶段三</span>
+                                <h4>整合与突破（9-12 周）</h4>
+                            </div>
+                            <ul>
+                                <li>尝试在非优势领域（艺术、社交）中投入时间，体验"不擅长但享受"</li>
+                                <li>建立"反向导师"关系，向情感型人格学习共情与柔韧</li>
+                                <li>复盘前 8 周进展，调整个人发展计划</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== 第 8 章：荣格八维专项解读 ============== -->
+            <section class="report-chapter" id="chapter-8">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">08</span>
+                    <h2 class="chapter-marker__title">荣格八维专项解读</h2>
+                </div>
+                <div class="chapter-body">
+                    <p>
+                        荣格认知功能理论是 MBTI 的理论基础。每个人都有八种认知功能，但使用频率和熟练度不同。
+                        你的功能栈排序为 <strong>Ni &gt; Te &gt; Fi &gt; Se</strong>，同时阴影功能
+                        <strong>Ne、Ti、Fe、Si</strong> 在特定情境下也会被激活。
+                    </p>
+                    <figure class="chapter-figure">
+                        <div class="chapter-figure__placeholder" style="background:linear-gradient(135deg,#87699a,#9B7ED8);">
+                            <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/><circle cx="100" cy="60" r="35" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"/><circle cx="100" cy="60" r="20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/><text x="100" y="20" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Ni</text><text x="155" y="65" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Te</text><text x="100" y="110" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Fi</text><text x="45" y="65" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">Se</text></svg>
+                        </div>
+                        <figcaption>图 3：INTJ 认知功能栈同心圆 — 从内到外为主导到劣势</figcaption>
+                    </figure>
+                    <h3 class="sub-heading">主导功能 Ni 深度解析</h3>
+                    <p>
+                        Ni（内向直觉）是你的核心认知工具。与 Ne（外向直觉）的发散式联想不同，
+                        Ni 是一种<strong>收敛式洞察</strong> — 它从大量 seemingly 无关的信息中提炼出
+                        统一的底层模式，形成"顿悟"式的理解。这就是为什么你经常能"看到"别人看不到的未来走向。
+                    </p>
+                    <p>
+                        然而，Ni 的强大也带来了代价：你可能过度依赖内在洞察而忽视外部数据验证，
+                        在信息不充分时过早形成结论。成长的方向不是削弱 Ni，而是<strong>用 Te 的事实检验
+                        来锚定 Ni 的直觉跳跃</strong>。
+                    </p>
+                </div>
+            </section>
+
+            <!-- ============== 第 9 章：人格恋爱专题 ============== -->
+            <section class="report-chapter" id="chapter-9">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">09</span>
+                    <h2 class="chapter-marker__title">人格恋爱专题</h2>
+                </div>
+                <div class="chapter-body">
+                    <p>
+                        在亲密关系中，INTJ-A-C 型展现出<strong>"理性深情"</strong>的独特模式。
+                        你不会轻易坠入爱河，但一旦认定一个人，你的忠诚度和投入度极高。
+                        你表达爱的方式不是甜言蜜语，而是<strong>为伴侣规划更好的未来、解决实际问题</strong>。
+                    </p>
+                    <h3 class="sub-heading">恋爱中的优势</h3>
+                    <ul class="chapter-list">
+                        <li>极度忠诚，一旦承诺便全力以赴</li>
+                        <li>善于为关系制定长远规划，提供安全感</li>
+                        <li>在伴侣遇到困难时提供理性且有效的解决方案</li>
+                        <li>尊重伴侣的独立性，不黏人、不控制</li>
+                    </ul>
+                    <h3 class="sub-heading">恋爱中的挑战</h3>
+                    <ul class="chapter-list">
+                        <li>可能让伴侣觉得"被分析"而非"被感受"</li>
+                        <li>对情感表达不够主动，容易让对方感到被冷落</li>
+                        <li>高标准可能延伸到择偶上，导致"宁缺毋滥"的长期单身</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ============== 第 10 章：最佳恋爱对象 ============== -->
+            <section class="report-chapter" id="chapter-10">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">10</span>
+                    <h2 class="chapter-marker__title">最佳恋爱对象</h2>
+                </div>
+                <div class="chapter-body">
+                    <p>基于认知功能互补原则，以下人格类型与你的匹配度最高：</p>
+                    <div class="match-grid">
+                        <div class="match-card match-card--best">
+                            <span class="match-card__rank">匹配度 95%</span>
+                            <div class="match-card__code">ENFP</div>
+                            <div class="match-card__name">竞选者</div>
+                            <p>Ne-Te 的互补让你在对方的创意火花中找到灵感，同时你的 Ni 能帮对方聚焦落地。</p>
+                        </div>
+                        <div class="match-card match-card--good">
+                            <span class="match-card__rank">匹配度 88%</span>
+                            <div class="match-card__code">ENTP</div>
+                            <div class="match-card__name">辩论家</div>
+                            <p>智力上的势均力敌，你们的对话永远充满火花和深度。</p>
+                        </div>
+                        <div class="match-card">
+                            <span class="match-card__rank">匹配度 75%</span>
+                            <div class="match-card__code">INFJ</div>
+                            <div class="match-card__name">提倡者</div>
+                            <p>Ni 共享带来深层理解，但需注意双方都不擅长发起行动。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== 第 11 章：深度职业专题（模块 1 + 模块 2） ============== -->
+            <section class="report-chapter" id="chapter-11">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">11</span>
+                    <h2 class="chapter-marker__title">深度职业专题</h2>
+                </div>
+                <div class="chapter-body">
+
+                    <!-- ===== 模块 1：职业发展路径 ===== -->
+                    <div class="module-block" id="module-1">
+                        <div class="module-block__header" style="--module-color:#5a96b1">
+                            <span class="module-block__icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                            </span>
+                            <h3>模块 1 · 职业发展路径</h3>
+                        </div>
+
+                        <p>
+                            作为 INTJ-A-C，你的职业核心驱动力源于对<strong>系统性问题解决</strong>的渴望。
+                            你不适合重复性强、缺乏成长空间的工作，而需要能够持续挑战你认知边界的领域。
+                        </p>
+
+                        <h4 class="sub-heading-mini">TOP 5 职业匹配排名</h4>
+                        <div class="career-ranking">
+                            <div class="career-row">
+                                <span class="career-row__rank">1</span>
+                                <div class="career-row__info">
+                                    <strong>数据科学家</strong>
+                                    <span>匹配度 96%</span>
+                                </div>
+                                <div class="career-row__salary">¥25-60K/月</div>
+                            </div>
+                            <div class="career-row">
+                                <span class="career-row__rank">2</span>
+                                <div class="career-row__info">
+                                    <strong>产品总监</strong>
+                                    <span>匹配度 93%</span>
+                                </div>
+                                <div class="career-row__salary">¥30-80K/月</div>
+                            </div>
+                            <div class="career-row">
+                                <span class="career-row__rank">3</span>
+                                <div class="career-row__info">
+                                    <strong>战略咨询师</strong>
+                                    <span>匹配度 91%</span>
+                                </div>
+                                <div class="career-row__salary">¥35-100K/月</div>
+                            </div>
+                            <div class="career-row">
+                                <span class="career-row__rank">4</span>
+                                <div class="career-row__info">
+                                    <strong>系统架构师</strong>
+                                    <span>匹配度 89%</span>
+                                </div>
+                                <div class="career-row__salary">¥28-70K/月</div>
+                            </div>
+                            <div class="career-row">
+                                <span class="career-row__rank">5</span>
+                                <div class="career-row__info">
+                                    <strong>量化研究员</strong>
+                                    <span>匹配度 87%</span>
+                                </div>
+                                <div class="career-row__salary">¥30-90K/月</div>
+                            </div>
+                        </div>
+
+                        <figure class="chapter-figure">
+                            <div class="chapter-figure__placeholder" style="background:linear-gradient(135deg,#5a96b1,#5ea67e);">
+                                <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><polyline points="20,90 50,75 80,60 110,45 140,30 170,20" fill="none" stroke="#fff" stroke-width="2"/><circle cx="20" cy="90" r="4" fill="#fff"/><circle cx="50" cy="75" r="4" fill="#fff"/><circle cx="80" cy="60" r="4" fill="#fff"/><circle cx="110" cy="45" r="4" fill="#fff"/><circle cx="140" cy="30" r="4" fill="#fff"/><circle cx="170" cy="20" r="4" fill="#fff"/><text x="100" y="110" text-anchor="middle" fill="#fff" font-size="9" opacity="0.6">职业发展曲线</text></svg>
+                            </div>
+                            <figcaption>图 4：INTJ-A-C 型职业发展曲线 — 初期平缓，中期加速，后期指数增长</figcaption>
+                        </figure>
+
+                        <h4 class="sub-heading-mini">发展路径规划</h4>
+                        <p>
+                            <strong>0-3 年（探索期）</strong>：广泛接触不同领域，积累跨学科知识。
+                            你的优势在于快速学习，不要过早锁定方向。建议在技术、商业、设计三个维度各投入 30% 精力。
+                        </p>
+                        <p>
+                            <strong>3-7 年（聚焦期）</strong>：选定 1-2 个核心赛道深耕，建立专业壁垒。
+                            利用 Ni 的洞察力找到行业痛点，用 Te 构建解决方案。这个阶段的关键是从"执行者"转型为"设计者"。
+                        </p>
+                        <p>
+                            <strong>7-15 年（影响力期）</strong>：从个人贡献者转向系统建设者。
+                            你的目标不是做得更多，而是<strong>设计能运转的系统</strong>，让系统替你产出价值。
+                        </p>
+                    </div>
+
+                    <!-- ===== 模块 2：跨人格协作指南 ===== -->
+                    <div class="module-block" id="module-2">
+                        <div class="module-block__header" style="--module-color:#87699a">
+                            <span class="module-block__icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+                            </span>
+                            <h3>模块 2 · 跨人格协作指南</h3>
+                        </div>
+
+                        <p>
+                            在团队协作中，你的 Ni-Te 组合使你天然成为<strong>"方向设定者"</strong>。
+                            但你需要注意，并非所有人都能理解你的直觉跳跃。以下是与不同人格类型的协作策略：
+                        </p>
+
+                        <div class="collab-table">
+                            <div class="collab-row collab-row--header">
+                                <span>人格类型</span>
+                                <span>协作策略</span>
+                                <span>注意事项</span>
+                            </div>
+                            <div class="collab-row">
+                                <span class="collab-row__type">ENFP</span>
+                                <span>让对方发散创意，你来收敛落地</span>
+                                <span>不要否定对方的热情，先肯定再补充</span>
+                            </div>
+                            <div class="collab-row">
+                                <span class="collab-row__type">ESFJ</span>
+                                <span>明确分工与时间线，尊重流程</span>
+                                <span>避免过度直接，注意措辞温度</span>
+                            </div>
+                            <div class="collab-row">
+                                <span class="collab-row__type">ISTP</span>
+                                <span>给对方自主空间，聚焦技术问题</span>
+                                <span>不要过度规划，留出灵活调整空间</span>
+                            </div>
+                            <div class="collab-row">
+                                <span class="collab-row__type">ENTJ</span>
+                                <span>直接讨论战略，效率优先</span>
+                                <span>注意权力边界，避免正面冲突</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ============== 第 12 章：合适的职业（模块 3 + 模块 4） ============== -->
+            <section class="report-chapter" id="chapter-12">
+                <div class="chapter-marker">
+                    <span class="chapter-marker__num">12</span>
+                    <h2 class="chapter-marker__title">合适的职业</h2>
+                </div>
+                <div class="chapter-body">
+
+                    <!-- ===== 模块 3：压力预警机制 ===== -->
+                    <div class="module-block" id="module-3">
+                        <div class="module-block__header" style="--module-color:#deb45c">
+                            <span class="module-block__icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+                            </span>
+                            <h3>模块 3 · 压力预警机制</h3>
+                        </div>
+
+                        <p>
+                            INTJ-A-C 型在压力下的反应模式具有高度规律性。了解你的压力信号和应对策略，
+                            是维持长期高效能的关键。
+                        </p>
+
+                        <h4 class="sub-heading-mini">压力三级预警</h4>
+                        <div class="alert-levels">
+                            <div class="alert-level alert-level--1">
+                                <span class="alert-level__badge">黄色预警</span>
+                                <p><strong>信号</strong>：开始过度规划、对细节失控感增强、睡眠质量下降</p>
+                                <p><strong>应对</strong>：暂停新增任务，进行 30 分钟有氧运动，与信任的人倾诉</p>
+                            </div>
+                            <div class="alert-level alert-level--2">
+                                <span class="alert-level__badge">橙色预警</span>
+                                <p><strong>信号</strong>：对他人变得尖刻、开始怀疑自己的能力、出现逃避倾向</p>
+                                <p><strong>应对</strong>：强制休假 1-2 天，完全脱离工作环境，进行感官体验活动</p>
+                            </div>
+                            <div class="alert-level alert-level--3">
+                                <span class="alert-level__badge">红色预警</span>
+                                <p><strong>信号</strong>：Se 失控（暴饮暴食/冲动消费）、完全封闭自我、出现虚无感</p>
+                                <p><strong>应对</strong>：寻求专业心理咨询，暂停所有重大决策，回归基本生活节奏</p>
+                            </div>
+                        </div>
+
+                        <figure class="chapter-figure">
+                            <div class="chapter-figure__placeholder" style="background:linear-gradient(135deg,#deb45c,#e17055);">
+                                <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg"><path d="M20 100 Q60 80 100 60 T180 20" fill="none" stroke="#fff" stroke-width="3"/><circle cx="20" cy="100" r="5" fill="#5ea67e"/><circle cx="60" cy="85" r="5" fill="#deb45c"/><circle cx="100" cy="60" r="5" fill="#e17055"/><circle cx="140" cy="40" r="5" fill="#c0392b"/><circle cx="180" cy="20" r="5" fill="#c0392b"/><text x="100" y="115" text-anchor="middle" fill="#fff" font-size="9" opacity="0.6">压力曲线与预警节点</text></svg>
+                            </div>
+                            <figcaption>图 5：INTJ 型压力曲线 — 从绿色安全区到红色危险区的五个阶段</figcaption>
+                        </figure>
+                    </div>
+
+                    <!-- ===== 模块 4：个人成长行动计划 ===== -->
+                    <div class="module-block" id="module-4">
+                        <div class="module-block__header" style="--module-color:#5ea67e">
+                            <span class="module-block__icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                            </span>
+                            <h3>模块 4 · 个人成长行动计划</h3>
+                        </div>
+
+                        <p>
+                            以下为你定制的 <strong>90 天成长行动方案</strong>，基于你的认知功能栈和 Sub1/Sub2 倾向量身设计。
+                        </p>
+
+                        <h4 class="sub-heading-mini">第 1 个月：觉察与基线</h4>
+                        <div class="action-checklist">
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>每日晨间 5 分钟"感官扫描"：注意 3 个身体感受</span></label>
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>每周记录 1 次"情绪日记"，用词语而非分析描述感受</span></label>
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>完成 1 次非暴力沟通（NVC）练习</span></label>
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>阅读《思考，快与慢》第 1-5 章</span></label>
+                        </div>
+
+                        <h4 class="sub-heading-mini">第 2 个月：技能建设</h4>
+                        <div class="action-checklist">
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>每周进行 2 次有氧运动（每次 30 分钟以上）</span></label>
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>在团队会议中主动练习"先肯定，再补充"的沟通模式</span></label>
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>完成 1 个"80 分即可"的项目，刻意不追求完美</span></label>
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>参加 1 次纯社交活动（非工作目的）</span></label>
+                        </div>
+
+                        <h4 class="sub-heading-mini">第 3 个月：整合与突破</h4>
+                        <div class="action-checklist">
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>建立 1 段"反向导师"关系，向情感型人格学习</span></label>
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>在非优势领域（艺术/音乐/烹饪）完成 1 个作品</span></label>
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>撰写 90 天成长复盘，调整下一步计划</span></label>
+                            <label class="action-item"><input type="checkbox"><span class="action-item__check"></span><span>与 1 位信任的朋友分享你的成长感受</span></label>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ============== 报告结尾 ============== -->
+            <section class="report-end">
+                <div class="report-end__card">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#9B7ED8" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <h3>报告阅读完成</h3>
+                    <p>你已完成 INTJ-A-C 深度报告的全部 12 章内容</p>
+                    <p class="report-end__time" id="readDuration">阅读时长：0 分钟</p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ============== 底部操作栏 ============== -->
+        <div class="report-actionbar" id="reportActionbar">
+            <button class="report-actionbar__btn" id="shareReportBtn">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                <span>分享</span>
+            </button>
+            <button class="report-actionbar__btn" id="backToTopBtn">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                <span>顶部</span>
+            </button>
+        </div>
+
+        <!-- ============== 页脚 ============== -->
+        <footer id="footer" class="footer--vue tw-bg-white tw-py-20 medium:tw-py-40 huge:tw-pt-60 tw-border-t tw-border-gray-03 tw-m-auto tw-mb-0 print:tw-hidden">
+            <nav role="navigation" aria-label="Footer" class="sp-wrap footer__links p-sm tw-mb-20 tw-grid tw-grid-cols-2 tw-gap-20 tw-border-b tw-border-gray-03 tw-pb-20 dark:tw-border-ds-medium medium:tw-mb-40 medium:tw-grid-cols-4 medium:tw-pb-40">
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">产品</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="index.html#be-understood">免费测评</a></li>
+                        <li class="tw-mt-10"><a href="payment.html">深度报告</a></li>
+                        <li class="tw-mt-10"><a href="result-free.html">人格认证卡</a></li>
+                        <li class="tw-mt-10"><a href="index.html#testimonials">用户评价</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">资源</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="index.html#understand-others">人格测试</a></li>
+                        <li class="tw-mt-10"><a href="index.html#understand-others">人格类型</a></li>
+                        <li class="tw-mt-10"><a href="index.html#core-features">核心优势</a></li>
+                        <li class="tw-mt-10"><a href="index.html#core-features">理论框架</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">帮助</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="account.html">联系我们</a></li>
+                        <li class="tw-mt-10"><a href="#">常见问题</a></li>
+                        <li class="tw-mt-10"><a href="#">反馈问题</a></li>
+                        <li class="tw-mt-10"><a href="orders.html">订单查询</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">关注我们</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="#">微信公众号</a></li>
+                        <li class="tw-mt-10"><a href="#">微博</a></li>
+                        <li class="tw-mt-10"><a href="#">QQ 群</a></li>
+                        <li class="tw-mt-10"><a href="#">邮箱订阅</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="copyright" class="sp-wrap tw-text-center p-sm">
+                <ul class="tw-list-none tw-p-0 tw-m-0 tw-flex tw-justify-center tw-gap-20 tw-flex-wrap">
+                    <li>&copy; 2026 Career Test. 保留所有权利</li>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">用户协议</a></li>
+                    <li><a href="#">无障碍声明</a></li>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- 报告页脚本 -->
+    <script src="assets/js/deep-report.js"></script>
+</body>
+</html>

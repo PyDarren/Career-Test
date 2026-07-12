@@ -1,0 +1,765 @@
+/* ==========================================================================
+   Career Test 测评历史页样式
+   移动端优先，基于 16personalities 设计语言
+   ========================================================================== */
+
+/* ==========================================================================
+   1. 页面主体
+   ========================================================================== */
+body {
+    font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: #2d2d3a;
+    background: #f9f9f9;
+}
+
+.history-main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 0 80px;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   2. 顶部导航栏（固定）
+   ========================================================================== */
+.history-navbar {
+    position: sticky;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: #fff;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+}
+
+.history-navbar__inner {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+}
+
+.history-navbar__btn {
+    background: none;
+    border: none;
+    color: #2d2d3a;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.history-navbar__btn:hover {
+    background: rgba(155, 126, 216, 0.08);
+}
+
+.history-navbar__btn--text {
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #9B7ED8;
+    padding: 8px 12px;
+}
+
+.history-navbar__title {
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #2d2d3a;
+    margin: 0;
+}
+
+/* 编辑模式下的管理按钮 */
+.history-navbar__btn--text.edit-mode {
+    color: #e17055;
+}
+
+/* ==========================================================================
+   3. 汇总信息条
+   ========================================================================== */
+.history-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 12px;
+}
+
+.history-summary__count {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.history-summary__num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #9B7ED8;
+}
+
+.history-summary__label {
+    font-size: 14px;
+    color: #636e72;
+}
+
+.history-summary__trend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #5ea67e;
+    background: rgba(94, 166, 126, 0.08);
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.history-summary__trend svg {
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   4. 历史记录列表
+   ========================================================================== */
+.history-list {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ===== 记录卡片 ===== */
+.record-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    animation: cardSlideIn 0.35s ease-out both;
+}
+
+.record-card:nth-child(1) { animation-delay: 0s; }
+.record-card:nth-child(2) { animation-delay: 0.08s; }
+.record-card:nth-child(3) { animation-delay: 0.16s; }
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.record-card:active {
+    transform: scale(0.98);
+}
+
+.record-card--removing {
+    animation: cardSlideOut 0.3s ease-in forwards;
+}
+
+@keyframes cardSlideOut {
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin: 0;
+    }
+}
+
+/* 左侧类型徽标 */
+.record-card__badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.record-card__badge--blue   { background: linear-gradient(135deg, #5a96b1, #7ab5cf); }
+.record-card__badge--purple { background: linear-gradient(135deg, #87699a, #a888ba); }
+.record-card__badge--gold   { background: linear-gradient(135deg, #deb45c, #e8c878); }
+.record-card__badge--green  { background: linear-gradient(135deg, #5ea67e, #7cc09b); }
+
+/* 中间信息 */
+.record-card__body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.record-card__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.record-card__code {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2d2d3a;
+}
+
+.record-card__name {
+    font-size: 14px;
+    color: #636e72;
+}
+
+.record-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.record-card__date {
+    font-size: 13px;
+    color: #9B9BAB;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* 付费/免费标签 */
+.record-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.record-tag--paid {
+    background: rgba(245, 213, 71, 0.15);
+    color: #c99e2e;
+}
+
+.record-tag--free {
+    background: rgba(94, 166, 126, 0.12);
+    color: #5ea67e;
+}
+
+.record-tag__dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+.record-tag--paid .record-tag__dot { background: #deb45c; }
+.record-tag--free .record-tag__dot { background: #5ea67e; }
+
+/* 右侧查看按钮 */
+.record-card__view {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(155, 126, 216, 0.08);
+    color: #9B7ED8;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.record-card__view:hover {
+    background: rgba(155, 126, 216, 0.15);
+    transform: translateX(2px);
+}
+
+.record-card__view svg {
+    transition: transform 0.2s;
+}
+
+.record-card__view:hover svg {
+    transform: translateX(2px);
+}
+
+/* ===== 编辑模式下的卡片 ===== */
+.record-card--edit {
+    padding-left: 12px;
+}
+
+.record-card__checkbox {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #d5d8d6;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: #fff;
+}
+
+.record-card--edit .record-card__checkbox {
+    display: flex;
+}
+
+.record-card--edit .record-card__view {
+    display: none;
+}
+
+.record-card__checkbox--checked {
+    border-color: #9B7ED8;
+    background: #9B7ED8;
+}
+
+.record-card__checkbox--checked svg {
+    display: block;
+}
+
+.record-card__checkbox svg {
+    display: none;
+}
+
+/* 选中卡片高亮 */
+.record-card--selected {
+    background: rgba(155, 126, 216, 0.04);
+    border: 1.5px solid rgba(155, 126, 216, 0.3);
+}
+
+/* 最新记录标记 */
+.record-card__latest {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: linear-gradient(135deg, #9B7ED8, #B8A4E0);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 0 16px 0 12px;
+    letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   5. 空状态
+   ========================================================================== */
+.history-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    text-align: center;
+}
+
+.history-empty__illustration {
+    margin-bottom: 24px;
+    opacity: 0.9;
+}
+
+.history-empty__title {
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d2d3a;
+    margin: 0 0 8px;
+}
+
+.history-empty__desc {
+    font-size: 14px;
+    color: #9B9BAB;
+    margin: 0 0 32px;
+    line-height: 1.6;
+}
+
+.history-empty__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #9B7ED8 0%, #B8A4E0 100%);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(155, 126, 216, 0.25);
+}
+
+.history-empty__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(155, 126, 216, 0.35);
+}
+
+.history-empty__cta:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   6. 底部提示
+   ========================================================================== */
+.history-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 24px 20px 20px;
+    font-size: 12px;
+    color: #b2bec3;
+}
+
+.history-hint svg {
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   7. 底部删除操作栏
+   ========================================================================== */
+.history-actionbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    z-index: 200;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.history-actionbar--visible {
+    transform: translateY(0);
+}
+
+.history-actionbar__select-all {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d2d3a;
+}
+
+.history-actionbar__select-all input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.history-actionbar__check {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #d5d8d6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.history-actionbar__select-all input:checked + .history-actionbar__check {
+    border-color: #9B7ED8;
+    background: #9B7ED8;
+}
+
+.history-actionbar__select-all input:checked + .history-actionbar__check::after {
+    content: '';
+    width: 6px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-top: -2px;
+}
+
+.history-actionbar__delete {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #e17055;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.history-actionbar__delete:hover:not(:disabled) {
+    background: #d65f44;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(225, 112, 85, 0.3);
+}
+
+.history-actionbar__delete:disabled {
+    background: #d5d8d6;
+    cursor: not-allowed;
+}
+
+.history-actionbar__delete em {
+    font-style: normal;
+    font-weight: 800;
+    margin-left: 2px;
+}
+
+/* ==========================================================================
+   8. 删除确认弹窗
+   ========================================================================== */
+.confirm-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.confirm-modal--open {
+    visibility: visible;
+}
+
+.confirm-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+
+.confirm-modal--open .confirm-modal__overlay {
+    opacity: 1;
+}
+
+.confirm-modal__panel {
+    position: relative;
+    background: #fff;
+    border-radius: 24px;
+    padding: 32px 28px 24px;
+    max-width: 340px;
+    width: 100%;
+    text-align: center;
+    transform: scale(0.85);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.confirm-modal--open .confirm-modal__panel {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.confirm-modal__icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(225, 112, 85, 0.1);
+    border-radius: 50%;
+}
+
+.confirm-modal__title {
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #2d2d3a;
+    margin: 0 0 8px;
+}
+
+.confirm-modal__desc {
+    font-size: 14px;
+    color: #636e72;
+    margin: 0 0 24px;
+    line-height: 1.6;
+}
+
+.confirm-modal__actions {
+    display: flex;
+    gap: 12px;
+}
+
+.confirm-modal__btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.confirm-modal__btn--cancel {
+    background: #f1f3f2;
+    color: #636e72;
+}
+
+.confirm-modal__btn--cancel:hover {
+    background: #e7eae8;
+}
+
+.confirm-modal__btn--confirm {
+    background: #e17055;
+    color: #fff;
+}
+
+.confirm-modal__btn--confirm:hover {
+    background: #d65f44;
+    box-shadow: 0 4px 12px rgba(225, 112, 85, 0.3);
+}
+
+/* ==========================================================================
+   9. Toast 提示
+   ========================================================================== */
+.history-toast {
+    position: fixed;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(0, 0, 0, 0.78);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 500;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    max-width: 90vw;
+}
+
+.history-toast--visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   10. 响应式
+   ========================================================================== */
+@media (min-width: 768px) {
+    .history-main {
+        padding-top: 0;
+    }
+
+    .history-navbar__inner {
+        padding: 14px 20px;
+    }
+
+    .history-navbar__title {
+        font-size: 18px;
+    }
+
+    .record-card {
+        padding: 20px 18px;
+    }
+
+    .record-card__badge {
+        width: 56px;
+        height: 56px;
+        font-size: 15px;
+    }
+
+    .record-card__code {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 380px) {
+    .history-summary {
+        padding: 16px 16px 10px;
+    }
+
+    .history-list {
+        padding: 0 16px;
+    }
+
+    .record-card {
+        padding: 14px 12px;
+        gap: 10px;
+    }
+
+    .record-card__badge {
+        width: 46px;
+        height: 46px;
+        font-size: 13px;
+        border-radius: 12px;
+    }
+
+    .record-card__code {
+        font-size: 15px;
+    }
+
+    .record-card__name {
+        font-size: 13px;
+    }
+
+    .record-card__view {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .record-card__view span {
+        display: none;
+    }
+
+    .history-summary__num {
+        font-size: 24px;
+    }
+
+    .confirm-modal__panel {
+        padding: 28px 22px 20px;
+    }
+}
+
+/* ==========================================================================
+   11. 动画偏好
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .record-card,
+    .record-card--removing {
+        animation: none;
+    }
+
+    .confirm-modal__panel,
+    .history-actionbar {
+        transition: none;
+    }
+}

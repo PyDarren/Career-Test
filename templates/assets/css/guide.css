@@ -1,0 +1,762 @@
+/* ==========================================================================
+   Career Test 测评引导页样式
+   基于 16personalities 设计语言
+   ========================================================================== */
+
+/* ==========================================================================
+   1. 页面主体
+   ========================================================================== */
+.page--guide body {
+    background: #f4f4f4;
+}
+
+.guide__main {
+    padding-top: 0;
+}
+
+/* ==========================================================================
+   2. 顶部导航 — 跳过按钮
+   ========================================================================== */
+.guide__navbar {
+    background: #fff;
+    border-bottom: 1px solid #e7eae8;
+}
+
+.guide__skip {
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    font-size: 14px;
+    color: #636e72;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.guide__skip:hover {
+    background: #f4f4f4;
+    color: #7559C3;
+}
+
+/* ==========================================================================
+   3. 轮播容器
+   ========================================================================== */
+.guide-carousel {
+    position: relative;
+    background: #fff;
+    padding: 60px 0 40px;
+    overflow: hidden;
+}
+
+.guide__shape--top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 0;
+}
+
+/* ==========================================================================
+   4. 轨道与幻灯片
+   ========================================================================== */
+.guide-carousel__track {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.guide-slide {
+    display: none;
+    animation: guideFadeIn 0.5s ease-in-out;
+}
+
+.guide-slide.active {
+    display: block;
+}
+
+@keyframes guideFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.guide-slide__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ==========================================================================
+   5. 幻灯片视觉区
+   ========================================================================== */
+.guide-slide__visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 320px;
+}
+
+.guide-illustration {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+/* ==========================================================================
+   6. 步骤 1 — 时长与题量
+   ========================================================================== */
+.guide-illustration--time {
+    gap: 32px;
+}
+
+/* 时钟动画 */
+.guide-clock {
+    width: 160px;
+    height: 160px;
+}
+
+.guide-clock__face {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f9f9f9 0%, #e7eae8 100%);
+    border: 4px solid #7559C3;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(117, 89, 195, 0.15);
+}
+
+.guide-clock__hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    border-radius: 4px;
+}
+
+.guide-clock__hand--hour {
+    width: 4px;
+    height: 40px;
+    background: #4A6FA5;
+    transform: translateX(-50%) rotate(30deg);
+    animation: clockTick 12s linear infinite;
+}
+
+.guide-clock__hand--minute {
+    width: 3px;
+    height: 60px;
+    background: #7559C3;
+    transform: translateX(-50%) rotate(180deg);
+    animation: clockTick 60s linear infinite;
+}
+
+.guide-clock__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background: #33A474;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes clockTick {
+    from { transform: translateX(-50%) rotate(0deg); }
+    to { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* 统计数字 */
+.guide-stats {
+    display: flex;
+    gap: 32px;
+}
+
+.guide-stat {
+    text-align: center;
+}
+
+.guide-stat__value {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.guide-stat__unit {
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 4px;
+    color: #636e72;
+}
+
+.guide-stat__label {
+    font-size: 14px;
+    color: #636e72;
+    margin-top: 8px;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+}
+
+/* ==========================================================================
+   7. 步骤 2 — 荣格八维
+   ========================================================================== */
+.guide-cognitive {
+    width: 280px;
+    height: 280px;
+}
+
+.guide-cognitive__ring {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 50%;
+    border: 3px dashed #e7eae8;
+    animation: ringRotate 30s linear infinite;
+}
+
+@keyframes ringRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.guide-cognitive__node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Red Hat Display', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    /* 反向旋转保持标签正立 */
+    transform: rotate(var(--angle)) translateX(120px) rotate(calc(-1 * var(--angle)));
+    animation: counterRotate 30s linear infinite;
+}
+
+@keyframes counterRotate {
+    from { transform: rotate(var(--angle)) translateX(120px) rotate(calc(-1 * var(--angle))); }
+    to { transform: rotate(calc(var(--angle) + 360deg)) translateX(120px) rotate(calc(-1 * (var(--angle) + 360deg))); }
+}
+
+.guide-cognitive__node--1 { background: #7559C3; }
+.guide-cognitive__node--2 { background: #4A6FA5; }
+.guide-cognitive__node--3 { background: #33A474; }
+.guide-cognitive__node--4 { background: #E0A93A; }
+
+.guide-cognitive__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    margin: -50px 0 0 -50px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #7559C3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(117, 89, 195, 0.2);
+}
+
+.guide-cognitive__type {
+    font-family: 'Red Hat Display', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: #7559C3;
+}
+
+/* 八维功能说明列表 */
+.guide-theory {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.guide-theory__item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.guide-theory__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Red Hat Display', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    border: 2px solid currentColor;
+}
+
+.guide-theory__item strong {
+    display: block;
+    font-size: 15px;
+    color: #2d3436;
+    margin-bottom: 2px;
+}
+
+.guide-theory__item p {
+    margin: 0;
+    font-size: 13px;
+    color: #636e72;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   8. 步骤 3 — 双轨制防伪
+   ========================================================================== */
+.guide-illustration--security {
+    gap: 32px;
+}
+
+.guide-shield {
+    width: 140px;
+    height: 160px;
+}
+
+.guide-shield__icon {
+    width: 100%;
+    height: 100%;
+}
+
+/* 防伪机制说明 */
+.guide-security {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.guide-security__item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    border-left: 4px solid;
+}
+
+.guide-security__item:first-child {
+    border-left-color: #7559C3;
+}
+
+.guide-security__item:last-child {
+    border-left-color: #4A6FA5;
+}
+
+.guide-security__num {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+    text-align: center;
+}
+
+.guide-security__text strong {
+    display: block;
+    font-size: 16px;
+    color: #2d3436;
+    margin-bottom: 4px;
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+}
+
+.guide-security__text p {
+    margin: 0;
+    font-size: 13px;
+    color: #636e72;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   9. 提示列表
+   ========================================================================== */
+.guide-tips {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.guide-tip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #636e72;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+}
+
+.guide-tip__icon {
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   10. 进度条演示
+   ========================================================================== */
+.guide-progress-demo {
+    margin-top: 32px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+}
+
+.guide-progress-demo__label {
+    font-size: 14px;
+    color: #636e72;
+    margin-bottom: 12px;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+}
+
+.guide-progress-demo__bar {
+    height: 8px;
+    background: #e7eae8;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.guide-progress-demo__fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #7559C3 0%, #4A6FA5 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease-in-out;
+}
+
+.guide-progress-demo__percent {
+    margin-top: 8px;
+    text-align: right;
+    font-size: 13px;
+    color: #7559C3;
+    font-family: 'Red Hat Display', sans-serif;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   11. 跳过引导复选框
+   ========================================================================== */
+.guide-skip-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    cursor: pointer;
+    user-select: none;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    font-size: 14px;
+    color: #636e72;
+}
+
+.guide-skip-option input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.guide-skip-option__checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #b2bec3;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    flex-shrink: 0;
+}
+
+.guide-skip-option input:checked ~ .guide-skip-option__checkmark {
+    background: #33A474;
+    border-color: #33A474;
+}
+
+.guide-skip-option input:checked ~ .guide-skip-option__checkmark::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.guide-skip-option:hover .guide-skip-option__checkmark {
+    border-color: #33A474;
+}
+
+/* ==========================================================================
+   12. 轮播控制
+   ========================================================================== */
+.guide-carousel__controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.guide-carousel__btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid #e7eae8;
+    background: #fff;
+    color: #636e72;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    padding: 0;
+}
+
+.guide-carousel__btn:hover {
+    border-color: #7559C3;
+    color: #7559C3;
+    background: #f9f9ff;
+    transform: scale(1.05);
+}
+
+.guide-carousel__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.guide-carousel__btn:disabled:hover {
+    border-color: #e7eae8;
+    color: #636e72;
+    background: #fff;
+}
+
+/* 圆点指示器 */
+.guide-carousel__dots {
+    display: flex;
+    gap: 12px;
+}
+
+.guide-carousel__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 0;
+    background: #e7eae8;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.guide-carousel__dot.active {
+    background: #7559C3;
+    width: 36px;
+    border-radius: 6px;
+}
+
+.guide-carousel__dot:hover:not(.active) {
+    background: #b2bec3;
+}
+
+/* ==========================================================================
+   13. 底部 CTA
+   ========================================================================== */
+.guide__cta {
+    padding: 80px 20px 100px;
+}
+
+.guide__cta .section__title {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+/* ==========================================================================
+   14. 响应式 — 移动端优先
+   ========================================================================== */
+@media screen and (max-width: 980px) {
+    .guide-slide__inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 20px;
+    }
+
+    .guide-slide__visual {
+        min-height: 260px;
+        order: -1;
+    }
+
+    .guide-theory {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 736px) {
+    .guide-carousel {
+        padding: 40px 0 30px;
+    }
+
+    .guide-slide__inner {
+        gap: 32px;
+        padding: 16px;
+    }
+
+    /* 时钟缩小 */
+    .guide-clock {
+        width: 120px;
+        height: 120px;
+    }
+
+    .guide-clock__hand--hour {
+        height: 30px;
+    }
+
+    .guide-clock__hand--minute {
+        height: 45px;
+    }
+
+    /* 统计数字 */
+    .guide-stats {
+        gap: 24px;
+    }
+
+    .guide-stat__value {
+        font-size: 36px;
+    }
+
+    /* 八维环缩小 */
+    .guide-cognitive {
+        width: 220px;
+        height: 220px;
+    }
+
+    .guide-cognitive__node {
+        width: 48px;
+        height: 48px;
+        margin: -24px 0 0 -24px;
+        font-size: 14px;
+        transform: rotate(var(--angle)) translateX(90px) rotate(calc(-1 * var(--angle)));
+    }
+
+    @keyframes counterRotate {
+        from { transform: rotate(var(--angle)) translateX(90px) rotate(calc(-1 * var(--angle))); }
+        to { transform: rotate(calc(var(--angle) + 360deg)) translateX(90px) rotate(calc(-1 * (var(--angle) + 360deg))); }
+    }
+
+    .guide-cognitive__center {
+        width: 80px;
+        height: 80px;
+        margin: -40px 0 0 -40px;
+    }
+
+    .guide-cognitive__type {
+        font-size: 20px;
+    }
+
+    /* 控制按钮 */
+    .guide-carousel__btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .guide-carousel__controls {
+        gap: 16px;
+    }
+
+    /* CTA */
+    .guide__cta {
+        padding: 60px 20px 80px;
+    }
+
+    .guide__cta .section__title {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .guide-stat__value {
+        font-size: 28px;
+    }
+
+    .guide-stat__unit {
+        font-size: 13px;
+    }
+
+    .guide-stat__label {
+        font-size: 12px;
+    }
+
+    .guide-security__num {
+        font-size: 24px;
+        width: 32px;
+    }
+
+    .guide-security__text strong {
+        font-size: 14px;
+    }
+
+    .guide-security__text p {
+        font-size: 12px;
+    }
+
+    .guide-carousel__dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .guide-carousel__dot.active {
+        width: 24px;
+    }
+}
+
+/* ==========================================================================
+   15. 动画降级
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .guide-clock__hand--hour,
+    .guide-clock__hand--minute,
+    .guide-cognitive__ring,
+    .guide-cognitive__node {
+        animation: none;
+    }
+
+    .guide-slide {
+        animation: none;
+    }
+
+    .guide-carousel__btn,
+    .guide-carousel__dot {
+        transition: none;
+    }
+}

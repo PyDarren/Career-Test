@@ -1,0 +1,782 @@
+/* ==========================================================================
+   Career Test 账户设置页样式
+   移动端优先，基于 16personalities 设计语言
+   ========================================================================== */
+
+/* ==========================================================================
+   1. 页面主体
+   ========================================================================== */
+body {
+    font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: #2d2d3a;
+    background: #f9f9f9;
+}
+
+.account-main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 0 80px;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   2. 顶部导航栏（固定）
+   ========================================================================== */
+.account-navbar {
+    position: sticky;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: #fff;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+}
+
+.account-navbar__inner {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+}
+
+.account-navbar__btn {
+    background: none;
+    border: none;
+    color: #2d2d3a;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.account-navbar__btn:hover {
+    background: rgba(155, 126, 216, 0.08);
+}
+
+.account-navbar__title {
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #2d2d3a;
+    margin: 0;
+}
+
+.account-navbar__spacer {
+    width: 36px;
+}
+
+/* ==========================================================================
+   3. 分区通用
+   ========================================================================== */
+.account-section {
+    padding: 0 20px;
+    margin-bottom: 24px;
+}
+
+.account-section__title {
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #9B9BAB;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 10px;
+    padding-left: 4px;
+}
+
+.account-section__hint {
+    font-size: 12px;
+    color: #b2bec3;
+    margin: 8px 4px 0;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   4. 卡片容器
+   ========================================================================== */
+.account-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   5. 卡片行
+   ========================================================================== */
+.account-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    min-height: 52px;
+    transition: background 0.2s;
+}
+
+.account-row--action {
+    cursor: pointer;
+}
+
+.account-row--action:active {
+    background: #f9f9fb;
+}
+
+.account-row--avatar {
+    padding: 20px 18px;
+}
+
+.account-row--toggle {
+    align-items: center;
+}
+
+.account-row--danger .account-row__label {
+    color: #e17055;
+}
+
+.account-row__label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #2d2d3a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.account-row__label svg {
+    flex-shrink: 0;
+}
+
+.account-row__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.account-row__sublabel {
+    font-size: 12px;
+    color: #9B9BAB;
+}
+
+.account-row__value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.account-row__text {
+    font-size: 14px;
+    color: #636e72;
+}
+
+/* ==========================================================================
+   6. 分隔线
+   ========================================================================== */
+.account-divider {
+    height: 1px;
+    background: #f1f3f2;
+    margin: 0 18px;
+}
+
+/* ==========================================================================
+   7. 头像
+   ========================================================================== */
+.avatar-wrapper {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+}
+
+.avatar svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-radius: 50%;
+}
+
+.avatar-wrapper:hover .avatar-overlay,
+.avatar-wrapper:active .avatar-overlay {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   8. 类型徽标 & 状态标签
+   ========================================================================== */
+.type-badge {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #9B7ED8;
+    background: rgba(155, 126, 216, 0.1);
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+.status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 10px;
+}
+
+.status-tag--active {
+    background: rgba(94, 166, 126, 0.12);
+    color: #5ea67e;
+}
+
+.status-tag--active::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #5ea67e;
+}
+
+/* ==========================================================================
+   9. 开关切换器
+   ========================================================================== */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.toggle-switch input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.toggle-switch__slider {
+    position: absolute;
+    inset: 0;
+    background: #d5d8d6;
+    border-radius: 26px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.toggle-switch__slider::before {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 2px;
+    top: 2px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toggle-switch input:checked + .toggle-switch__slider {
+    background: #9B7ED8;
+}
+
+.toggle-switch input:checked + .toggle-switch__slider::before {
+    transform: translateX(20px);
+}
+
+/* ==========================================================================
+   10. 安全提示区
+   ========================================================================== */
+.security-tip {
+    display: flex;
+    gap: 14px;
+    background: linear-gradient(135deg, rgba(94, 166, 126, 0.06) 0%, rgba(155, 126, 216, 0.04) 100%);
+    border-radius: 16px;
+    padding: 18px 16px;
+    border: 1px solid rgba(94, 166, 126, 0.15);
+}
+
+.security-tip__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(94, 166, 126, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.security-tip__body strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d2d3a;
+    margin-bottom: 4px;
+}
+
+.security-tip__body p {
+    margin: 0;
+    font-size: 12px;
+    color: #636e72;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   11. 退出登录按钮
+   ========================================================================== */
+.logout-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 16px;
+    background: #fff;
+    color: #e17055;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s;
+}
+
+.logout-btn:hover {
+    background: #fef5f3;
+    box-shadow: 0 4px 16px rgba(225, 112, 85, 0.1);
+}
+
+.logout-btn:active {
+    transform: scale(0.98);
+}
+
+/* ==========================================================================
+   12. 弹窗通用
+   ========================================================================== */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.modal--open {
+    visibility: visible;
+}
+
+.modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+
+.modal--open .modal__overlay {
+    opacity: 1;
+}
+
+.modal__panel {
+    position: relative;
+    background: #fff;
+    border-radius: 24px;
+    padding: 28px 24px 24px;
+    max-width: 360px;
+    width: 100%;
+    transform: scale(0.85);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal--open .modal__panel {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal__title {
+    font-family: 'Red Hat Display', 'PingFang SC', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d2d3a;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.modal__field {
+    margin-bottom: 16px;
+}
+
+.modal__label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #636e72;
+    margin-bottom: 6px;
+}
+
+.modal__input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e7eae8;
+    border-radius: 14px;
+    font-size: 16px;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    color: #2d2d3a;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.modal__input:focus {
+    border-color: #9B7ED8;
+}
+
+.modal__char-count {
+    text-align: right;
+    font-size: 12px;
+    color: #b2bec3;
+    margin-top: 6px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.modal__code-row {
+    display: flex;
+    gap: 10px;
+}
+
+.modal__code-row .modal__input {
+    flex: 1;
+}
+
+.modal__code-btn {
+    flex-shrink: 0;
+    padding: 0 18px;
+    border: 2px solid #9B7ED8;
+    background: #fff;
+    color: #9B7ED8;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.modal__code-btn:hover {
+    background: rgba(155, 126, 216, 0.05);
+}
+
+.modal__code-btn:disabled {
+    border-color: #d5d8d6;
+    color: #b2bec3;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   13. 弹窗按钮
+   ========================================================================== */
+.modal__actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.modal__btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Inter', 'PingFang SC', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal__btn--cancel {
+    background: #f1f3f2;
+    color: #636e72;
+}
+
+.modal__btn--cancel:hover {
+    background: #e7eae8;
+}
+
+.modal__btn--confirm {
+    background: linear-gradient(135deg, #9B7ED8 0%, #B8A4E0 100%);
+    color: #fff;
+}
+
+.modal__btn--confirm:hover {
+    box-shadow: 0 4px 12px rgba(155, 126, 216, 0.3);
+}
+
+.modal__btn--danger {
+    background: #e17055;
+    color: #fff;
+}
+
+.modal__btn--danger:hover:not(:disabled) {
+    background: #d65f44;
+    box-shadow: 0 4px 12px rgba(225, 112, 85, 0.3);
+}
+
+.modal__btn--danger:disabled {
+    background: #d5d8d6;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   14. 删除账户弹窗（危险样式）
+   ========================================================================== */
+.modal__panel--danger {
+    border: 2px solid rgba(225, 112, 85, 0.2);
+}
+
+.modal__danger-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(225, 112, 85, 0.1);
+    border-radius: 50%;
+}
+
+.modal__desc {
+    font-size: 14px;
+    color: #636e72;
+    margin: 0 0 20px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.modal__desc strong {
+    color: #e17055;
+}
+
+.modal__confirm-box {
+    background: #fef5f3;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 4px;
+}
+
+.modal__check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #636e72;
+}
+
+.modal__check input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal__check-mark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d5d8d6;
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.modal__check input:checked + .modal__check-mark {
+    border-color: #e17055;
+    background: #e17055;
+}
+
+.modal__check input:checked + .modal__check-mark::after {
+    content: '';
+    width: 5px;
+    height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-top: -2px;
+}
+
+/* ==========================================================================
+   15. 数据导出进度
+   ========================================================================== */
+.export-progress {
+    text-align: center;
+}
+
+.export-progress__bar {
+    width: 100%;
+    height: 8px;
+    background: #f1f3f2;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.export-progress__fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #9B7ED8 0%, #5a96b1 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.export-progress__text {
+    font-size: 13px;
+    color: #636e72;
+    margin: 0;
+}
+
+/* ==========================================================================
+   16. Toast 提示
+   ========================================================================== */
+.account-toast {
+    position: fixed;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(0, 0, 0, 0.78);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 500;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    max-width: 90vw;
+}
+
+.account-toast--visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   17. 响应式
+   ========================================================================== */
+@media (min-width: 768px) {
+    .account-main {
+        padding-top: 0;
+    }
+
+    .account-navbar__inner {
+        padding: 14px 20px;
+    }
+
+    .account-navbar__title {
+        font-size: 18px;
+    }
+
+    .account-row {
+        padding: 18px 20px;
+    }
+
+    .account-row--avatar {
+        padding: 24px 20px;
+    }
+
+    .avatar-wrapper {
+        width: 64px;
+        height: 64px;
+    }
+
+    .modal__panel {
+        max-width: 400px;
+        padding: 32px 28px 28px;
+    }
+}
+
+@media (max-width: 380px) {
+    .account-section {
+        padding: 0 16px;
+        margin-bottom: 20px;
+    }
+
+    .account-row {
+        padding: 14px 14px;
+    }
+
+    .account-row--avatar {
+        padding: 18px 14px;
+    }
+
+    .account-row__label {
+        font-size: 14px;
+    }
+
+    .account-row__sublabel {
+        font-size: 11px;
+    }
+
+    .avatar-wrapper {
+        width: 52px;
+        height: 52px;
+    }
+
+    .modal__panel {
+        padding: 24px 20px 20px;
+    }
+
+    .modal__code-row {
+        flex-direction: column;
+    }
+
+    .modal__code-btn {
+        padding: 12px;
+    }
+}
+
+/* ==========================================================================
+   18. 动画偏好
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .toggle-switch__slider::before,
+    .modal__panel,
+    .account-toast {
+        transition: none;
+    }
+}

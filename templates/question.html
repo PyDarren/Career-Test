@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="免费职业性格测试 — 60 道题，约 12 分钟完成，发现你的真实性格类型。">
+    <meta name="author" content="">
+    <title>免费性格测试 | Career Test</title>
+
+    <link rel="icon" href="16p-assets/images/system/logo.svg" type="image/svg+xml">
+
+    <!-- 16personalities 原始 CSS（完全一致） -->
+    <link rel="stylesheet" href="16p-assets/css/styles-core.css" />
+    <link rel="stylesheet" href="16p-assets/css/personality-test.css" />
+    <link rel="stylesheet" href="16p-assets/css/styles-fonts.css" />
+    <link rel="stylesheet" href="16p-assets/css/homepage.css" />
+
+    <!-- Inter + Red Hat Display 字体 -->
+    <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,440..770;1,440..770&display=swap">
+    <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,700..800;1,700..800&display=swap">
+
+    <!-- 本页补充样式（仅覆盖 16p CSS 未涉及的部分：量表选项、题目卡片、完成页） -->
+    <link rel="stylesheet" href="assets/css/question.css" />
+
+    <style>[v-cloak] {display: none !important;}</style>
+</head>
+<body class="">
+    <ul class="sr-only">
+        <li><a href="#main-content" id="access-main">跳到主要内容</a></li>
+    </ul>
+    <div class="g-wrp" id="main-app">
+
+        <!-- ============== 顶部导航栏 ============== -->
+        <div class="navbar navbar--sticky" id="js-navbar" data-testid="top-nav">
+            <app-logo class="logo">
+                <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+                    <img src="16p-assets/images/system/logo.svg" width="32" height="32" alt="Career Test Logo">
+                    <span style="font-family:'Red Hat Display',sans-serif;font-weight:800;font-size:18px;color:#33A474;">Career Test</span>
+                </a>
+            </app-logo>
+            <nav class="sp-nav__topmiddle middle-section items--4 anonymous">
+                <ul>
+                    <li class=""><a href="index.html#be-understood" class="link--quiz">开始测评</a></li>
+                    <li class=""><a href="index.html#understand-others" class="">人格类型</a></li>
+                    <li class=""><a href="index.html#core-features" class="">核心优势</a></li>
+                    <li class=""><a href="index.html#testimonials" class="">用户评价</a></li>
+                </ul>
+            </nav>
+            <div class="right-section">
+                <a href="guide.html" class="sp-action sp-button button--purple button--md button--pill button--auto test-button tw-hidden medium:tw-flex">
+                    <span class="button__text">开始测试</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ============== 答题主体（main.q-pt — 16p 原始结构） ============== -->
+        <main class="q-pt" id="main-content" tabindex="-1">
+
+            <!-- ============== 绿色 Header ============== -->
+            <header>
+                <h1>职业性格测试</h1>
+                <div class="trademark">基于荣格八维理论与 MBTI 单量表架构</div>
+            </header>
+
+            <!-- ============== 3 个步骤卡片（16p 实际渲染结构） ============== -->
+            <div class="tips">
+                <!-- 桌面端彩色高亮层 -->
+                <div class="tip-highlight first"></div>
+                <div class="tip-highlight second"></div>
+                <div class="tip-highlight third"></div>
+
+                <!-- 绿色形状过渡层（桌面端） -->
+                <div class="shape"></div>
+                <div class="shadow"></div>
+
+                <!-- 步骤 1：完成测试（蓝色） -->
+                <div class="tip first">
+                    <div class="card__body tw-p-15 medium:tw-p-20">
+                        <div class="card__text tw-flex tw-items-center tw-gap-10 medium:tw-block">
+                            <picture class="step__picture tw-mb-0 tw-block tw-shrink-0 medium:tw-mb-[-3px] medium:tw-ms-auto huge:tw-mb-[-24px]">
+                                <source media="(min-width: 768px)" srcset="16p-assets/images/personality-test/complete-lg.svg">
+                                <img src="16p-assets/images/personality-test/complete-sm.svg" alt="打印机正在打印带勾的纸张" class="tw-block tw-size-40 medium:tw-ms-auto medium:tw-size-[120px] huge:tw-size-[160px]" width="40" height="40">
+                            </picture>
+                            <strong class="self tw-bg-blue-lighter-09 dark:tw-bg-blue-darker-04 tw-text-blue-darker-06 dark:tw-text-white tw-inline-flex tw-items-center tw-align-middle tw-no-underline p-sst tw-gap-[4px] tw-rounded-[40px] tw-py-5 tw-pe-10 tw-font-bold tw-uppercase tw-ps-10 tw-mb-5 tw-hidden medium:tw-inline-flex">步骤 1</strong>
+                            <h2 class="card__title h6 tw-hidden medium:tw-block">完成测试</h2>
+                            <p class="tw-mb-0 medium:tw-mt-10">做真实的自己，诚实回答，发现你的性格类型。</p>
+                            <div class="blue dark:tw-border-blue-darker-05 card__bg--custom tw-absolute tw-inset-x-0 tw-top-0 tw-hidden tw-overflow-hidden medium:tw-block">
+                                <svg class="tw-hidden medium:tw-block huge:tw-hidden" width="768px" height="25px" viewBox="0 0 768 25" preserveAspectRatio="none" aria-hidden="true"><path d="m74 19 133-9 99 13 151-10 86 12 42-9 117 6 66-5.5V0H0v2z" fill="#F6F6F7" fill-rule="evenodd" class="dark:tw-fill-blue-darker-05"></path></svg>
+                                <svg class="tw-hidden huge:tw-block" width="1920px" height="100px" viewBox="0 0 1920 100" preserveAspectRatio="none" aria-hidden="true"><path d="m409.5 89 243-16.5L816 96l277-18 141 22 77.5-16.5 213 11L1920 63V0H0z" fill="#F6F6F7" fill-rule="evenodd" class="dark:tw-fill-blue-darker-05"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 步骤 2：查看详细结果（绿色） -->
+                <div class="tip second">
+                    <div class="card__body tw-p-15 medium:tw-p-20">
+                        <div class="card__text tw-flex tw-items-center tw-gap-10 medium:tw-block">
+                            <picture class="step__picture tw-mb-0 tw-block tw-shrink-0 medium:tw-mb-[-3px] medium:tw-ms-auto huge:tw-mb-[-24px]">
+                                <source media="(min-width: 768px)" srcset="16p-assets/images/personality-test/results-lg.svg">
+                                <img src="16p-assets/images/personality-test/results-sm.svg" alt="显示详细结果图表" class="tw-block tw-size-40 medium:tw-ms-auto medium:tw-size-[120px] huge:tw-size-[160px]" width="40" height="40">
+                            </picture>
+                            <strong class="self tw-bg-green-lighter-09 dark:tw-bg-green-darker-04 tw-text-green-darker-06 dark:tw-text-white tw-inline-flex tw-items-center tw-align-middle tw-no-underline p-sst tw-gap-[4px] tw-rounded-[40px] tw-py-5 tw-pe-10 tw-font-bold tw-uppercase tw-ps-10 tw-mb-5 tw-hidden medium:tw-inline-flex">步骤 2</strong>
+                            <h2 class="card__title h6 tw-hidden medium:tw-block">查看详细结果</h2>
+                            <p class="tw-mb-0 medium:tw-mt-10">了解你的性格类型如何影响生活的方方面面。</p>
+                            <div class="green dark:tw-border-green-darker-05 card__bg--custom tw-absolute tw-inset-x-0 tw-top-0 tw-hidden tw-overflow-hidden medium:tw-block">
+                                <svg class="tw-hidden medium:tw-block huge:tw-hidden" width="768px" height="25px" viewBox="0 0 768 25" preserveAspectRatio="none" aria-hidden="true"><path d="m74 19 133-9 99 13 151-10 86 12 42-9 117 6 66-5.5V0H0v2z" fill="#F6F6F7" fill-rule="evenodd" class="dark:tw-fill-green-darker-05"></path></svg>
+                                <svg class="tw-hidden huge:tw-block" width="1920px" height="100px" viewBox="0 0 1920 100" preserveAspectRatio="none" aria-hidden="true"><path d="m409.5 89 243-16.5L816 96l277-18 141 22 77.5-16.5 213 11L1920 63V0H0z" fill="#F6F6F7" fill-rule="evenodd" class="dark:tw-fill-green-darker-05"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 步骤 3：解锁潜能（紫色） -->
+                <div class="tip third last">
+                    <div class="card__body tw-p-15 medium:tw-p-20">
+                        <div class="card__text tw-flex tw-items-center tw-gap-10 medium:tw-block">
+                            <picture class="step__picture tw-mb-0 tw-block tw-shrink-0 medium:tw-mb-[-3px] medium:tw-ms-auto huge:tw-mb-[-24px]">
+                                <source media="(min-width: 768px)" srcset="16p-assets/images/personality-test/potential-lg.svg">
+                                <img src="16p-assets/images/personality-test/potential-sm.svg" alt="解锁职业潜能" class="tw-block tw-size-40 medium:tw-ms-auto medium:tw-size-[120px] huge:tw-size-[160px]" width="40" height="40">
+                            </picture>
+                            <strong class="self tw-bg-purple-lighter-09 dark:tw-bg-purple-darker-04 tw-text-purple-darker-06 dark:tw-text-white tw-inline-flex tw-items-center tw-align-middle tw-no-underline p-sst tw-gap-[4px] tw-rounded-[40px] tw-py-5 tw-pe-10 tw-font-bold tw-uppercase tw-ps-10 tw-mb-5 tw-hidden medium:tw-inline-flex">步骤 3</strong>
+                            <h2 class="card__title h6 tw-hidden medium:tw-block">解锁潜能</h2>
+                            <p class="tw-mb-0 medium:tw-mt-10">找到适合你性格的职业，获得真正有用的职业指导。</p>
+                            <div class="purple dark:tw-border-purple-darker-05 card__bg--custom tw-absolute tw-inset-x-0 tw-top-0 tw-hidden tw-overflow-hidden medium:tw-block">
+                                <svg class="tw-hidden medium:tw-block huge:tw-hidden" width="768px" height="25px" viewBox="0 0 768 25" preserveAspectRatio="none" aria-hidden="true"><path d="m74 19 133-9 99 13 151-10 86 12 42-9 117 6 66-5.5V0H0v2z" fill="#F6F6F7" fill-rule="evenodd" class="dark:tw-fill-purple-darker-05"></path></svg>
+                                <svg class="tw-hidden huge:tw-block" width="1920px" height="100px" viewBox="0 0 1920 100" preserveAspectRatio="none" aria-hidden="true"><path d="m409.5 89 243-16.5L816 96l277-18 141 22 77.5-16.5 213 11L1920 63V0H0z" fill="#F6F6F7" fill-rule="evenodd" class="dark:tw-fill-purple-darker-05"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============== 答题区域 ============== -->
+            <div class="quiz-wrapper" id="quizWrapper">
+
+                <!-- 步骤 0：性别选择（16p 风格 .gender.sp-select） -->
+                <div class="quiz-step quiz-step--gender" id="stepGender">
+                    <div class="gender sp-select">
+                        <div class="input__label">你的性别是？<span>（用于报告中的统计）</span></div>
+                        <div class="input__note">这不会影响你的测试结果</div>
+                        <div class="group__options">
+                            <button class="gender-option" data-gender="male">
+                                <span class="gender-option__icon">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="10" cy="14" r="5"/>
+                                        <path d="M14 10 L20 4"/>
+                                        <path d="M15 4 L20 4 L20 9"/>
+                                    </svg>
+                                </span>
+                                <span class="gender-option__text">男性</span>
+                            </button>
+                            <button class="gender-option" data-gender="female">
+                                <span class="gender-option__icon">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="9" r="5"/>
+                                        <path d="M12 14 L12 22"/>
+                                        <path d="M9 19 L15 19"/>
+                                    </svg>
+                                </span>
+                                <span class="gender-option__text">女性</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 步骤 1+：答题 -->
+                <div class="quiz-step quiz-step--question" id="stepQuestion" style="display:none;">
+
+                    <!-- 题目卡片 -->
+                    <div class="question-card" id="questionCard">
+                        <div class="question-card__number" id="questionNumber">第 1 题</div>
+                        <div class="question-card__text" id="questionText">
+                            你经常主动结交新朋友。
+                        </div>
+
+                        <!-- 7 点量表 -->
+                        <div class="scale">
+                            <!-- 左侧标签：不同意 -->
+                            <div class="scale__label scale__label--disagree">
+                                <span class="scale__label-text">不同意</span>
+                            </div>
+
+                            <!-- 7 个圆形选项 -->
+                            <div class="scale__options" id="scaleOptions">
+                                <button class="scale-option scale-option--1" data-value="-3" aria-label="强烈不同意">
+                                    <span class="scale-option__circle"></span>
+                                </button>
+                                <button class="scale-option scale-option--2" data-value="-2" aria-label="不同意">
+                                    <span class="scale-option__circle"></span>
+                                </button>
+                                <button class="scale-option scale-option--3" data-value="-1" aria-label="有点不同意">
+                                    <span class="scale-option__circle"></span>
+                                </button>
+                                <button class="scale-option scale-option--4" data-value="0" aria-label="既不同意也不反对">
+                                    <span class="scale-option__circle scale-option__circle--neutral"></span>
+                                </button>
+                                <button class="scale-option scale-option--5" data-value="1" aria-label="有点同意">
+                                    <span class="scale-option__circle"></span>
+                                </button>
+                                <button class="scale-option scale-option--6" data-value="2" aria-label="同意">
+                                    <span class="scale-option__circle"></span>
+                                </button>
+                                <button class="scale-option scale-option--7" data-value="3" aria-label="强烈同意">
+                                    <span class="scale-option__circle"></span>
+                                </button>
+                            </div>
+
+                            <!-- 右侧标签：同意 -->
+                            <div class="scale__label scale__label--agree">
+                                <span class="scale__label-text">同意</span>
+                            </div>
+                        </div>
+
+                        <!-- 量表描述（选中后显示） -->
+                        <div class="scale-description" id="scaleDescription"></div>
+                    </div>
+
+                    <!-- 答题进度条（对齐引导页风格） -->
+                    <div class="question-progress" id="progressWrapper" style="display:none;">
+                        <div class="progress-label">
+                            <span class="progress-label__text">答题进度</span>
+                            <span class="progress-label__count" id="progressCount">0 / 86</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="progressFiller" style="width:0%;"></div>
+                        </div>
+                        <div class="progress-percent" id="percentage">0%</div>
+                    </div>
+
+                    <!-- 操作行（16p 风格 .action-row） -->
+                    <div class="action-row" id="actionRow">
+                        <button class="sp-action sp-button button--gray button--md button--pill button--auto" id="prevBtn" disabled>
+                            <span class="button__text">上一题</span>
+                        </button>
+                        <button class="sp-action sp-button button--green button--md button--pill button--auto" id="nextBtn" disabled>
+                            <span class="button__text">下一题</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 步骤 2：完成 -->
+                <div class="quiz-step quiz-step--complete" id="stepComplete" style="display:none;">
+                    <div class="complete-card">
+                        <div class="complete-card__icon">
+                            <svg viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="32" cy="32" r="28" stroke="#33A474"/>
+                                <path d="M20 32 L28 40 L44 24" stroke="#33A474" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h2 class="complete-card__title">答题完成！</h2>
+                        <p class="complete-card__desc">你已完成全部 60 道题目，正在生成你的职业性格分析报告...</p>
+
+                        <div class="complete-card__stats">
+                            <div class="complete-card__stat">
+                                <div class="complete-card__stat-value text--green">60</div>
+                                <div class="complete-card__stat-label">题目数</div>
+                            </div>
+                            <div class="complete-card__stat">
+                                <div class="complete-card__stat-value text--purple" id="completeTime">12:00</div>
+                                <div class="complete-card__stat-label">用时</div>
+                            </div>
+                            <div class="complete-card__stat">
+                                <div class="complete-card__stat-value text--blue">100%</div>
+                                <div class="complete-card__stat-label">完成度</div>
+                            </div>
+                        </div>
+
+                        <div class="complete-card__loading">
+                            <div class="complete-card__loading-bar">
+                                <div class="complete-card__loading-fill" id="loadingFill"></div>
+                            </div>
+                            <span class="complete-card__loading-text" id="loadingText">分析中...</span>
+                        </div>
+
+                        <a href="result-free.html" class="sp-action sp-button button--purple button--lg button--pill button--auto button--icon-rt" id="viewResultBtn" style="display:none;">
+                            <span class="button__text">查看结果</span>
+                            <span class="sp-icon size--inherit color--inherit icon--rotatable icon--dir-rt icon--arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 48 48" style="display:block;">
+                                    <path style="fill:white !important;" d="M23.296875,3.421875 L22.63125,4.0875 C22.190625,4.528125 22.190625,5.240625 22.63125,5.68125 L39.365625,22.40625 L4.125,22.40625 C3.50625,22.40625 3,22.9125 3,23.53125 L3,24.46875 C3,25.0875 3.50625,25.59375 4.125,25.59375 L39.365625,25.59375 L22.63125,42.328125 C22.190625,42.76875 22.190625,43.48125 22.63125,43.921875 L23.296875,44.5875 C23.7375,45.028125 24.45,45.028125 24.890625,44.5875 L44.68125,24.796875 C45.121875,24.35625 45.121875,23.64375 44.68125,23.203125 L24.890625,3.421875 C24.440625,2.98125 23.7375,2.98125 23.296875,3.421875 Z"></path>
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- ============== 页脚 ============== -->
+        <footer id="footer" class="footer--vue tw-bg-white tw-py-20 medium:tw-py-40 huge:tw-pt-60 tw-border-t tw-border-gray-03 tw-m-auto tw-mb-0 print:tw-hidden">
+            <nav role="navigation" aria-label="Footer" class="sp-wrap footer__links p-sm tw-mb-20 tw-grid tw-grid-cols-2 tw-gap-20 tw-border-b tw-border-gray-03 tw-pb-20 dark:tw-border-ds-medium medium:tw-mb-40 medium:tw-grid-cols-4 medium:tw-pb-40">
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">产品</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="index.html#be-understood">免费测评</a></li>
+                        <li class="tw-mt-10"><a href="payment.html">深度报告</a></li>
+                        <li class="tw-mt-10"><a href="result-free.html">人格认证卡</a></li>
+                        <li class="tw-mt-10"><a href="index.html#testimonials">用户评价</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">资源</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="index.html#understand-others">人格测试</a></li>
+                        <li class="tw-mt-10"><a href="index.html#understand-others">人格类型</a></li>
+                        <li class="tw-mt-10"><a href="index.html#core-features">核心优势</a></li>
+                        <li class="tw-mt-10"><a href="index.html#core-features">理论框架</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">帮助</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="account.html">联系我们</a></li>
+                        <li class="tw-mt-10"><a href="#">常见问题</a></li>
+                        <li class="tw-mt-10"><a href="#">反馈问题</a></li>
+                        <li class="tw-mt-10"><a href="orders.html">订单查询</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-body p-sm tw-m-0 tw-font-semibold">关注我们</h3>
+                    <ul class="tw-m-0 tw-list-none tw-p-0">
+                        <li class="tw-mt-10"><a href="#">微信公众号</a></li>
+                        <li class="tw-mt-10"><a href="#">微博</a></li>
+                        <li class="tw-mt-10"><a href="#">QQ 群</a></li>
+                        <li class="tw-mt-10"><a href="#">邮箱订阅</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="copyright" class="sp-wrap tw-text-center p-sm">
+                <ul class="tw-list-none tw-p-0 tw-m-0 tw-flex tw-justify-center tw-gap-20 tw-flex-wrap">
+                    <li>&copy; 2026 Career Test. 保留所有权利</li>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">用户协议</a></li>
+                    <li><a href="#">无障碍声明</a></li>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- 答题页脚本 -->
+    <script src="assets/js/question.js"></script>
+</body>
+</html>
