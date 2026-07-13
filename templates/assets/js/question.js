@@ -1,99 +1,110 @@
 /**
  * question.js — 答题页交互逻辑（16p 风格）
- * 流程：性别选择 → 86 题 7 点量表 → 完成页
+ * 流程：性别选择 → 80 题 5 点李克特量表 → 完成页
+ * 题项来源：IPIP-50（大五人格，公有领域）+ RIASEC-30（自主编写，基于霍兰德理论）
  */
 (function () {
     'use strict';
 
-    // ============== 题目数据（16p 原版 60 题中文翻译） ==============
+    // ============== 题目数据（IPIP-50 大五人格 + RIASEC-30 职业兴趣） ==============
+    // dimension: O=开放性, C=尽责性, E=外向性, A=宜人性, N=神经质
+    //            R=现实型, I=研究型, A=艺术型, S=社会型, E=企业型, C=常规型
+    // reverse: true 表示反向计分（1↔5, 2↔4, 3↔3）
     var questions = [
-        { text: '你经常主动结交新朋友。' },
-        { text: '复杂新奇的想法比简单直接的更让你兴奋。' },
-        { text: '你通常更容易被情感共鸣说服，而非事实论据。' },
-        { text: '你的生活和工作空间整洁有序。' },
-        { text: '即使压力很大，你通常也能保持冷静。' },
-        { text: '向陌生人推广自己或建立人脉让你感到畏惧。' },
-        { text: '你能有效地安排任务优先级，常在截止日期前完成。' },
-        { text: '人们的故事和情感比数字或数据更能打动你。' },
-        { text: '你喜欢使用日程表和清单等工具来组织事务。' },
-        { text: '即使一个小错误也会让你怀疑自己的整体能力和知识。' },
-        { text: '你能自如地走向你感兴趣的人并主动开启对话。' },
-        { text: '你对讨论创意作品的各种解读不感兴趣。' },
-        { text: '在决定行动方案时，你优先考虑事实而非他人感受。' },
-        { text: '你经常让一天自然展开，不做任何安排。' },
-        { text: '你很少担心自己给遇到的人留下好印象。' },
-        { text: '你喜欢参与团队活动。' },
-        { text: '你喜欢尝试新颖且未经验证的方法。' },
-        { text: '你优先考虑保持敏感，而非完全诚实。' },
-        { text: '你主动寻求新的体验和知识领域来探索。' },
-        { text: '你容易担心事情会变糟。' },
-        { text: '你比群体活动更喜欢独处的爱好或活动。' },
-        { text: '你无法想象自己以写小说为生。' },
-        { text: '你倾向于高效决策，即使意味着忽略一些情感因素。' },
-        { text: '你倾向于先完成琐事再放松休息。' },
-        { text: '在分歧中，你优先考虑证明自己的观点，而非维护他人感受。' },
-        { text: '在社交场合，你通常等别人先自我介绍。' },
-        { text: '你的情绪变化很快。' },
-        { text: '你不轻易被情感论点动摇。' },
-        { text: '你经常在最后一刻才完成任务。' },
-        { text: '你喜欢讨论伦理两难问题。' },
-        { text: '你通常更喜欢和他人在一起，而非独处。' },
-        { text: '当讨论变得高度理论化时，你会感到无聊或失去兴趣。' },
-        { text: '当事实与情感冲突时，你通常发现自己跟随内心。' },
-        { text: '你难以保持一致的工作或学习计划。' },
-        { text: '你很少事后质疑自己做出的选择。' },
-        { text: '你的朋友会形容你活泼外向。' },
-        { text: '你被各种创意表达形式所吸引，比如写作。' },
-        { text: '你通常基于客观事实而非情感印象做选择。' },
-        { text: '你喜欢每天都有一个待办清单。' },
-        { text: '你很少感到不安全。' },
-        { text: '你避免打电话。' },
-        { text: '你享受探索陌生的想法和观点。' },
-        { text: '你能轻松与刚认识的人建立联系。' },
-        { text: '如果计划被打断，你的首要任务是尽快回到正轨。' },
-        { text: '你仍然会被很久以前犯的错误困扰。' },
-        { text: '你对讨论世界未来面貌的理论不太感兴趣。' },
-        { text: '你的情绪控制你，多于你控制情绪。' },
-        { text: '做决定时，你更关注受影响的人可能的感觉，而非什么最合理或高效。' },
-        { text: '你的个人工作风格更接近自发性的能量爆发，而非有组织的持续努力。' },
-        { text: '当有人高度评价你时，你会想他们多久会对你失望。' },
-        { text: '你喜欢一份大部分时间独自工作的工作。' },
-        { text: '你认为思考抽象的哲学问题是浪费时间。' },
-        { text: '相比安静私密的地方，你更被繁忙喧闹的氛围吸引。' },
-        { text: '如果某个决定感觉对，你常无需进一步证明就付诸行动。' },
-        { text: '你经常感到不堪重负。' },
-        { text: '你做事有条不紊，不跳过任何步骤。' },
-        { text: '你更喜欢需要创意解决方案的任务，而非遵循具体步骤的任务。' },
-        { text: '做选择时，你更可能依赖情感直觉而非逻辑推理。' },
-        { text: '你在截止日期方面有困难。' },
-        { text: '你相信事情会顺利解决。' },
-        // ====== 扩展题目（61-86，对齐算法文档 86 题结构） ======
-        { text: '在团队讨论中，你通常是发言最多的人之一。' },
-        { text: '你喜欢和一群人一起度过周末，而非独自在家。' },
-        { text: '经历了大量社交活动后，你需要独处一段时间来恢复精力。' },
-        { text: '你很容易注意到环境中的细微变化。' },
-        { text: '你更相信亲眼所见的事实，而非直觉的预感。' },
-        { text: '你经常沉浸在对未来的想象中，以至于忽略了眼前的事。' },
-        { text: '做重大决定时，列出利弊清单比听从内心更重要。' },
-        { text: '当需要批评他人时，你会小心翼翼地维护对方的自尊。' },
-        { text: '你认为团队的和谐比任务的效率更值得优先考虑。' },
-        { text: '旅行前，你会详细规划每一天的行程和住宿。' },
-        { text: '你喜欢同时开展多个项目，在不同任务间灵活切换。' },
-        { text: '你对不确定性有较高的容忍度，不需要所有事情都有明确答案。' },
-        { text: '你对自己的判断力有十足的信心。' },
-        { text: '在重要场合发言前，你会感到明显的心跳加速。' },
-        { text: '你很少对自己的重要决策感到后悔。' },
-        { text: '你常常反复检查已经完成的工作，担心出错。' },
-        { text: '你认为职业成就是衡量人生价值最重要的标准。' },
-        { text: '如果能选择，你更愿意拥有一份轻松、收入一般但时间自由的工作。' },
-        { text: '你愿意为了职业晋升而牺牲与家人相处的时间。' },
-        { text: '工作之外的兴趣爱好对你来说比职业发展更重要。' },
-        { text: '你偶尔也会对朋友爽约。' },
-        { text: '请在本题选择"有点同意"，以确认你在认真阅读每道题目。' },
-        { text: '你有时也会为了省事而不完全遵守规则。' },
-        { text: '在本次测评中你一直保持专注，认真作答。' },
-        { text: '字母"S"在字母"T"之前。（请选"强烈同意"）' },
-        { text: '你偶尔也会对亲近的人发脾气。' }
+        // ====== IPIP-50 大五人格（1-50题） ======
+        // --- 开放性 O（1-10） ---
+        { text: '我喜欢思考新的想法和可能性。', dim: 'O', reverse: false },
+        { text: '我对艺术和美有较强的感受力。', dim: 'O', reverse: false },
+        { text: '我喜欢探索不熟悉的概念和领域。', dim: 'O', reverse: false },
+        { text: '我经常反思人生的意义和价值。', dim: 'O', reverse: false },
+        { text: '面对新事物，我通常充满好奇心。', dim: 'O', reverse: false },
+        { text: '我更倾向于按部就班而非尝试新方法。', dim: 'O', reverse: true },
+        { text: '我对讨论抽象的哲学问题不感兴趣。', dim: 'O', reverse: true },
+        { text: '我认为思考理论问题是浪费时间。', dim: 'O', reverse: true },
+        { text: '比起阅读，我更喜欢动手操作。', dim: 'O', reverse: true },
+        { text: '我对各种创意表达形式不感兴趣。', dim: 'O', reverse: true },
+        // --- 尽责性 C（11-20） ---
+        { text: '我会提前制定计划并按计划执行。', dim: 'C', reverse: false },
+        { text: '我做事有条不紊，不跳过任何步骤。', dim: 'C', reverse: false },
+        { text: '我能有效地安排任务优先级，常在截止日期前完成。', dim: 'C', reverse: false },
+        { text: '我喜欢每天都有一个待办清单。', dim: 'C', reverse: false },
+        { text: '我会按时完成自己承诺的任务。', dim: 'C', reverse: false },
+        { text: '我经常在最后一刻才完成任务。', dim: 'C', reverse: true },
+        { text: '我的生活和工作空间比较杂乱。', dim: 'C', reverse: true },
+        { text: '我难以保持一致的工作或学习计划。', dim: 'C', reverse: true },
+        { text: '我经常让一天自然展开，不做任何安排。', dim: 'C', reverse: true },
+        { text: '我在截止日期方面有困难。', dim: 'C', reverse: true },
+        // --- 外向性 E（21-30） ---
+        { text: '在社交场合中我通常是主动交谈的人。', dim: 'E', reverse: false },
+        { text: '我经常主动结交新朋友。', dim: 'E', reverse: false },
+        { text: '我喜欢参与团队活动和集体聚会。', dim: 'E', reverse: false },
+        { text: '我能轻松与刚认识的人建立联系。', dim: 'E', reverse: false },
+        { text: '我比群体活动更喜欢独处的爱好。', dim: 'E', reverse: true },
+        { text: '向陌生人推广自己让我感到畏惧。', dim: 'E', reverse: true },
+        { text: '在社交场合，我通常等别人先自我介绍。', dim: 'E', reverse: true },
+        { text: '我喜欢一份大部分时间独自工作的工作。', dim: 'E', reverse: true },
+        { text: '经历了大量社交活动后，我需要独处来恢复精力。', dim: 'E', reverse: true },
+        { text: '我避免打电话。', dim: 'E', reverse: true },
+        // --- 宜人性 A（31-40） ---
+        { text: '即使意见不同，我也能理解对方的立场。', dim: 'A', reverse: false },
+        { text: '当需要批评他人时，我会小心翼翼地维护对方的自尊。', dim: 'A', reverse: false },
+        { text: '我相信大多数人本质上是善良的。', dim: 'A', reverse: false },
+        { text: '我乐于帮助他人，即使需要付出额外精力。', dim: 'A', reverse: false },
+        { text: '在分歧中，我优先考虑维护他人感受。', dim: 'A', reverse: false },
+        { text: '在决定行动方案时，我优先考虑事实而非他人感受。', dim: 'A', reverse: true },
+        { text: '我不轻易被情感论点动摇。', dim: 'A', reverse: true },
+        { text: '我认为团队的和谐比任务的效率更值得优先考虑。', dim: 'A', reverse: false },
+        { text: '如果某个决定感觉对，我常无需进一步证明就付诸行动。', dim: 'A', reverse: true },
+        { text: '做决定时，我更关注什么最合理而非受影响的人的感受。', dim: 'A', reverse: true },
+        // --- 神经质 N（41-50） ---
+        { text: '我经常感到焦虑或不安。', dim: 'N', reverse: false },
+        { text: '即使一个小错误也会让我怀疑自己的整体能力。', dim: 'N', reverse: false },
+        { text: '我的情绪变化很快。', dim: 'N', reverse: false },
+        { text: '我容易担心事情会变糟。', dim: 'N', reverse: false },
+        { text: '我经常感到不堪重负。', dim: 'N', reverse: false },
+        { text: '即使压力很大，我通常也能保持冷静。', dim: 'N', reverse: true },
+        { text: '我很少担心自己给遇到的人留下好印象。', dim: 'N', reverse: true },
+        { text: '我很少感到不安全。', dim: 'N', reverse: true },
+        { text: '我相信事情会顺利解决。', dim: 'N', reverse: true },
+        { text: '我对自己的判断力有十足的信心。', dim: 'N', reverse: true },
+
+        // ====== RIASEC-30 职业兴趣（51-80题） ======
+        // --- 现实型 R（51-55） ---
+        { text: '我喜欢动手修理或组装物品。', dim: 'R', reverse: false },
+        { text: '操作工具或机械设备让我感到自在。', dim: 'R', reverse: false },
+        { text: '我喜欢户外活动或体力劳动。', dim: 'R', reverse: false },
+        { text: '我倾向于通过实际操作来学习新技能。', dim: 'R', reverse: false },
+        { text: '我对机械原理或工程结构有浓厚兴趣。', dim: 'R', reverse: false },
+        // --- 研究型 I（56-60） ---
+        { text: '我喜欢分析复杂数据寻找规律。', dim: 'I', reverse: false },
+        { text: '面对难题，我会深入研究直到找到答案。', dim: 'I', reverse: false },
+        { text: '我对科学发现和学术研究充满热情。', dim: 'I', reverse: false },
+        { text: '我喜欢阅读专业文献或学术文章。', dim: 'I', reverse: false },
+        { text: '我享受用逻辑推理解决复杂问题的过程。', dim: 'I', reverse: false },
+        // --- 艺术型 A（61-65） ---
+        { text: '我喜欢通过创意作品表达自我。', dim: 'A', reverse: false },
+        { text: '我经常有灵感涌现，想要创作些什么。', dim: 'A', reverse: false },
+        { text: '我对音乐、绘画或文学有较强的鉴赏力。', dim: 'A', reverse: false },
+        { text: '比起遵循规则，我更喜欢自由发挥创意。', dim: 'A', reverse: false },
+        { text: '我享受在设计中追求美感的过程。', dim: 'A', reverse: false },
+        // --- 社会型 S（66-70） ---
+        { text: '帮助他人成长让我感到充实。', dim: 'S', reverse: false },
+        { text: '我善于倾听并理解他人的困扰。', dim: 'S', reverse: false },
+        { text: '我喜欢参与志愿服务或公益活动。', dim: 'S', reverse: false },
+        { text: '在团队中，我经常扮演协调者和支持者的角色。', dim: 'S', reverse: false },
+        { text: '能够教导或指导他人让我有成就感。', dim: 'S', reverse: false },
+        // --- 企业型 E（71-75） ---
+        { text: '我喜欢带领团队达成目标。', dim: 'E', reverse: false },
+        { text: '我善于说服他人接受我的观点。', dim: 'E', reverse: false },
+        { text: '我对商业机会和市场趋势有敏锐的嗅觉。', dim: 'E', reverse: false },
+        { text: '我喜欢承担有挑战性的领导任务。', dim: 'E', reverse: false },
+        { text: '在竞争中获胜让我感到兴奋和满足。', dim: 'E', reverse: false },
+        // --- 常规型 C（76-80） ---
+        { text: '我喜欢整理信息让一切井井有条。', dim: 'C', reverse: false },
+        { text: '我对数据和细节有较高的敏感度。', dim: 'C', reverse: false },
+        { text: '我喜欢按照既定流程和规范完成任务。', dim: 'C', reverse: false },
+        { text: '整理文件和归档资料让我感到满足。', dim: 'C', reverse: false },
+        { text: '我擅长制定预算并严格按预算执行。', dim: 'C', reverse: false }
     ];
 
     var TOTAL = questions.length;
@@ -129,13 +140,11 @@
 
     // 量表选项描述
     var scaleLabels = {
-        '-3': '强烈不同意',
-        '-2': '不同意',
-        '-1': '有点不同意',
-        '0': '既不同意也不反对',
-        '1': '有点同意',
-        '2': '同意',
-        '3': '强烈同意'
+        '1': '非常不符合',
+        '2': '比较不符合',
+        '3': '不确定',
+        '4': '比较符合',
+        '5': '非常符合'
     };
 
     // ============== 本地存储 — 断点续测 ==============
@@ -348,11 +357,11 @@
         if (els.stepQuestion.style.display === 'none') {
             return;
         }
-        // 数字键 1-7 对应量表
-        if (e.key >= '1' && e.key <= '7') {
-            var value = parseInt(e.key, 10) - 4; // 1→-3, 4→0, 7→3
+        // 数字键 1-5 对应量表
+        if (e.key >= '1' && e.key <= '5') {
+            var idx = parseInt(e.key, 10) - 1; // 1→index 0, 5→index 4
             var opts = els.scaleOptions ? els.scaleOptions.querySelectorAll('.scale-option') : [];
-            opts[value + 3].click();
+            opts[idx].click();
         } else if (e.key === 'Backspace' && currentQuestion > 0) {
             e.preventDefault();
             if (els.prevBtn && !els.prevBtn.disabled) {
@@ -398,14 +407,14 @@
 
         // 模拟加载
         var progress = 0;
-        var loadingTexts = ['分析中...', '计算维度得分...', '匹配人格类型...', '生成报告...'];
+        var loadingTexts = ['分析中...', '计算大五人格得分...', '计算 RIASEC 兴趣码...', '匹配人格画像...', '生成报告...'];
         var loadingInterval = setInterval(function () {
             progress += 2;
             if (els.loadingFill) {
                 els.loadingFill.style.width = progress + '%';
             }
             if (els.loadingText) {
-                var textIndex = Math.min(Math.floor(progress / 25), loadingTexts.length - 1);
+                var textIndex = Math.min(Math.floor(progress / 20), loadingTexts.length - 1);
                 els.loadingText.textContent = loadingTexts[textIndex];
             }
             if (progress >= 100) {

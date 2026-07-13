@@ -16,15 +16,15 @@
 
     // ============== 模拟模板数据 ==============
     var MOCK_TEMPLATES = [
-        { id: 'TPL-001', name: '你的人格类型', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>你的人格类型：INTJ 建筑师</h3><p>作为 <strong>INTJ 建筑师</strong>，你属于稀有的人格类型，仅占总人口的约 <strong>2%</strong>。你天生具有战略思维，善于将抽象概念转化为可执行的计划。</p><p>你的核心特质包括：</p><ul><li>独立思考，追求知识与能力的极致</li><li>善于长期规划，对未来有清晰的愿景</li><li>对效率和逻辑有极高的要求</li><li>在社交中偏内向，但能在关键时刻展现领导力</li></ul><p>这份深度报告将帮助你更全面地了解自己的人格特质，发掘潜在优势，并给出针对性的成长建议。</p>' },
-        { id: 'TPL-002', name: '人格特征分析', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>人格特征深度分析</h3><p>你的认知功能组合为 <strong>Ni-Te-Fi-Se</strong>，这一独特的组合赋予了你独特的思维模式与行为倾向。</p><p>主导功能 <strong>内倾直觉(Ni)</strong> 使你能够洞察事物的内在规律，预见未来趋势。辅助功能 <strong>外倾思考(Te)</strong> 则帮助你将直觉转化为系统化的执行方案。</p>' },
+        { id: 'TPL-001', name: '你的人格画像', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>你的人格画像：沉稳架构师·IRC</h3><p>作为 <strong>沉稳架构师·IRC</strong>，你属于较为稀有的人格原型，约占人群的约 <strong>3.13%</strong>。你天生具有战略思维，善于将抽象概念转化为可执行的计划。</p><p>你的核心特质包括：</p><ul><li>独立思考，追求知识与能力的极致</li><li>善于长期规划，对未来有清晰的愿景</li><li>对效率和逻辑有极高的要求</li><li>在社交中偏内向，但能在关键时刻展现领导力</li></ul><p>这份深度报告将帮助你更全面地了解自己的人格特质，发掘潜在优势，并给出针对性的成长建议。</p>' },
+        { id: 'TPL-002', name: '人格特征分析', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>人格特征深度分析</h3><p>你的大五人格维度组合为 <strong>O↑C↑E↓A↑N↓</strong>（高开放性、高尽责性、低外向性、高宜人性、低神经质），这一独特的组合赋予了你独特的思维模式与行为倾向。</p><p>主导维度 <strong>开放性(O)</strong> 使你能够洞察事物的内在规律，预见未来趋势。辅助维度 <strong>尽责性(C)</strong> 则帮助你将洞察转化为系统化的执行方案。</p>' },
         { id: 'TPL-003', name: '人格优势', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>你的核心优势</h3><ul><li><strong>战略思维</strong>：能够从宏观角度审视问题，制定长远规划</li><li><strong>独立自主</strong>：不依赖他人认可，有强大的内在驱动力</li><li><strong>高效执行</strong>：善于将复杂目标分解为可操作的步骤</li><li><strong>深度专注</strong>：对感兴趣的领域有极强的钻研精神</li></ul>' },
         { id: 'TPL-004', name: '人格劣势', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>需要注意的方面</h3><ul><li><strong>过度完美主义</strong>：对自己和他人要求过高，容易造成压力</li><li><strong>情感表达不足</strong>：可能被误解为冷漠或缺乏同理心</li><li><strong>社交倦怠</strong>：长时间社交后会感到精力耗尽</li></ul>' },
         { id: 'TPL-005', name: '深度职业专题', type: 'chapter', typeLabel: '报告章节', status: 'draft', content: '<h3>职业发展深度解读</h3><p>基于你的人格特质，你在以下职业方向有天然优势：</p>' },
         { id: 'TPL-006', name: '解锁报告 CTA', type: 'cta', typeLabel: 'CTA 文案', status: 'published', content: '' },
-        { id: 'TPL-007', name: '推荐职位 - INTJ', type: 'job', typeLabel: '推荐职位', status: 'published', content: '' },
+        { id: 'TPL-007', name: '推荐职位 - 沉稳架构师', type: 'job', typeLabel: '推荐职位', status: 'published', content: '' },
         { id: 'TPL-008', name: '分享引导文案', type: 'cta', typeLabel: 'CTA 文案', status: 'review', content: '' },
-        { id: 'TPL-009', name: '荣格八维解读', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>荣格八维专项解读</h3><p>你的认知功能栈为：<strong>Ni &gt; Te &gt; Fi &gt; Se</strong></p>' },
+        { id: 'TPL-009', name: '大五人格五维度深度解读', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>大五人格五维度深度解读</h3><p>你的大五人格维度排序为：<strong>开放性(O) &gt; 尽责性(C) &gt; 宜人性(A) &gt; 稳定性(N↓) &gt; 外向性(E)</strong></p>' },
         { id: 'TPL-010', name: '人格恋爱专题', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>恋爱关系中的你</h3><p>在亲密关系中，你追求深度连接与精神共鸣...</p>' }
     ];
 
@@ -37,8 +37,8 @@
     ];
 
     var MOCK_VERSIONS = [
-        { version: 'v3.2.1', time: '2026-07-12 10:30', author: '陈编辑', note: '优化人格类型描述文案，增加核心特质要点列表', status: 'current', statusLabel: '当前版本', diff: { add: 45, del: 12 } },
-        { version: 'v3.2.0', time: '2026-07-10 14:20', author: '陈编辑', note: '补充荣格八维功能栈说明，调整段落顺序', status: 'published', statusLabel: '已发布', diff: { add: 78, del: 23 } },
+        { version: 'v3.2.1', time: '2026-07-12 10:30', author: '陈编辑', note: '优化人格画像描述文案，增加核心特质要点列表', status: 'current', statusLabel: '当前版本', diff: { add: 45, del: 12 } },
+        { version: 'v3.2.0', time: '2026-07-10 14:20', author: '陈编辑', note: '补充大五人格五维度说明，调整段落顺序', status: 'published', statusLabel: '已发布', diff: { add: 78, del: 23 } },
         { version: 'v3.1.0', time: '2026-07-08 09:15', author: '王主管', note: '审批通过并发布，修正统计数据来源', status: 'published', statusLabel: '已发布', diff: { add: 15, del: 8 } },
         { version: 'v3.0.0', time: '2026-07-05 16:40', author: '陈编辑', note: '大规模重写报告结构，按12章节模板重新组织内容', status: 'published', statusLabel: '已发布', diff: { add: 320, del: 180 } },
         { version: 'v2.4.3', time: '2026-06-28 11:00', author: '陈编辑', note: '微调措辞，优化阅读体验', status: 'published', statusLabel: '已发布', diff: { add: 8, del: 12 } }

@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="你的职业性格测试结果 — 免费查看人格类型、认证卡片与基础解读。">
-    <title>你的测试结果 | Career Test</title>
+    <meta name="description" content="你的职业人格测试结果 — 免费查看人格画像、RIASEC兴趣码、认证卡片与基础解读。">
+    <title>你的测试结果 | 画己职测</title>
 
     <!-- 复用 16personalities 本地资源 -->
     <link rel="stylesheet" href="16p-assets/css/styles-core.css" />
@@ -16,7 +16,7 @@
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,700..800;1,700..800&display=swap">
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-    <link rel="icon" type="image/svg+xml" href="16p-assets/images/system/logo.svg">
+    <link rel="icon" type="image/png" href="assets/images/职业测评 LOGO 透明.png">
 
     <style>[v-cloak] {display: none !important;}</style>
 </head>
@@ -27,8 +27,8 @@
         <div class="navbar navbar--sticky" id="js-navbar" data-testid="top-nav">
             <app-logo class="logo">
                 <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-                    <img src="16p-assets/images/system/logo.svg" width="32" height="32" alt="Career Test Logo">
-                    <span style="font-family:'Red Hat Display',sans-serif;font-weight:800;font-size:18px;color:#33A474;">Career Test</span>
+                    <img src="assets/images/职业测评 LOGO 透明.png" width="36" height="36" alt="画己职测 Logo" style="object-fit:cover;width:36px !important;height:36px !important;flex-shrink:0;">
+                    <span style="font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-weight:700;font-size:18px;color:#2d3436;letter-spacing:1px;">画己职测</span>
                 </a>
             </app-logo>
             <nav class="sp-nav__topmiddle middle-section items--4 anonymous">
@@ -48,20 +48,20 @@
 
         <main class="result-main">
 
-            <!-- ============== 1. 人格类型展示区 ============== -->
+            <!-- ============== 1. 人格画像展示区 ============== -->
             <section class="result-hero" id="resultHero">
                 <div class="result-hero__bg"></div>
                 <div class="result-hero__content">
-                    <p class="result-hero__label">你的职业人格类型</p>
-                    <h1 class="result-hero__code" id="personalityCode">INTJ-A-C</h1>
-                    <div class="result-hero__title" id="personalityTitle">战略家</div>
-                    <div class="result-hero__subtitle" id="personalitySubtitle">智慧的先锋 · 未来的建筑师</div>
+                    <p class="result-hero__label">你的职业人格画像</p>
+                    <h1 class="result-hero__code" id="personalityCode">沉稳架构师·IRC</h1>
+                    <div class="result-hero__title" id="personalityTitle">沉稳架构师</div>
+                    <div class="result-hero__subtitle" id="personalitySubtitle">深思熟虑的系统设计者 · 职业兴趣码 IRC</div>
                     <div class="result-hero__segments">
-                        <span class="segment segment--base">INTJ</span>
-                        <span class="segment-divider">-</span>
-                        <span class="segment segment--sub1">A</span>
-                        <span class="segment-divider">-</span>
-                        <span class="segment segment--sub2">C</span>
+                        <span class="segment segment--base">IRC</span>
+                        <span class="segment-divider">·</span>
+                        <span class="segment segment--sub1">沉稳架构师</span>
+                        <span class="segment-divider">·</span>
+                        <span class="segment segment--sub2">●●●●●</span>
                     </div>
                 </div>
             </section>
@@ -77,25 +77,29 @@
 
             <!-- ============== 3. 基础雷达图区 ============== -->
             <section class="result-radar">
-                <h2 class="result-section__title">四维分布</h2>
+                <h2 class="result-section__title">五维分布</h2>
                 <div class="result-radar__container">
                     <canvas id="radarCanvas" width="320" height="320"></canvas>
                     <div class="result-radar__legend">
                         <div class="legend-item">
+                            <span class="legend-dot" style="background:#9B7ED8"></span>
+                            <span class="legend-label">开放性 (O) <strong>78%</strong></span>
+                        </div>
+                        <div class="legend-item">
                             <span class="legend-dot" style="background:#5a96b1"></span>
-                            <span class="legend-label">外倾 (E) <strong>32%</strong></span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background:#87699a"></span>
-                            <span class="legend-label">直觉 (N) <strong>78%</strong></span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background:#deb45c"></span>
-                            <span class="legend-label">思考 (T) <strong>85%</strong></span>
+                            <span class="legend-label">尽责性 (C) <strong>85%</strong></span>
                         </div>
                         <div class="legend-item">
                             <span class="legend-dot" style="background:#5ea67e"></span>
-                            <span class="legend-label">判断 (J) <strong>71%</strong></span>
+                            <span class="legend-label">外向性 (E) <strong>32%</strong></span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background:#deb45c"></span>
+                            <span class="legend-label">宜人性 (A) <strong>71%</strong></span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background:#e17055"></span>
+                            <span class="legend-label">稳定性 (N↓) <strong>68%</strong></span>
                         </div>
                     </div>
                 </div>
@@ -177,8 +181,8 @@
 
                             <!-- 编码 + 口号 -->
                             <div class="cert-card__code-area">
-                                <div class="cert-card__code" id="cardCode">INTJ-A-C</div>
-                                <div class="cert-card__slogan" id="cardSlogan">智慧的先锋 · 未来的建筑师</div>
+                                <div class="cert-card__code" id="cardCode">沉稳架构师·IRC</div>
+                                <div class="cert-card__slogan" id="cardSlogan">深思熟虑的系统设计者 · 职业兴趣码 IRC</div>
                             </div>
 
                             <!-- 吉祥物占位区 -->
@@ -199,18 +203,18 @@
                             <div class="cert-card__info">
                                 <div class="cert-card__info-item">
                                     <span class="cert-card__info-label">人格稀有度</span>
-                                    <span class="cert-card__info-value">2.70%</span>
-                                    <span class="cert-card__info-badge">超稀有</span>
+                                    <span class="cert-card__info-value">3.13%</span>
+                                    <span class="cert-card__info-badge">稀有</span>
                                 </div>
                                 <div class="cert-card__info-item">
                                     <span class="cert-card__info-label">相同人格名人</span>
-                                    <span class="cert-card__info-value cert-card__info-value--sm">马斯克 · 尼采</span>
+                                    <span class="cert-card__info-value cert-card__info-value--sm">埃隆·马斯克 · 尼采</span>
                                 </div>
                                 <div class="cert-card__info-item">
                                     <span class="cert-card__info-label">最佳搭子</span>
                                     <div class="cert-card__partners">
-                                        <span class="partner-pill">ENFP</span>
-                                        <span class="partner-pill">ENTP</span>
+                                        <span class="partner-pill">灵感传播者</span>
+                                        <span class="partner-pill">稳健协调者</span>
                                     </div>
                                 </div>
                             </div>
@@ -316,7 +320,7 @@
             <section class="result-disclaimer">
                 <div class="disclaimer-box">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9B9BAB" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
-                    <p>本结果由 AI 根据 86 道题目综合推导，仅供自我探索与职业参考，不作为临床诊断依据。</p>
+                    <p>本结果由 AI 根据 80 道题目综合推导，仅供自我探索与职业参考，不作为临床诊断依据。</p>
                 </div>
             </section>
 
@@ -332,13 +336,13 @@
                     <div class="deep-preview__content">
                         <div class="deep-preview__chapter">
                             <span class="deep-preview__num">01</span>
-                            <h3>你的人格类型</h3>
-                            <p>INTJ-A-C 战略家 — 深入解析你的四维八极认知功能栈，揭示 Ni-Te-Fi-Se 的运作机制与深层驱动力…</p>
+                            <h3>你的人格画像</h3>
+                            <p>沉稳架构师·IRC — 深入解析你的大五人格五维度组合，揭示 O-C-E-A-N 的运作机制与深层驱动力…</p>
                         </div>
                         <div class="deep-preview__chapter">
                             <span class="deep-preview__num">02</span>
                             <h3>人格特征分析</h3>
-                            <p>从认知、情感、行为三个层面拆解你的性格特征，包含 8 项核心指标评分与人群对比数据…</p>
+                            <p>从认知、情感、行为三个层面拆解你的性格特征，包含 5 项核心维度评分与人群对比数据…</p>
                         </div>
                         <div class="deep-preview__chapter deep-preview__chapter--locked">
                             <span class="deep-preview__num">03</span>
@@ -347,8 +351,8 @@
                         </div>
                         <div class="deep-preview__chapter deep-preview__chapter--locked">
                             <span class="deep-preview__num">08</span>
-                            <h3>荣格八维专项解读</h3>
-                            <p class="deep-preview__locked-text">解锁后查看你的八维功能栈深度解析…</p>
+                            <h3>大五人格五维度深度解读</h3>
+                            <p class="deep-preview__locked-text">解锁后查看你的五维度深度解析…</p>
                         </div>
                         <div class="deep-preview__chapter deep-preview__chapter--locked">
                             <span class="deep-preview__num">11</span>
@@ -360,7 +364,7 @@
                         <div class="deep-preview__mask-content">
                             <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#9B7ED8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                             <p>12 章深度报告</p>
-                            <p class="deep-preview__mask-sub">万字级职业分析 · 荣格八维 · 恋爱指南</p>
+                            <p class="deep-preview__mask-sub">万字级职业分析 · 大五人格 · 恋爱指南</p>
                         </div>
                     </div>
                 </div>
@@ -369,7 +373,7 @@
                 <div class="deep-cta__action">
                     <div class="deep-cta__features">
                         <span class="feature-pill">12 章报告</span>
-                        <span class="feature-pill">荣格八维</span>
+                        <span class="feature-pill">大五人格</span>
                         <span class="feature-pill">职业匹配</span>
                         <span class="feature-pill">恋爱指南</span>
                     </div>
@@ -431,7 +435,7 @@
             </nav>
             <div id="copyright" class="sp-wrap tw-text-center p-sm">
                 <ul class="tw-list-none tw-p-0 tw-m-0 tw-flex tw-justify-center tw-gap-20 tw-flex-wrap">
-                    <li>&copy; 2026 Career Test. 保留所有权利</li>
+                    <li>&copy; 2026 画己职测. 保留所有权利</li>
                     <li><a href="#">隐私政策</a></li>
                     <li><a href="#">用户协议</a></li>
                     <li><a href="#">无障碍声明</a></li>

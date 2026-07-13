@@ -9,6 +9,8 @@
     // ============== 配置 ==============
     var CONFIG = {
         storageKey: 'career_test_orders',
+        versionKey: 'career_test_orders_version',
+        dataVersion: '2.0',
         exportSteps: ['正在收集订单数据...', '正在生成账单...', '正在渲染 PDF...', '导出完成'],
         refundableDays: 7  // 7 天内可退款
     };
@@ -19,20 +21,20 @@
             id: 'CT202607120001',
             date: '2026-07-12',
             dateLabel: '2026-07-12 14:32',
-            productName: 'INTJ 深度职业报告',
+            productName: '职业人格深度报告',
             amount: 2.99,
             originalAmount: 9.90,
             payMethod: '微信支付',
             status: 'completed',
             invoiceStatus: 'none',
             reportUrl: 'deep-report.html',
-            typeCode: 'INTJ-A-C'
+            typeCode: '沉稳架构师·IRC'
         },
         {
             id: 'CT202606280002',
             date: '2026-06-28',
             dateLabel: '2026-06-28 09:15',
-            productName: 'ENFP 深度职业报告',
+            productName: '职业人格深度报告',
             amount: 2.99,
             originalAmount: 9.90,
             payMethod: '支付宝',
@@ -41,20 +43,20 @@
             refundTime: '2026-07-01 10:00',
             invoiceStatus: 'none',
             reportUrl: 'deep-report.html',
-            typeCode: 'ENFP-A-C'
+            typeCode: '灵感传播者·AES'
         },
         {
             id: 'CT202605150003',
             date: '2026-05-15',
             dateLabel: '2026-05-15 16:48',
-            productName: 'INTJ 深度职业报告',
+            productName: '职业人格深度报告',
             amount: 2.99,
             originalAmount: 9.90,
             payMethod: '微信支付',
             status: 'completed',
             invoiceStatus: 'issued',
             reportUrl: 'deep-report.html',
-            typeCode: 'INTJ-T-C'
+            typeCode: '沉稳架构师·IRC'
         }
     ];
 
@@ -118,6 +120,11 @@
     //  1. 数据加载
     // ========================================================
     function loadOrders() {
+        var savedVersion = localStorage.getItem(CONFIG.versionKey);
+        if (savedVersion !== CONFIG.dataVersion) {
+            localStorage.removeItem(CONFIG.storageKey);
+            localStorage.setItem(CONFIG.versionKey, CONFIG.dataVersion);
+        }
         var saved = localStorage.getItem(CONFIG.storageKey);
         if (saved) {
             try {
@@ -650,7 +657,7 @@
     function generateBillContent() {
         var lines = [];
         lines.push('================================');
-        lines.push('   Career Test 消费账单');
+        lines.push('   画己职测 消费账单');
         lines.push('   生成日期：' + new Date().toLocaleString('zh-CN'));
         lines.push('================================');
         lines.push('');

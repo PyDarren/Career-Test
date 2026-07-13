@@ -11,11 +11,12 @@
     var CONFIG = {
         maxRecords: 3,
         storageKey: 'career_test_history',
+        versionKey: 'career_test_history_version',
+        dataVersion: '2.0',  // 数据版本：升级测评体系后递增，触发旧数据清除
         badgeColors: {
-            'INTJ': 'purple', 'INTP': 'blue', 'ENTJ': 'gold', 'ENTP': 'green',
-            'INFJ': 'green', 'INFP': 'gold', 'ENFJ': 'purple', 'ENFP': 'blue',
-            'ISTJ': 'blue', 'ISFJ': 'green', 'ESTJ': 'gold', 'ESFJ': 'purple',
-            'ISTP': 'gold', 'ISFP': 'green', 'ESTP': 'purple', 'ESFP': 'blue'
+            // RIASEC 首字母 → 徽标颜色
+            'R': 'gold', 'I': 'blue', 'A': 'purple',
+            'S': 'green', 'E': 'gold', 'C': 'green'
         }
     };
 
@@ -25,9 +26,9 @@
             id: 'rec_001',
             date: '2026-07-12',
             dateLabel: '07月12日',
-            code: 'INTJ-A-C',
-            baseCode: 'INTJ',
-            typeName: '战略师',
+            code: '沉稳架构师·IRC',
+            baseCode: 'IRC',
+            typeName: '沉稳架构师',
             isPaid: true,
             reportUrl: 'deep-report.html'
         },
@@ -35,9 +36,9 @@
             id: 'rec_002',
             date: '2026-06-28',
             dateLabel: '06月28日',
-            code: 'ENFP-A-C',
-            baseCode: 'ENFP',
-            typeName: '竞选者',
+            code: '灵感传播者·AES',
+            baseCode: 'AES',
+            typeName: '灵感传播者',
             isPaid: false,
             reportUrl: 'result-free.html'
         },
@@ -45,9 +46,9 @@
             id: 'rec_003',
             date: '2026-05-15',
             dateLabel: '05月15日',
-            code: 'INTJ-T-C',
-            baseCode: 'INTJ',
-            typeName: '战略师',
+            code: '沉稳架构师·IRC',
+            baseCode: 'IRC',
+            typeName: '沉稳架构师',
             isPaid: true,
             reportUrl: 'deep-report.html'
         }
@@ -89,6 +90,13 @@
     //  1. 数据加载（localStorage → 降级到 Mock 数据）
     // ========================================================
     function loadRecords() {
+        // 版本检测：数据版本不匹配时清除旧数据
+        var savedVersion = localStorage.getItem(CONFIG.versionKey);
+        if (savedVersion !== CONFIG.dataVersion) {
+            localStorage.removeItem(CONFIG.storageKey);
+            localStorage.setItem(CONFIG.versionKey, CONFIG.dataVersion);
+        }
+
         var saved = localStorage.getItem(CONFIG.storageKey);
         if (saved) {
             try {
@@ -148,7 +156,7 @@
     }
 
     function renderCard(record, isLatest) {
-        var badgeColor = CONFIG.badgeColors[record.baseCode] || 'purple';
+        var badgeColor = CONFIG.badgeColors[record.baseCode.charAt(0)] || 'purple';
         var paidTag = record.isPaid
             ? '<span class="record-tag record-tag--paid"><span class="record-tag__dot"></span>付费报告</span>'
             : '<span class="record-tag record-tag--free"><span class="record-tag__dot"></span>免费报告</span>';
@@ -207,7 +215,7 @@
         var previous = sorted[1];
 
         if (latest.baseCode === previous.baseCode) {
-            els.trendText.textContent = '类型稳定 · ' + latest.baseCode;
+            els.trendText.textContent = '画像稳定 · ' + latest.typeName;
             els.trendInfo.style.color = '#5ea67e';
             els.trendInfo.style.background = 'rgba(94, 166, 126, 0.08)';
         } else {

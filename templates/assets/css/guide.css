@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Career Test 测评引导页样式
+   画己职测 测评引导页样式
    基于 16personalities 设计语言
    ========================================================================== */
 
@@ -271,21 +271,21 @@
     margin: -50px 0 0 -50px;
     border-radius: 50%;
     background: #fff;
-    border: 3px solid #7559C3;
+    border: 3px solid #e17055;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 16px rgba(117, 89, 195, 0.2);
+    box-shadow: 0 4px 16px rgba(225, 112, 85, 0.2);
 }
 
 .guide-cognitive__type {
     font-family: 'Red Hat Display', sans-serif;
     font-weight: 800;
     font-size: 24px;
-    color: #7559C3;
+    color: #e17055;
 }
 
-/* 八维功能说明列表 */
+/* 大五人格维度说明列表 */
 .guide-theory {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -593,13 +593,31 @@
 /* ==========================================================================
    13. 底部 CTA
    ========================================================================== */
-.guide__cta {
+.q-hm .cta.guide__cta {
     padding: 80px 20px 100px;
+    background-color: #F9F9F9;
 }
 
-.guide__cta .section__title {
+.q-hm .cta.guide__cta .section__title {
     font-size: 32px;
     margin-bottom: 12px;
+    color: #2d3436;
+}
+
+.q-hm .cta.guide__cta .cta__subtitle {
+    color: #636e72;
+}
+
+.q-hm .cta.guide__cta .cta__shape--bottom {
+    background-color: #F9F9F9;
+}
+
+.q-hm .cta.guide__cta .cta__shape--bottom path {
+    fill: #F9F9F9;
+}
+
+.q-hm .cta.guide__cta .cta__shape--top path {
+    fill: #F9F9F9;
 }
 
 /* ==========================================================================

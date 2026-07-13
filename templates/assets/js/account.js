@@ -17,7 +17,7 @@
 
     // ============== 模拟用户数据 ==============
     var DEFAULT_USER = {
-        nickname: 'Career Test 用户',
+        nickname: '画己职测 用户',
         avatar: null,           // base64 或 null
         phone: '138****6789',
         typeCode: 'INTJ-A-C',

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Career Test 答题页补充样式
+   画己职测 答题页补充样式
    仅覆盖 16personalities CSS（personality-test.css）未涉及的部分：
    - 量表选项（.scale / .scale-option）
    - 题目卡片（.question-card）
@@ -167,12 +167,12 @@ body {
     color: #5ea67e;
 }
 
-/* 7 个圆形选项 */
+/* 5 个圆形选项 */
 .scale__options {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
     flex: 1 1 auto;
 }
 
@@ -204,28 +204,23 @@ body {
     background: #fff;
 }
 
-/* 圆圈大小：两边大中间小 (1=7 > 2=6 > 3=5 > 4) */
+/* 圆圈大小：两边大中间小 (1=5 > 2=4 > 3) */
 .scale-option--1 .scale-option__circle,
-.scale-option--7 .scale-option__circle {
-    width: 36px;
-    height: 36px;
+.scale-option--5 .scale-option__circle {
+    width: 38px;
+    height: 38px;
 }
 .scale-option--2 .scale-option__circle,
-.scale-option--6 .scale-option__circle {
+.scale-option--4 .scale-option__circle {
     width: 32px;
     height: 32px;
 }
-.scale-option--3 .scale-option__circle,
-.scale-option--5 .scale-option__circle {
-    width: 28px;
-    height: 28px;
-}
-.scale-option--4 .scale-option__circle {
-    width: 22px;
-    height: 22px;
+.scale-option--3 .scale-option__circle {
+    width: 26px;
+    height: 26px;
 }
 
-/* 1: 强烈不同意 — 暖红 */
+/* 1: 非常不符合 — 暖红 */
 .scale-option--1 .scale-option__circle {
     border-color: #e17055;
 }
@@ -236,7 +231,7 @@ body {
     box-shadow: 0 4px 12px rgba(225, 112, 85, 0.3);
 }
 
-/* 2: 不同意 — 浅红 */
+/* 2: 比较不符合 — 浅红 */
 .scale-option--2 .scale-option__circle {
     border-color: #f0867f;
 }
@@ -247,56 +242,34 @@ body {
     box-shadow: 0 4px 12px rgba(240, 134, 127, 0.3);
 }
 
-/* 3: 有点不同意 — 淡红 */
+/* 3: 不确定 — 灰 */
 .scale-option--3 .scale-option__circle {
-    border-color: #f5b7b1;
+    border-color: #b2bec3;
 }
 .scale-option--3.selected .scale-option__circle,
 .scale-option--3:hover .scale-option__circle {
-    background: #f5b7b1;
-    border-color: #f5b7b1;
-    box-shadow: 0 4px 12px rgba(245, 183, 177, 0.3);
-}
-
-/* 4: 中立 — 灰 */
-.scale-option--4 .scale-option__circle {
-    border-color: #b2bec3;
-}
-.scale-option--4.selected .scale-option__circle,
-.scale-option--4:hover .scale-option__circle {
     background: #b2bec3;
     border-color: #b2bec3;
     box-shadow: 0 4px 12px rgba(178, 190, 195, 0.3);
 }
 
-/* 5: 有点同意 — 淡青绿 */
-.scale-option--5 .scale-option__circle {
-    border-color: #a8d8c5;
-}
-.scale-option--5.selected .scale-option__circle,
-.scale-option--5:hover .scale-option__circle {
-    background: #a8d8c5;
-    border-color: #a8d8c5;
-    box-shadow: 0 4px 12px rgba(168, 216, 197, 0.3);
-}
-
-/* 6: 同意 — 青绿 */
-.scale-option--6 .scale-option__circle {
+/* 4: 比较符合 — 淡青绿 */
+.scale-option--4 .scale-option__circle {
     border-color: #5ea67e;
 }
-.scale-option--6.selected .scale-option__circle,
-.scale-option--6:hover .scale-option__circle {
+.scale-option--4.selected .scale-option__circle,
+.scale-option--4:hover .scale-option__circle {
     background: #5ea67e;
     border-color: #5ea67e;
     box-shadow: 0 4px 12px rgba(94, 166, 126, 0.3);
 }
 
-/* 7: 强烈同意 — 深绿 */
-.scale-option--7 .scale-option__circle {
+/* 5: 非常符合 — 深绿 */
+.scale-option--5 .scale-option__circle {
     border-color: #3d8b5e;
 }
-.scale-option--7.selected .scale-option__circle,
-.scale-option--7:hover .scale-option__circle {
+.scale-option--5.selected .scale-option__circle,
+.scale-option--5:hover .scale-option__circle {
     background: #3d8b5e;
     border-color: #3d8b5e;
     box-shadow: 0 4px 12px rgba(61, 139, 94, 0.3);
@@ -470,12 +443,12 @@ body {
 
     /* 桌面端圆圈大小：两边大中间小 */
     .scale-option--1 .scale-option__circle,
-    .scale-option--7 .scale-option__circle {
-        width: 44px;
-        height: 44px;
+    .scale-option--5 .scale-option__circle {
+        width: 46px;
+        height: 46px;
     }
     .scale-option--2 .scale-option__circle,
-    .scale-option--6 .scale-option__circle {
+    .scale-option--4 .scale-option__circle {
         width: 40px;
         height: 40px;
     }
@@ -522,14 +495,14 @@ body {
 
     /* 小屏圆圈大小：两边大中间小 */
     .scale-option--1 .scale-option__circle,
-    .scale-option--7 .scale-option__circle {
-        width: 28px;
-        height: 28px;
+    .scale-option--5 .scale-option__circle {
+        width: 30px;
+        height: 30px;
     }
     .scale-option--2 .scale-option__circle,
-    .scale-option--6 .scale-option__circle {
-        width: 25px;
-        height: 25px;
+    .scale-option--4 .scale-option__circle {
+        width: 26px;
+        height: 26px;
     }
     .scale-option--3 .scale-option__circle,
     .scale-option--5 .scale-option__circle {
@@ -554,14 +527,14 @@ body {
 
     /* 超小屏圆圈大小：两边大中间小 */
     .scale-option--1 .scale-option__circle,
-    .scale-option--7 .scale-option__circle {
-        width: 24px;
-        height: 24px;
+    .scale-option--5 .scale-option__circle {
+        width: 26px;
+        height: 26px;
     }
     .scale-option--2 .scale-option__circle,
-    .scale-option--6 .scale-option__circle {
-        width: 21px;
-        height: 21px;
+    .scale-option--4 .scale-option__circle {
+        width: 22px;
+        height: 22px;
     }
     .scale-option--3 .scale-option__circle,
     .scale-option--5 .scale-option__circle {

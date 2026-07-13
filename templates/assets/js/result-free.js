@@ -8,20 +8,21 @@
 
     // ============== 模拟数据（静态页面用，后端接入后替换为 API 返回） ==============
     var resultData = {
-        code: 'INTJ-A-C',
-        title: '战略师',
-        slogan: '智慧的先锋 · 未来的建筑师',
+        code: '沉稳架构师·IRC',
+        title: '沉稳架构师',
+        slogan: '深思熟虑的系统设计者 · 职业兴趣码 IRC',
         summary: '你是一个拥有深远洞察力的战略思考者，能够将抽象概念转化为系统化行动方案，在复杂环境中始终保持冷静与方向感。',
         dimensions: [
-            { label: '外倾 (E)', value: 32, color: '#5a96b1' },
-            { label: '直觉 (N)', value: 78, color: '#87699a' },
-            { label: '思考 (T)', value: 85, color: '#deb45c' },
-            { label: '判断 (J)', value: 71, color: '#5ea67e' }
+            { label: '开放性 (O)', value: 78, color: '#9B7ED8' },
+            { label: '尽责性 (C)', value: 85, color: '#5a96b1' },
+            { label: '外向性 (E)', value: 32, color: '#5ea67e' },
+            { label: '宜人性 (A)', value: 71, color: '#deb45c' },
+            { label: '稳定性 (N↓)', value: 68, color: '#e17055' }
         ],
-        rarity: '2.70%',
-        rarityLabel: '超稀有',
-        famousPeople: '马斯克 · 尼采',
-        bestPartners: ['ENFP', 'ENTP']
+        rarity: '3.13%',
+        rarityLabel: '稀有',
+        famousPeople: '埃隆·马斯克 · 尼采',
+        bestPartners: ['灵感传播者', '稳健协调者']
     };
 
     // ============== DOM 元素引用 ==============
@@ -52,7 +53,7 @@
         var cx = size / 2;
         var cy = size / 2;
         var maxRadius = 110;
-        var sides = 4;
+        var sides = resultData.dimensions.length;
         var angleStep = (Math.PI * 2) / sides;
         var startAngle = -Math.PI / 2;
 
@@ -327,7 +328,7 @@
                     }
                 } else if (channel === 'weibo') {
                     var shareUrl = encodeURIComponent(window.location.href);
-                    var shareText = encodeURIComponent('我的职业人格类型是 ' + resultData.code + ' ' + resultData.title + '！来测测你的吧～');
+                    var shareText = encodeURIComponent('我的职业人格画像是 ' + resultData.code + ' ' + resultData.title + '！来测测你的吧～');
                     window.open('https://service.weibo.com/share/share.php?url=' + shareUrl + '&title=' + shareText, '_blank');
                 }
             });

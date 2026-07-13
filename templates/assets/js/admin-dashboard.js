@@ -586,7 +586,7 @@
 
         els.screenshotDownload.addEventListener('click', function () {
             // 模拟下载
-            var blob = new Blob(['Career Test 数据看板截图\n生成时间：' + getCurrentTimeStr()], { type: 'text/plain' });
+            var blob = new Blob(['画己职测 数据看板截图\n生成时间：' + getCurrentTimeStr()], { type: 'text/plain' });
             var url = URL.createObjectURL(blob);
             var a = document.createElement('a');
             a.href = url;

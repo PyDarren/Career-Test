@@ -8,13 +8,13 @@
 
     // ============== 模拟数据（静态页面用，后端接入后替换为 API 返回） ==============
     var config = {
-        originalPrice: 199.00,
-        currentPrice: 99.00,
+        originalPrice: 9.90,
+        currentPrice: 2.99,
         // 模拟优惠券
         coupons: {
-            'NEWUSER20': { discount: 20, type: 'amount', label: '立减 ¥20' },
+            'NEWUSER20': { discount: 20, type: 'percent', label: '8 折优惠' },
             'CAREER10':  { discount: 10, type: 'percent', label: '9 折优惠' },
-            'VIP50':     { discount: 50, type: 'amount', label: '立减 ¥50' }
+            'VIP50':     { discount: 50, type: 'percent', label: '5 折优惠' }
         },
         // 轮询配置
         pollInterval: 2000,   // 2 秒

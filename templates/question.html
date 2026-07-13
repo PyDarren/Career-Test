@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="免费职业性格测试 — 60 道题，约 12 分钟完成，发现你的真实性格类型。">
+    <meta name="description" content="免费职业性格测试 — 80 道题，约 10 分钟完成，发现你的人格画像与职业兴趣方向。">
     <meta name="author" content="">
-    <title>免费性格测试 | Career Test</title>
+    <title>免费性格测试 | 画己职测</title>
 
-    <link rel="icon" href="16p-assets/images/system/logo.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" href="assets/images/职业测评 LOGO 透明.png">
 
     <!-- 16personalities 原始 CSS（完全一致） -->
     <link rel="stylesheet" href="16p-assets/css/styles-core.css" />
@@ -35,8 +35,8 @@
         <div class="navbar navbar--sticky" id="js-navbar" data-testid="top-nav">
             <app-logo class="logo">
                 <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-                    <img src="16p-assets/images/system/logo.svg" width="32" height="32" alt="Career Test Logo">
-                    <span style="font-family:'Red Hat Display',sans-serif;font-weight:800;font-size:18px;color:#33A474;">Career Test</span>
+                    <img src="assets/images/职业测评 LOGO 透明.png" width="36" height="36" alt="画己职测 Logo" style="object-fit:cover;width:36px !important;height:36px !important;flex-shrink:0;">
+                    <span style="font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-weight:700;font-size:18px;color:#2d3436;letter-spacing:1px;">画己职测</span>
                 </a>
             </app-logo>
             <nav class="sp-nav__topmiddle middle-section items--4 anonymous">
@@ -60,7 +60,7 @@
             <!-- ============== 绿色 Header ============== -->
             <header>
                 <h1>职业性格测试</h1>
-                <div class="trademark">基于荣格八维理论与 MBTI 单量表架构</div>
+                <div class="trademark">基于 IPIP 大五人格量表与霍兰德 RIASEC 职业兴趣理论</div>
             </header>
 
             <!-- ============== 3 个步骤卡片（16p 实际渲染结构） ============== -->
@@ -175,41 +175,35 @@
                             你经常主动结交新朋友。
                         </div>
 
-                        <!-- 7 点量表 -->
+                        <!-- 5 点李克特量表 -->
                         <div class="scale">
-                            <!-- 左侧标签：不同意 -->
+                            <!-- 左侧标签：不符合 -->
                             <div class="scale__label scale__label--disagree">
-                                <span class="scale__label-text">不同意</span>
+                                <span class="scale__label-text">不符合</span>
                             </div>
 
-                            <!-- 7 个圆形选项 -->
+                            <!-- 5 个圆形选项 -->
                             <div class="scale__options" id="scaleOptions">
-                                <button class="scale-option scale-option--1" data-value="-3" aria-label="强烈不同意">
+                                <button class="scale-option scale-option--1" data-value="1" aria-label="非常不符合">
                                     <span class="scale-option__circle"></span>
                                 </button>
-                                <button class="scale-option scale-option--2" data-value="-2" aria-label="不同意">
+                                <button class="scale-option scale-option--2" data-value="2" aria-label="比较不符合">
                                     <span class="scale-option__circle"></span>
                                 </button>
-                                <button class="scale-option scale-option--3" data-value="-1" aria-label="有点不同意">
-                                    <span class="scale-option__circle"></span>
-                                </button>
-                                <button class="scale-option scale-option--4" data-value="0" aria-label="既不同意也不反对">
+                                <button class="scale-option scale-option--3" data-value="3" aria-label="不确定">
                                     <span class="scale-option__circle scale-option__circle--neutral"></span>
                                 </button>
-                                <button class="scale-option scale-option--5" data-value="1" aria-label="有点同意">
+                                <button class="scale-option scale-option--4" data-value="4" aria-label="比较符合">
                                     <span class="scale-option__circle"></span>
                                 </button>
-                                <button class="scale-option scale-option--6" data-value="2" aria-label="同意">
-                                    <span class="scale-option__circle"></span>
-                                </button>
-                                <button class="scale-option scale-option--7" data-value="3" aria-label="强烈同意">
+                                <button class="scale-option scale-option--5" data-value="5" aria-label="非常符合">
                                     <span class="scale-option__circle"></span>
                                 </button>
                             </div>
 
-                            <!-- 右侧标签：同意 -->
+                            <!-- 右侧标签：符合 -->
                             <div class="scale__label scale__label--agree">
-                                <span class="scale__label-text">同意</span>
+                                <span class="scale__label-text">符合</span>
                             </div>
                         </div>
 
@@ -221,7 +215,7 @@
                     <div class="question-progress" id="progressWrapper" style="display:none;">
                         <div class="progress-label">
                             <span class="progress-label__text">答题进度</span>
-                            <span class="progress-label__count" id="progressCount">0 / 86</span>
+                            <span class="progress-label__count" id="progressCount">0 / 80</span>
                         </div>
                         <div class="progress-track">
                             <div class="progress-fill" id="progressFiller" style="width:0%;"></div>
@@ -250,11 +244,11 @@
                             </svg>
                         </div>
                         <h2 class="complete-card__title">答题完成！</h2>
-                        <p class="complete-card__desc">你已完成全部 60 道题目，正在生成你的职业性格分析报告...</p>
+                        <p class="complete-card__desc">你已完成全部 80 道题目，正在生成你的职业性格分析报告...</p>
 
                         <div class="complete-card__stats">
                             <div class="complete-card__stat">
-                                <div class="complete-card__stat-value text--green">60</div>
+                                <div class="complete-card__stat-value text--green">80</div>
                                 <div class="complete-card__stat-label">题目数</div>
                             </div>
                             <div class="complete-card__stat">
@@ -331,7 +325,7 @@
             </nav>
             <div id="copyright" class="sp-wrap tw-text-center p-sm">
                 <ul class="tw-list-none tw-p-0 tw-m-0 tw-flex tw-justify-center tw-gap-20 tw-flex-wrap">
-                    <li>&copy; 2026 Career Test. 保留所有权利</li>
+                    <li>&copy; 2026 画己职测. 保留所有权利</li>
                     <li><a href="#">隐私政策</a></li>
                     <li><a href="#">用户协议</a></li>
                     <li><a href="#">无障碍声明</a></li>

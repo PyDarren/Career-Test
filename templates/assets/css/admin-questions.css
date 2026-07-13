@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Career Test 后台题库管理页样式
+   画己职测 后台题库管理页样式
    PC 端管理后台，配色与前台保持一致
    ========================================================================== */
 
@@ -545,10 +545,17 @@ body.admin-body {
     font-weight: 600;
 }
 
-.category-tag--EI { background: rgba(155, 126, 216, 0.1); color: #9B7ED8; }
-.category-tag--SN { background: rgba(90, 150, 177, 0.1); color: #5a96b1; }
-.category-tag--TF { background: rgba(222, 180, 92, 0.1); color: #deb45c; }
-.category-tag--JP { background: rgba(94, 166, 126, 0.1); color: #5ea67e; }
+.category-tag--BO { background: rgba(155, 126, 216, 0.1); color: #9B7ED8; }
+.category-tag--BC { background: rgba(90, 150, 177, 0.1); color: #5a96b1; }
+.category-tag--BE { background: rgba(94, 166, 126, 0.1); color: #5ea67e; }
+.category-tag--BA { background: rgba(222, 180, 92, 0.1); color: #deb45c; }
+.category-tag--BN { background: rgba(225, 112, 85, 0.1); color: #e17055; }
+.category-tag--RR { background: rgba(180, 120, 60, 0.1); color: #b4783c; }
+.category-tag--RI { background: rgba(70, 130, 180, 0.1); color: #4682b4; }
+.category-tag--RA { background: rgba(200, 100, 150, 0.1); color: #c86496; }
+.category-tag--RS { background: rgba(100, 180, 130, 0.1); color: #64b482; }
+.category-tag--RE { background: rgba(210, 140, 70, 0.1); color: #d28c46; }
+.category-tag--RC { background: rgba(140, 140, 160, 0.1); color: #8c8ca0; }
 
 .status-dot {
     display: inline-flex;

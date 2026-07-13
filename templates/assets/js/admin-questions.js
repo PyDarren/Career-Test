@@ -10,32 +10,34 @@
     // ============== 配置 ==============
     var CONFIG = {
         storageKey: 'admin_questions',
-        versionKey: 'admin_question_versions',
+        versionKey: 'admin_questions_version',   // 版本检测：数据版本不匹配时清除旧数据
+        dataVersion: '2.0',
+        versionsKey: 'admin_question_versions',  // 版本历史记录存储
         grayscaleKey: 'admin_grayscale_config',
         pageSize: 10
     };
 
     // ============== 模拟题目数据 ==============
     var MOCK_QUESTIONS = [
-        { id: 'Q001', question: '在社交聚会中，你更倾向于主动与人交谈还是安静观察？', optionA: '主动与人交谈', optionB: '安静观察', weight: 3, category: 'EI', status: 'active', logs: [{ time: '2026-07-10 14:30', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q002', question: '面对新项目时，你更关注整体愿景还是具体执行步骤？', optionA: '整体愿景', optionB: '具体执行步骤', weight: 4, category: 'SN', status: 'active', logs: [{ time: '2026-07-10 14:35', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q003', question: '做决定时，你更依赖逻辑分析还是内心感受？', optionA: '逻辑分析', optionB: '内心感受', weight: 5, category: 'TF', status: 'active', logs: [{ time: '2026-07-10 14:40', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q004', question: '你更喜欢有计划地安排行程还是保持灵活性？', optionA: '有计划地安排', optionB: '保持灵活性', weight: 3, category: 'JP', status: 'active', logs: [{ time: '2026-07-10 14:42', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q005', question: '阅读时你更喜欢概念性理论还是实用性操作指南？', optionA: '概念性理论', optionB: '实用性操作指南', weight: 2, category: 'SN', status: 'active', logs: [{ time: '2026-07-10 14:45', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q006', question: '团队讨论中你更愿意公开发言还是私下交流想法？', optionA: '公开发言', optionB: '私下交流想法', weight: 3, category: 'EI', status: 'active', logs: [{ time: '2026-07-10 14:48', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q007', question: '你认为公正的评判应基于规则还是具体情境？', optionA: '基于规则', optionB: '基于具体情境', weight: 4, category: 'TF', status: 'grayscale', logs: [{ time: '2026-07-11 09:00', author: '陈管理', action: '创建题目' }, { time: '2026-07-11 10:00', author: '陈管理', action: '设为灰度' }] },
-        { id: 'Q008', question: '完成一项任务后你更倾向于立即开始下一项还是先休息调整？', optionA: '立即开始下一项', optionB: '先休息调整', weight: 2, category: 'JP', status: 'active', logs: [{ time: '2026-07-11 09:15', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q009', question: '你更容易被未来的可能性还是过去的经验所激励？', optionA: '未来的可能性', optionB: '过去的经验', weight: 4, category: 'SN', status: 'active', logs: [{ time: '2026-07-11 09:20', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q010', question: '在冲突中你更追求公平客观还是和谐共情？', optionA: '公平客观', optionB: '和谐共情', weight: 5, category: 'TF', status: 'active', logs: [{ time: '2026-07-11 09:25', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q011', question: '你喜欢在嘈杂的开放环境还是安静独处空间工作？', optionA: '嘈杂的开放环境', optionB: '安静独处空间', weight: 3, category: 'EI', status: 'inactive', logs: [{ time: '2026-07-11 09:30', author: '陈管理', action: '创建题目' }, { time: '2026-07-11 11:00', author: '陈管理', action: '禁用题目' }] },
-        { id: 'Q012', question: '你更看重任务的完成质量还是完成效率？', optionA: '完成质量', optionB: '完成效率', weight: 3, category: 'JP', status: 'grayscale', logs: [{ time: '2026-07-11 10:00', author: '陈管理', action: '创建题目' }] }
+        { id: 'Q001', question: '我喜欢思考新的想法和可能性。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'BO', status: 'published', logs: [{ time: '2026-07-10 14:30', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q002', question: '我会提前制定计划并按计划执行。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'BC', status: 'published', logs: [{ time: '2026-07-10 14:35', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q003', question: '在社交场合中我通常是主动交谈的人。', optionA: '非常不符合', optionB: '非常符合', weight: 2, category: 'BE', status: 'published', logs: [{ time: '2026-07-10 14:40', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q004', question: '即使意见不同，我也能理解对方的立场。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'BA', status: 'published', logs: [{ time: '2026-07-10 14:42', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q005', question: '我经常感到焦虑或不安。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'BN', status: 'published', logs: [{ time: '2026-07-10 14:45', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q006', question: '我更倾向于按部就班而非尝试新方法。', optionA: '非常不符合', optionB: '非常符合', weight: 2, category: 'BO', status: 'draft', logs: [{ time: '2026-07-10 14:48', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q007', question: '我经常在最后一刻才完成任务。', optionA: '非常不符合', optionB: '非常符合', weight: 2, category: 'BC', status: 'draft', logs: [{ time: '2026-07-11 09:00', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q008', question: '我比群体活动更喜欢独处的爱好。', optionA: '非常不符合', optionB: '非常符合', weight: 2, category: 'BE', status: 'published', logs: [{ time: '2026-07-11 09:15', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q009', question: '我喜欢动手修理或组装物品。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'RR', status: 'published', logs: [{ time: '2026-07-11 09:20', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q010', question: '我喜欢分析复杂数据寻找规律。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'RI', status: 'published', logs: [{ time: '2026-07-11 09:25', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q011', question: '我喜欢通过创意作品表达自我。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'RA', status: 'draft', logs: [{ time: '2026-07-11 09:30', author: '陈管理', action: '创建题目' }] },
+        { id: 'Q012', question: '帮助他人成长让我感到充实。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'RS', status: 'published', logs: [{ time: '2026-07-11 10:00', author: '陈管理', action: '创建题目' }] }
     ];
 
     var MOCK_VERSIONS = [
-        { version: 'v2.3', desc: '新增 3 道 T/F 维度灰度题目，优化 E/I 维度权重分配', author: '陈管理', time: '2026-07-11 10:30', isCurrent: true },
+        { version: 'v2.3', desc: '新增 3 道宜人性(BA)维度灰度题目，优化外向性(BE)维度权重分配', author: '陈管理', time: '2026-07-11 10:30', isCurrent: true },
         { version: 'v2.2', desc: '修正 Q005 题干表述歧义，调整 Q007 权重至 4', author: '陈管理', time: '2026-07-05 16:20', isCurrent: false },
-        { version: 'v2.1', desc: '批量导入 15 道 J/P 维度新题目，替换旧版题库', author: '编辑员A', time: '2026-06-28 14:00', isCurrent: false },
-        { version: 'v2.0', desc: '题库架构升级至 6 点量表强制选择模式', author: '陈管理', time: '2026-06-15 09:00', isCurrent: false }
+        { version: 'v2.1', desc: '批量导入 15 道尽责性(BC)维度新题目，替换旧版题库', author: '编辑员A', time: '2026-06-28 14:00', isCurrent: false },
+        { version: 'v2.0', desc: '题库架构升级至 5 点李克特量表架构', author: '陈管理', time: '2026-06-15 09:00', isCurrent: false }
     ];
 
     // ============== DOM 引用 ==============
@@ -110,6 +112,13 @@
     //  1. 数据加载
     // ========================================================
     function loadQuestions() {
+        // 版本检测：数据版本不匹配时清除旧数据
+        var savedVersion = localStorage.getItem(CONFIG.versionKey);
+        if (savedVersion !== CONFIG.dataVersion) {
+            localStorage.removeItem(CONFIG.storageKey);
+            localStorage.setItem(CONFIG.versionKey, CONFIG.dataVersion);
+        }
+
         var saved = localStorage.getItem(CONFIG.storageKey);
         if (saved) {
             try {
@@ -129,7 +138,7 @@
     }
 
     function loadVersions() {
-        var saved = localStorage.getItem(CONFIG.versionKey);
+        var saved = localStorage.getItem(CONFIG.versionsKey);
         if (saved) {
             try {
                 state.versions = JSON.parse(saved);
@@ -141,7 +150,7 @@
     }
 
     function saveVersions() {
-        localStorage.setItem(CONFIG.versionKey, JSON.stringify(state.versions));
+        localStorage.setItem(CONFIG.versionsKey, JSON.stringify(state.versions));
     }
 
     // ========================================================
@@ -178,7 +187,7 @@
     function renderRow(q) {
         var weightClass = q.weight <= 2 ? 'low' : q.weight <= 3 ? 'mid' : q.weight === 4 ? 'high' : 'key';
         var statusClass = 'status-dot--' + q.status;
-        var statusText = { active: '启用', inactive: '禁用', grayscale: '灰度中' }[q.status];
+        var statusText = { published: '已发布', draft: '草稿', active: '启用', inactive: '禁用', grayscale: '灰度中' }[q.status];
         var isChecked = state.selectedIds.has(q.id);
 
         return '<tr data-id="' + q.id + '">' +
@@ -268,8 +277,8 @@
     // ========================================================
     function updateStats() {
         els.statTotal.textContent = state.questions.length;
-        els.statActive.textContent = state.questions.filter(function (q) { return q.status === 'active'; }).length;
-        els.statGrayscale.textContent = state.questions.filter(function (q) { return q.status === 'grayscale'; }).length;
+        els.statActive.textContent = state.questions.filter(function (q) { return q.status === 'published' || q.status === 'active'; }).length;
+        els.statGrayscale.textContent = state.questions.filter(function (q) { return q.status === 'draft' || q.status === 'grayscale'; }).length;
     }
 
     // ========================================================
@@ -339,8 +348,8 @@
             els.editOptionA.value = '';
             els.editOptionB.value = '';
             els.editWeight.value = '3';
-            els.editCategory.value = 'EI';
-            setRadioValue('editStatus', 'active');
+            els.editCategory.value = 'BO';
+            setRadioValue('editStatus', 'published');
             els.editLogSection.style.display = 'none';
         }
 
@@ -518,7 +527,7 @@
                     optionA: '选项 A',
                     optionB: '选项 B',
                     weight: 3,
-                    category: ['EI', 'SN', 'TF', 'JP'][i % 4],
+                    category: ['BO', 'BC', 'BE', 'BA', 'BN', 'RR', 'RI', 'RA', 'RS', 'RE', 'RC'][i % 11],
                     status: 'inactive',
                     logs: [{ time: getCurrentTimeStr(), author: '陈管理', action: '批量导入' }]
                 });
@@ -535,7 +544,7 @@
         // 下载模板
         els.downloadTemplate.addEventListener('click', function (e) {
             e.preventDefault();
-            var csv = 'ID,题干,选项A,选项B,权重,分类,状态\nQ001,示例题干,选项A内容,选项B内容,3,EI,active\n';
+            var csv = 'ID,题干,选项A,选项B,权重,分类,状态\nQ001,示例题干,非常不符合,非常符合,3,BO,published\n';
             var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
             var url = URL.createObjectURL(blob);
             var a = document.createElement('a');
