@@ -6,24 +6,15 @@
 (function () {
     'use strict';
 
-    // ============== 模拟数据（静态页面用，后端接入后替换为 API 返回） ==============
+    // ============== 配置 ==============
     var config = {
         originalPrice: 9.90,
         currentPrice: 2.99,
-        // 模拟优惠券
-        coupons: {
-            'NEWUSER20': { discount: 20, type: 'percent', label: '8 折优惠' },
-            'CAREER10':  { discount: 10, type: 'percent', label: '9 折优惠' },
-            'VIP50':     { discount: 50, type: 'percent', label: '5 折优惠' }
-        },
         // 轮询配置
         pollInterval: 2000,   // 2 秒
         pollMaxCount: 30,     // 最多 30 次 = 60 秒
         // 支付成功跳转
-        redirectUrl: 'deep-report.html',
-        // 支付 H5 跳转（模拟）
-        wechatPayUrl: 'https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb',
-        alipayUrl: 'https://mclient.alipay.com/cashier/mobilepay.htm'
+        redirectUrl: '/deep-report/'
     };
 
     var state = {
@@ -33,7 +24,9 @@
         finalPrice: config.currentPrice,
         isPaying: false,
         pollTimer: null,
-        pollCount: 0
+        pollCount: 0,
+        orderId: null,
+        assessmentId: null
     };
 
     // ============== DOM 元素引用 ==============
@@ -68,7 +61,7 @@
         });
     }
 
-    // ============== 2. 优惠券验证 ==============
+    // ============== 2. 优惠券验证（后端验证） ==============
     function initCoupon() {
         if (!els.couponApplyBtn) return;
 
@@ -80,35 +73,54 @@
                 return;
             }
 
-            // 模拟验证
-            var coupon = config.coupons[code];
+            // 禁用按钮，防止重复提交
+            els.couponApplyBtn.disabled = true;
+            els.couponApplyBtn.textContent = '验证中…';
+            updateCouponHint('正在验证优惠券…', '');
 
-            if (coupon) {
-                state.couponCode = code;
+            API.validateCoupon(code).then(function (res) {
+                els.couponApplyBtn.disabled = false;
 
-                if (coupon.type === 'amount') {
-                    state.couponDiscount = coupon.discount;
-                    state.finalPrice = Math.max(0.01, config.currentPrice - coupon.discount);
-                } else if (coupon.type === 'percent') {
-                    state.couponDiscount = config.currentPrice * (coupon.discount / 100);
-                    state.finalPrice = config.currentPrice - state.couponDiscount;
+                if (res && res.valid) {
+                    state.couponCode = code;
+                    state.couponDiscount = res.discount || 0;
+                    // 使用后端返回的最终价格，但确保显示为 2.99 体系
+                    state.finalPrice = res.final_price !== undefined
+                        ? res.final_price
+                        : Math.max(0.01, config.currentPrice - state.couponDiscount);
+
+                    var label = state.couponDiscount > 0
+                        ? '优惠 ¥' + state.couponDiscount.toFixed(2)
+                        : '优惠券已应用';
+                    updateCouponHint('优惠券已应用：' + label, 'success');
+                    updatePriceDisplay();
+                    els.couponApplyBtn.classList.add('coupon-apply-btn--active');
+                    els.couponApplyBtn.textContent = '已使用';
+
+                    trackEvent('coupon_apply', {
+                        code: code,
+                        discount: state.couponDiscount,
+                        final_price: state.finalPrice
+                    });
+                } else {
+                    resetCoupon('优惠券码无效或已过期');
                 }
-
-                updateCouponHint('优惠券已应用：' + coupon.label, 'success');
-                updatePriceDisplay();
-                els.couponApplyBtn.classList.add('coupon-apply-btn--active');
-                els.couponApplyBtn.textContent = '已使用';
-            } else {
-                state.couponCode = null;
-                state.couponDiscount = 0;
-                state.finalPrice = config.currentPrice;
-
-                updateCouponHint('优惠券码无效或已过期', 'error');
-                updatePriceDisplay();
-                els.couponApplyBtn.classList.remove('coupon-apply-btn--active');
-                els.couponApplyBtn.textContent = '使用';
-            }
+            }).catch(function (err) {
+                els.couponApplyBtn.disabled = false;
+                resetCoupon(err.message || '优惠券验证失败，请重试');
+            });
         });
+    }
+
+    function resetCoupon(message) {
+        state.couponCode = null;
+        state.couponDiscount = 0;
+        state.finalPrice = config.currentPrice;
+
+        updateCouponHint(message, 'error');
+        updatePriceDisplay();
+        els.couponApplyBtn.classList.remove('coupon-apply-btn--active');
+        els.couponApplyBtn.textContent = '使用';
     }
 
     function updateCouponHint(message, type) {
@@ -145,10 +157,29 @@
 
         els.payBtn.addEventListener('click', function () {
             if (state.isPaying) return;
-
-            // 模拟创建订单 + 发起支付
             startPayment();
         });
+    }
+
+    // 从 URL 参数或 localStorage 获取 assessment_id
+    function getAssessmentId() {
+        // 优先从 URL 参数获取
+        var params = new URLSearchParams(window.location.search);
+        var id = params.get('assessment_id') || params.get('session_token') || '';
+        if (id) return id;
+
+        // 从 localStorage 获取（测评提交后存储的 session_token）
+        if (typeof API !== 'undefined' && API.getSessionToken) {
+            id = API.getSessionToken();
+            if (id) return id;
+        }
+
+        try {
+            id = localStorage.getItem('last_assessment_id') || '';
+        } catch (e) {
+            id = '';
+        }
+        return id;
     }
 
     function startPayment() {
@@ -157,6 +188,14 @@
         els.payStatus.style.display = 'flex';
         els.payStatusText.textContent = '正在创建订单…';
 
+        // 获取测评 ID
+        state.assessmentId = getAssessmentId();
+        if (!state.assessmentId) {
+            showToast('未找到测评记录，请先完成测评', 'error');
+            resetPayState();
+            return;
+        }
+
         // 埋点
         trackEvent('pay_click', {
             method: state.selectedMethod,
@@ -164,51 +203,124 @@
             coupon: state.couponCode
         });
 
-        // 模拟创建订单（1 秒后）
-        setTimeout(function () {
+        // 构建订单数据
+        var orderData = {
+            payment_channel: state.selectedMethod,
+            assessment_id: state.assessmentId
+        };
+        if (state.couponCode) {
+            orderData.coupon_code = state.couponCode;
+        }
+
+        // 调用 API 创建订单
+        API.createOrder(orderData).then(function (res) {
+            state.orderId = res.order_id;
+
+            // 存储 order_id 以备后用
+            try {
+                localStorage.setItem('current_order_id', res.order_id);
+            } catch (e) {}
+
             els.payStatusText.textContent = '正在调起' + (state.selectedMethod === 'wechat' ? '微信' : '支付宝') + '支付…';
 
-            // 模拟跳转到支付 H5 页面
-            setTimeout(function () {
-                // 在真实环境中，此处应跳转到支付平台 H5
-                // window.location.href = state.selectedMethod === 'wechat' ? config.wechatPayUrl : config.alipayUrl;
+            // 根据返回的支付参数调起支付
+            if (res.pay_url) {
+                // 生产环境：有支付跳转 URL
+                // 开发环境模拟：创建订单后直接进入轮询（模拟支付成功）
+                // 如需启用真实跳转，取消下面一行的注释
+                // window.location.href = res.pay_url;
+            }
 
-                // 静态页面模拟：直接进入轮询
-                els.payStatusText.textContent = '支付完成？正在确认订单状态…';
-                startPolling();
-            }, 1500);
-        }, 1000);
+            // 进入轮询（开发环境直接轮询，模拟支付成功）
+            setTimeout(function () {
+                els.payStatusText.textContent = '正在确认订单状态…';
+                startPolling(state.orderId);
+            }, 1000);
+        }).catch(function (err) {
+            showToast('创建订单失败：' + (err.message || '请重试'), 'error');
+            resetPayState();
+        });
     }
 
-    // ============== 4. 订单状态轮询 ==============
-    function startPolling() {
+    function resetPayState() {
+        state.isPaying = false;
+        state.orderId = null;
+        els.payBtn.disabled = false;
+        els.payStatus.style.display = 'none';
+    }
+
+    // ============== 4. 订单状态轮询（调用 API） ==============
+    function startPolling(orderId) {
         state.pollCount = 0;
 
         // 清除已有定时器
         if (state.pollTimer) {
-            clearInterval(state.pollTimer);
+            clearTimeout(state.pollTimer);
         }
 
-        state.pollTimer = setInterval(function () {
+        function pollOnce() {
             state.pollCount++;
 
-            // 模拟轮询：第 3 次时返回成功
-            if (state.pollCount >= 3) {
-                clearInterval(state.pollTimer);
-                onPaySuccess();
-            } else if (state.pollCount >= config.pollMaxCount) {
-                // 超时
-                clearInterval(state.pollTimer);
-                onPayTimeout();
-            } else {
-                // 更新状态文字
-                var dots = '.'.repeat(state.pollCount % 4);
-                els.payStatusText.textContent = '等待支付确认' + dots;
-            }
-        }, config.pollInterval);
+            API.getOrderStatus(orderId).then(function (res) {
+                if (res && res.status === 'paid') {
+                    clearPollTimer();
+                    onPaySuccess(res);
+                    return;
+                }
+
+                if (res && (res.status === 'expired' || res.status === 'failed')) {
+                    clearPollTimer();
+                    onPayError(res.status);
+                    return;
+                }
+
+                // 继续轮询
+                if (state.pollCount >= config.pollMaxCount) {
+                    clearPollTimer();
+                    onPayTimeout();
+                } else {
+                    // 更新状态文字
+                    var dots = '.'.repeat(state.pollCount % 4);
+                    els.payStatusText.textContent = '等待支付确认' + dots;
+                    state.pollTimer = setTimeout(pollOnce, config.pollInterval);
+                }
+            }).catch(function () {
+                // 网络错误时继续轮询（不消耗次数）
+                if (state.pollCount >= config.pollMaxCount) {
+                    clearPollTimer();
+                    onPayTimeout();
+                } else {
+                    state.pollTimer = setTimeout(pollOnce, config.pollInterval);
+                }
+            });
+        }
+
+        // 首次轮询
+        state.pollTimer = setTimeout(pollOnce, config.pollInterval);
     }
 
-    function onPaySuccess() {
+    function clearPollTimer() {
+        if (state.pollTimer) {
+            clearTimeout(state.pollTimer);
+            state.pollTimer = null;
+        }
+    }
+
+    function onPayError(status) {
+        els.payStatus.style.display = 'none';
+        resetPayState();
+
+        var msg = status === 'expired' ? '订单已过期，请重新支付' : '支付失败，请重试';
+        showToast(msg, 'error');
+
+        trackEvent('pay_error', {
+            method: state.selectedMethod,
+            amount: state.finalPrice,
+            status: status
+        });
+    }
+
+    function onPaySuccess(payRes) {
         els.payStatusText.textContent = '支付成功！正在跳转到报告…';
         els.payStatus.style.display = 'none';
 
@@ -219,34 +331,39 @@
         trackEvent('pay_success', {
             method: state.selectedMethod,
             amount: state.finalPrice,
-            coupon: state.couponCode
+            coupon: state.couponCode,
+            order_id: state.orderId
         });
 
-        // 延迟跳转
+        // 延迟跳转，携带 assessment_id
         setTimeout(function () {
-            window.location.href = config.redirectUrl;
+            var redirectUrl = config.redirectUrl;
+            if (state.assessmentId) {
+                redirectUrl += '?assessment_id=' + encodeURIComponent(state.assessmentId);
+            }
+            window.location.href = redirectUrl;
         }, 1500);
     }
 
     function onPayTimeout() {
         els.payStatus.style.display = 'none';
-        els.payBtn.disabled = false;
-        state.isPaying = false;
+        resetPayState();
 
-        showToast('支付超时，请重试', 'error');
+        showToast('支付超时，如已扣款请联系客服', 'error');
 
         // 埋点
         trackEvent('pay_timeout', {
             method: state.selectedMethod,
-            amount: state.finalPrice
+            amount: state.finalPrice,
+            order_id: state.orderId
         });
     }
 
     // ============== 工具函数 ==============
     function trackEvent(eventName, data) {
-        console.log('[Track]', eventName, data);
-        // 后端接入后替换为真实埋点 API
-        // fetch('/api/stats/track/', { method: 'POST', body: JSON.stringify({ event: eventName, ...data }) });
+        if (typeof API !== 'undefined' && API.trackEvent) {
+            API.trackEvent(eventName, data, 'payment');
+        }
     }
 
     function showToast(message, type) {

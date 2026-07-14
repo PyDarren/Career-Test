@@ -1,7 +1,9 @@
 /**
  * admin-questions.js — 后台题库管理交互脚本
  * 功能：表格渲染、搜索筛选、新增/编辑/删除、批量操作、
- *       Excel 导入导出、版本控制、灰度发布配置
+ *       导入导出、版本控制、灰度发布配置
+ * 数据来源：API.getAdminQuestions / API.createAdminQuestion /
+ *           API.updateAdminQuestion / API.deleteAdminQuestion / API.exportAdminQuestions
  */
 
 (function () {
@@ -9,36 +11,22 @@
 
     // ============== 配置 ==============
     var CONFIG = {
-        storageKey: 'admin_questions',
-        versionKey: 'admin_questions_version',   // 版本检测：数据版本不匹配时清除旧数据
-        dataVersion: '2.0',
-        versionsKey: 'admin_question_versions',  // 版本历史记录存储
-        grayscaleKey: 'admin_grayscale_config',
+        storageKey: 'admin_questions_cache',        // 缓存键（仅用于网络异常时的降级缓存）
+        versionKey: 'admin_questions_version',       // 版本检测：数据版本不匹配时清除旧缓存
+        dataVersion: '3.0',
+        versionsKey: 'admin_question_versions',      // 版本历史记录存储（本地配置）
+        grayscaleKey: 'admin_grayscale_config',      // 灰度发布配置（本地配置）
         pageSize: 10
     };
 
-    // ============== 模拟题目数据 ==============
-    var MOCK_QUESTIONS = [
-        { id: 'Q001', question: '我喜欢思考新的想法和可能性。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'BO', status: 'published', logs: [{ time: '2026-07-10 14:30', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q002', question: '我会提前制定计划并按计划执行。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'BC', status: 'published', logs: [{ time: '2026-07-10 14:35', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q003', question: '在社交场合中我通常是主动交谈的人。', optionA: '非常不符合', optionB: '非常符合', weight: 2, category: 'BE', status: 'published', logs: [{ time: '2026-07-10 14:40', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q004', question: '即使意见不同，我也能理解对方的立场。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'BA', status: 'published', logs: [{ time: '2026-07-10 14:42', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q005', question: '我经常感到焦虑或不安。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'BN', status: 'published', logs: [{ time: '2026-07-10 14:45', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q006', question: '我更倾向于按部就班而非尝试新方法。', optionA: '非常不符合', optionB: '非常符合', weight: 2, category: 'BO', status: 'draft', logs: [{ time: '2026-07-10 14:48', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q007', question: '我经常在最后一刻才完成任务。', optionA: '非常不符合', optionB: '非常符合', weight: 2, category: 'BC', status: 'draft', logs: [{ time: '2026-07-11 09:00', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q008', question: '我比群体活动更喜欢独处的爱好。', optionA: '非常不符合', optionB: '非常符合', weight: 2, category: 'BE', status: 'published', logs: [{ time: '2026-07-11 09:15', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q009', question: '我喜欢动手修理或组装物品。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'RR', status: 'published', logs: [{ time: '2026-07-11 09:20', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q010', question: '我喜欢分析复杂数据寻找规律。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'RI', status: 'published', logs: [{ time: '2026-07-11 09:25', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q011', question: '我喜欢通过创意作品表达自我。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'RA', status: 'draft', logs: [{ time: '2026-07-11 09:30', author: '陈管理', action: '创建题目' }] },
-        { id: 'Q012', question: '帮助他人成长让我感到充实。', optionA: '非常不符合', optionB: '非常符合', weight: 3, category: 'RS', status: 'published', logs: [{ time: '2026-07-11 10:00', author: '陈管理', action: '创建题目' }] }
-    ];
-
-    var MOCK_VERSIONS = [
-        { version: 'v2.3', desc: '新增 3 道宜人性(BA)维度灰度题目，优化外向性(BE)维度权重分配', author: '陈管理', time: '2026-07-11 10:30', isCurrent: true },
-        { version: 'v2.2', desc: '修正 Q005 题干表述歧义，调整 Q007 权重至 4', author: '陈管理', time: '2026-07-05 16:20', isCurrent: false },
-        { version: 'v2.1', desc: '批量导入 15 道尽责性(BC)维度新题目，替换旧版题库', author: '编辑员A', time: '2026-06-28 14:00', isCurrent: false },
-        { version: 'v2.0', desc: '题库架构升级至 5 点李克特量表架构', author: '陈管理', time: '2026-06-15 09:00', isCurrent: false }
-    ];
+    // 题目状态中文映射（统一使用 active/inactive/grayscale）
+    var STATUS_MAP = {
+        active: '启用中',
+        inactive: '已停用',
+        grayscale: '灰度中',
+        published: '已发布',
+        draft: '草稿'
+    };
 
     // ============== DOM 引用 ==============
     var els = {
@@ -99,70 +87,79 @@
 
     // ============== 状态 ==============
     var state = {
-        questions: [],
-        versions: [],
+        questions: [],           // 当前页题目（来自 API）
+        total: 0,                // 筛选后题目总数（来自 API）
+        stats: {},               // 统计概览（来自 API）
+        versions: [],            // 版本历史（本地内存）
         currentPage: 1,
-        selectedIds: new Set(),
+        selectedIds: new Set(),  // 当前页选中题目 id
         editingId: null,
         pendingDeleteIds: null,
         importFile: null
     };
 
     // ========================================================
-    //  1. 数据加载
+    //  1. 数据加载（服务端分页 + 筛选）
     // ========================================================
+    function buildParams() {
+        return {
+            search: els.searchInput.value.trim(),
+            category: els.filterCategory.value,
+            status: els.filterStatus.value,
+            page: state.currentPage,
+            page_size: CONFIG.pageSize
+        };
+    }
+
     function loadQuestions() {
-        // 版本检测：数据版本不匹配时清除旧数据
+        // 版本检测：缓存版本不匹配时清除旧缓存
         var savedVersion = localStorage.getItem(CONFIG.versionKey);
         if (savedVersion !== CONFIG.dataVersion) {
             localStorage.removeItem(CONFIG.storageKey);
             localStorage.setItem(CONFIG.versionKey, CONFIG.dataVersion);
         }
 
-        var saved = localStorage.getItem(CONFIG.storageKey);
-        if (saved) {
+        var params = buildParams();
+        API.getAdminQuestions(params).then(function (data) {
+            state.questions = (data && data.list) || [];
+            state.total = (data && data.total) || 0;
+            state.stats = (data && data.stats) || {};
+            // 写入降级缓存
             try {
-                var parsed = JSON.parse(saved);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    state.questions = parsed;
-                    return;
-                }
-            } catch (e) {}
-        }
-        state.questions = MOCK_QUESTIONS.slice();
-        saveQuestions();
-    }
-
-    function saveQuestions() {
-        localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.questions));
-    }
-
-    function loadVersions() {
-        var saved = localStorage.getItem(CONFIG.versionsKey);
-        if (saved) {
+                localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.questions));
+            } catch (e) { /* 忽略缓存写入失败 */ }
+            renderTable();
+            updateStats();
+        }).catch(function (err) {
+            // 降级：尝试读取缓存
+            var cached = null;
             try {
-                state.versions = JSON.parse(saved);
-                return;
-            } catch (e) {}
-        }
-        state.versions = MOCK_VERSIONS.slice();
-        saveVersions();
-    }
-
-    function saveVersions() {
-        localStorage.setItem(CONFIG.versionsKey, JSON.stringify(state.versions));
+                cached = JSON.parse(localStorage.getItem(CONFIG.storageKey) || '[]');
+            } catch (e) { cached = null; }
+            if (Array.isArray(cached) && cached.length > 0) {
+                state.questions = cached;
+                state.total = cached.length;
+                state.stats = {};
+                showToast('网络异常，已显示缓存数据');
+            } else {
+                state.questions = [];
+                state.total = 0;
+                state.stats = {};
+                showToast('题目加载失败：' + (err.message || '未知错误'));
+            }
+            renderTable();
+            updateStats();
+        });
     }
 
     // ========================================================
     //  2. 表格渲染
     // ========================================================
     function renderTable() {
-        var filtered = getFilteredQuestions();
-        var totalPages = Math.ceil(filtered.length / CONFIG.pageSize) || 1;
+        var totalPages = Math.ceil(state.total / CONFIG.pageSize) || 1;
         if (state.currentPage > totalPages) state.currentPage = totalPages;
 
-        var start = (state.currentPage - 1) * CONFIG.pageSize;
-        var pageData = filtered.slice(start, start + CONFIG.pageSize);
+        var pageData = state.questions;
 
         if (pageData.length === 0) {
             els.tableBody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#9B9BAB;">暂无匹配的题目</td></tr>';
@@ -172,31 +169,34 @@
         }
 
         // 分页信息
-        var end = Math.min(start + CONFIG.pageSize, filtered.length);
-        els.paginationInfo.textContent = '共 ' + filtered.length + ' 条，第 ' + (start + 1) + '-' + end + ' 条';
+        var start = (state.currentPage - 1) * CONFIG.pageSize;
+        var end = Math.min(start + CONFIG.pageSize, state.total);
+        if (state.total === 0) {
+            els.paginationInfo.textContent = '共 0 条';
+        } else {
+            els.paginationInfo.textContent = '共 ' + state.total + ' 条，第 ' + (start + 1) + '-' + end + ' 条';
+        }
         els.prevPage.disabled = state.currentPage <= 1;
         els.nextPage.disabled = state.currentPage >= totalPages;
 
-        // 更新统计
-        updateStats();
-
-        // 更新批量删除按钮
         updateBatchDeleteBtn();
+        updateSelectAllState();
     }
 
     function renderRow(q) {
-        var weightClass = q.weight <= 2 ? 'low' : q.weight <= 3 ? 'mid' : q.weight === 4 ? 'high' : 'key';
+        var weight = q.weight || 3;
+        var weightClass = weight <= 2 ? 'low' : weight <= 3 ? 'mid' : weight === 4 ? 'high' : 'key';
         var statusClass = 'status-dot--' + q.status;
-        var statusText = { published: '已发布', draft: '草稿', active: '启用', inactive: '禁用', grayscale: '灰度中' }[q.status];
-        var isChecked = state.selectedIds.has(q.id);
+        var statusText = STATUS_MAP[q.status] || q.status;
+        var isChecked = state.selectedIds.has(String(q.id));
 
         return '<tr data-id="' + q.id + '">' +
             '<td class="col-check"><input type="checkbox" class="row-check"' + (isChecked ? ' checked' : '') + '></td>' +
-            '<td><span class="table-id">' + q.id + '</span></td>' +
+            '<td><span class="table-id">' + escapeHtml(String(q.id)) + '</span></td>' +
             '<td><div class="table-question" title="' + escapeHtml(q.question) + '">' + escapeHtml(q.question) + '</div></td>' +
             '<td><span class="table-option">' + escapeHtml(q.optionA) + '</span></td>' +
             '<td><span class="table-option">' + escapeHtml(q.optionB) + '</span></td>' +
-            '<td><span class="weight-badge weight-badge--' + weightClass + '">' + q.weight + '</span></td>' +
+            '<td><span class="weight-badge weight-badge--' + weightClass + '">' + weight + '</span></td>' +
             '<td><span class="category-tag category-tag--' + q.category + '">' + q.category + '</span></td>' +
             '<td><span class="status-dot ' + statusClass + '">' + statusText + '</span></td>' +
             '<td><div class="table-actions">' +
@@ -236,49 +236,37 @@
     }
 
     // ========================================================
-    //  3. 搜索与筛选
+    //  3. 搜索与筛选（参数提交给 API）
     // ========================================================
-    function getFilteredQuestions() {
-        var search = els.searchInput.value.trim().toLowerCase();
-        var category = els.filterCategory.value;
-        var status = els.filterStatus.value;
-
-        return state.questions.filter(function (q) {
-            var matchSearch = !search || q.question.toLowerCase().indexOf(search) >= 0 || q.id.toLowerCase().indexOf(search) >= 0;
-            var matchCategory = !category || q.category === category;
-            var matchStatus = !status || q.status === status;
-            return matchSearch && matchCategory && matchStatus;
-        });
-    }
-
     function initFilters() {
         var searchTimer = null;
         els.searchInput.addEventListener('input', function () {
             if (searchTimer) clearTimeout(searchTimer);
             searchTimer = setTimeout(function () {
                 state.currentPage = 1;
-                renderTable();
+                loadQuestions();
             }, 300);
         });
 
         els.filterCategory.addEventListener('change', function () {
             state.currentPage = 1;
-            renderTable();
+            loadQuestions();
         });
 
         els.filterStatus.addEventListener('change', function () {
             state.currentPage = 1;
-            renderTable();
+            loadQuestions();
         });
     }
 
     // ========================================================
-    //  4. 统计更新
+    //  4. 统计更新（来自 API 返回的 stats 字段）
     // ========================================================
     function updateStats() {
-        els.statTotal.textContent = state.questions.length;
-        els.statActive.textContent = state.questions.filter(function (q) { return q.status === 'published' || q.status === 'active'; }).length;
-        els.statGrayscale.textContent = state.questions.filter(function (q) { return q.status === 'draft' || q.status === 'grayscale'; }).length;
+        var s = state.stats || {};
+        els.statTotal.textContent = (s.total != null) ? s.total : state.total;
+        els.statActive.textContent = (s.active != null) ? s.active : 0;
+        els.statGrayscale.textContent = (s.grayscale != null) ? s.grayscale : 0;
     }
 
     // ========================================================
@@ -286,19 +274,17 @@
     // ========================================================
     function initSelectAll() {
         els.selectAll.addEventListener('change', function () {
-            var pageData = getFilteredQuestions().slice((state.currentPage - 1) * CONFIG.pageSize, state.currentPage * CONFIG.pageSize);
             if (els.selectAll.checked) {
-                pageData.forEach(function (q) { state.selectedIds.add(q.id); });
+                state.questions.forEach(function (q) { state.selectedIds.add(String(q.id)); });
             } else {
-                pageData.forEach(function (q) { state.selectedIds.delete(q.id); });
+                state.questions.forEach(function (q) { state.selectedIds.delete(String(q.id)); });
             }
             renderTable();
         });
     }
 
     function updateSelectAllState() {
-        var pageData = getFilteredQuestions().slice((state.currentPage - 1) * CONFIG.pageSize, state.currentPage * CONFIG.pageSize);
-        var allChecked = pageData.length > 0 && pageData.every(function (q) { return state.selectedIds.has(q.id); });
+        var allChecked = state.questions.length > 0 && state.questions.every(function (q) { return state.selectedIds.has(String(q.id)); });
         els.selectAll.checked = allChecked;
     }
 
@@ -314,7 +300,7 @@
     }
 
     // ========================================================
-    //  6. 新增/编辑抽屉
+    //  6. 新增/编辑抽屉（调用 API）
     // ========================================================
     function openEditDrawer(id) {
         state.editingId = id || null;
@@ -327,16 +313,16 @@
             els.editQuestion.value = q.question;
             els.editOptionA.value = q.optionA;
             els.editOptionB.value = q.optionB;
-            els.editWeight.value = String(q.weight);
+            els.editWeight.value = String(q.weight || 3);
             els.editCategory.value = q.category;
             setRadioValue('editStatus', q.status);
 
-            // 修改日志
+            // 操作日志
             if (q.logs && q.logs.length > 0) {
                 els.editLogSection.style.display = 'block';
                 els.editLog.innerHTML = q.logs.map(function (log) {
-                    return '<div class="edit-log__item"><span class="edit-log__time">' + log.time +
-                        '</span><span class="edit-log__content"><strong>' + log.author + '</strong> ' + log.action + '</span></div>';
+                    return '<div class="edit-log__item"><span class="edit-log__time">' + escapeHtml(log.time) +
+                        '</span><span class="edit-log__content"><strong>' + escapeHtml(log.author) + '</strong> ' + escapeHtml(log.action) + '</span></div>';
                 }).join('');
             } else {
                 els.editLogSection.style.display = 'none';
@@ -345,11 +331,11 @@
             els.drawerTitle.textContent = '新增题目';
             els.editId.value = '';
             els.editQuestion.value = '';
-            els.editOptionA.value = '';
-            els.editOptionB.value = '';
+            els.editOptionA.value = '非常不符合';
+            els.editOptionB.value = '非常符合';
             els.editWeight.value = '3';
             els.editCategory.value = 'BO';
-            setRadioValue('editStatus', 'published');
+            setRadioValue('editStatus', 'active');
             els.editLogSection.style.display = 'none';
         }
 
@@ -377,47 +363,39 @@
             if (!optionA) { showToast('请输入选项 A'); return; }
             if (!optionB) { showToast('请输入选项 B'); return; }
 
-            var weight = parseInt(els.editWeight.value, 10);
+            var weight = parseInt(els.editWeight.value, 10) || 3;
             var category = els.editCategory.value;
-            var status = getRadioValue('editStatus');
-            var now = new Date();
-            var timeStr = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+            var status = getRadioValue('editStatus') || 'active';
 
+            var payload = {
+                question: question,
+                optionA: optionA,
+                optionB: optionB,
+                weight: weight,
+                category: category,
+                status: status
+            };
+
+            els.drawerSave.disabled = true;
+
+            var promise;
             if (state.editingId) {
-                // 编辑
-                var q = findQuestion(state.editingId);
-                if (q) {
-                    q.question = question;
-                    q.optionA = optionA;
-                    q.optionB = optionB;
-                    q.weight = weight;
-                    q.category = category;
-                    q.status = status;
-                    if (!q.logs) q.logs = [];
-                    q.logs.push({ time: timeStr, author: '陈管理', action: '编辑题目内容' });
-                }
-                showToast('题目已更新');
+                promise = API.updateAdminQuestion(state.editingId, payload);
                 trackEvent('question_edit', { id: state.editingId });
             } else {
-                // 新增
-                var newId = 'Q' + String(state.questions.length + 1).padStart(3, '0');
-                state.questions.push({
-                    id: newId,
-                    question: question,
-                    optionA: optionA,
-                    optionB: optionB,
-                    weight: weight,
-                    category: category,
-                    status: status,
-                    logs: [{ time: timeStr, author: '陈管理', action: '创建题目' }]
-                });
-                showToast('题目已新增');
-                trackEvent('question_create', { id: newId });
+                promise = API.createAdminQuestion(payload);
+                trackEvent('question_create');
             }
 
-            saveQuestions();
-            renderTable();
-            closeDrawer();
+            promise.then(function () {
+                showToast(state.editingId ? '题目已更新' : '题目已新增');
+                closeDrawer();
+                loadQuestions();
+            }).catch(function (err) {
+                showToast('保存失败：' + (err.message || '未知错误'));
+            }).then(function () {
+                els.drawerSave.disabled = false;
+            });
         });
 
         els.addQuestionBtn.addEventListener('click', function () {
@@ -426,16 +404,16 @@
     }
 
     // ========================================================
-    //  7. 删除
+    //  7. 删除（调用 API）
     // ========================================================
     function openDeleteModal(ids) {
         state.pendingDeleteIds = ids;
         if (ids.length === 1) {
             els.deleteTitle.textContent = '确认删除该题目？';
-            els.deleteDesc.textContent = '删除后该题目将立即下线，此操作可在版本记录中回滚';
+            els.deleteDesc.textContent = '删除后该题目将立即下线，此操作不可恢复';
         } else {
             els.deleteTitle.textContent = '确认删除 ' + ids.length + ' 道题目？';
-            els.deleteDesc.textContent = '删除后这些题目将立即下线，此操作可在版本记录中回滚';
+            els.deleteDesc.textContent = '删除后这些题目将立即下线，此操作不可恢复';
         }
         els.deleteModal.classList.add('modal--open');
     }
@@ -449,23 +427,23 @@
         });
         els.deleteConfirm.addEventListener('click', function () {
             if (!state.pendingDeleteIds) return;
+            var ids = state.pendingDeleteIds;
+            els.deleteConfirm.disabled = true;
 
-            state.questions = state.questions.filter(function (q) {
-                return state.pendingDeleteIds.indexOf(q.id) < 0;
+            // 逐条调用删除 API
+            var promises = ids.map(function (id) { return API.deleteAdminQuestion(id); });
+            Promise.all(promises).then(function () {
+                ids.forEach(function (id) { state.selectedIds.delete(id); });
+                state.pendingDeleteIds = null;
+                els.deleteModal.classList.remove('modal--open');
+                showToast('已删除 ' + ids.length + ' 道题目');
+                trackEvent('question_delete', { count: ids.length });
+                loadQuestions();
+            }).catch(function (err) {
+                showToast('删除失败：' + (err.message || '未知错误'));
+            }).then(function () {
+                els.deleteConfirm.disabled = false;
             });
-
-            state.pendingDeleteIds.forEach(function (id) {
-                state.selectedIds.delete(id);
-            });
-
-            saveQuestions();
-            renderTable();
-            els.deleteModal.classList.remove('modal--open');
-
-            showToast('已删除 ' + state.pendingDeleteIds.length + ' 道题目');
-            trackEvent('question_delete', { count: state.pendingDeleteIds.length });
-
-            state.pendingDeleteIds = null;
         });
     }
 
@@ -516,42 +494,37 @@
 
         els.importConfirm.addEventListener('click', function () {
             if (!state.importFile) return;
-
-            // 模拟导入 5 条新题目
-            var baseLen = state.questions.length;
+            els.importConfirm.disabled = true;
+            // M4 阶段：通过 API 逐条创建占位题目（真实场景应解析文件后批量创建）
+            var categories = ['BO', 'BC', 'BE', 'BA', 'BN', 'RR', 'RI', 'RA', 'RS', 'RE', 'RC'];
+            var promises = [];
             for (var i = 1; i <= 5; i++) {
-                var newId = 'Q' + String(baseLen + i).padStart(3, '0');
-                state.questions.push({
-                    id: newId,
+                promises.push(API.createAdminQuestion({
                     question: '（导入）第 ' + i + ' 道题目示例内容',
-                    optionA: '选项 A',
-                    optionB: '选项 B',
+                    optionA: '非常不符合',
+                    optionB: '非常符合',
                     weight: 3,
-                    category: ['BO', 'BC', 'BE', 'BA', 'BN', 'RR', 'RI', 'RA', 'RS', 'RE', 'RC'][i % 11],
-                    status: 'inactive',
-                    logs: [{ time: getCurrentTimeStr(), author: '陈管理', action: '批量导入' }]
-                });
+                    category: categories[i % categories.length],
+                    status: 'inactive'
+                }));
             }
-
-            saveQuestions();
-            renderTable();
-            els.importModal.classList.remove('modal--open');
-
-            showToast('成功导入 5 道题目');
-            trackEvent('question_import', { count: 5 });
+            Promise.all(promises).then(function () {
+                els.importModal.classList.remove('modal--open');
+                showToast('成功导入 5 道题目');
+                trackEvent('question_import', { count: 5 });
+                loadQuestions();
+            }).catch(function (err) {
+                showToast('导入失败：' + (err.message || '未知错误'));
+            }).then(function () {
+                els.importConfirm.disabled = false;
+            });
         });
 
         // 下载模板
         els.downloadTemplate.addEventListener('click', function (e) {
             e.preventDefault();
-            var csv = 'ID,题干,选项A,选项B,权重,分类,状态\nQ001,示例题干,非常不符合,非常符合,3,BO,published\n';
-            var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'question_import_template.csv';
-            a.click();
-            URL.revokeObjectURL(url);
+            var csv = '序号,维度,题干,题目类型,是否反向,是否启用\n1,BO,示例题干,ocean,否,是\n';
+            API.downloadBlob(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' }), 'question_import_template.csv');
             showToast('模板已下载');
         });
     }
@@ -579,45 +552,48 @@
     }
 
     // ========================================================
-    //  9. 导出
+    //  9. 导出（调用 API 下载 CSV）
     // ========================================================
     function initExport() {
         els.exportBtn.addEventListener('click', function () {
-            var filtered = getFilteredQuestions();
-            var csv = 'ID,题干,选项A,选项B,权重,分类,状态\n';
-            filtered.forEach(function (q) {
-                csv += [q.id, '"' + q.question + '"', '"' + q.optionA + '"', '"' + q.optionB + '"', q.weight, q.category, q.status].join(',') + '\n';
+            if (state.total === 0) {
+                showToast('没有可导出的题目数据');
+                return;
+            }
+            var params = buildParams();
+            // 导出全部筛选结果，不分页
+            delete params.page;
+            delete params.page_size;
+            API.exportAdminQuestions(params).then(function (blob) {
+                API.downloadBlob(blob, 'questions_export_' + new Date().toISOString().substring(0, 10) + '.csv');
+                showToast('已导出 ' + state.total + ' 道题目');
+                trackEvent('question_export', { count: state.total });
+            }).catch(function (err) {
+                showToast('导出失败：' + (err.message || '未知错误'));
             });
-
-            var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'questions_export_' + new Date().toISOString().substring(0, 10) + '.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-
-            showToast('已导出 ' + filtered.length + ' 道题目');
-            trackEvent('question_export', { count: filtered.length });
         });
     }
 
     // ========================================================
-    // 10. 版本控制
+    // 10. 版本控制（本地内存记录）
     // ========================================================
     function renderVersions() {
+        if (state.versions.length === 0) {
+            els.versionTimeline.innerHTML = '<div style="text-align:center;padding:30px;color:#9B9BAB;">暂无版本记录</div>';
+            return;
+        }
         els.versionTimeline.innerHTML = state.versions.map(function (v) {
             return '<div class="version-item' + (v.isCurrent ? ' version-item--current' : '') + '">' +
                 '<div class="version-item__dot"></div>' +
                 '<div class="version-item__body">' +
                     '<div class="version-item__header">' +
-                        '<span class="version-item__version">' + v.version + '</span>' +
+                        '<span class="version-item__version">' + escapeHtml(v.version) + '</span>' +
                         (v.isCurrent ? '<span class="version-item__tag">当前版本</span>' : '') +
-                        '<span class="version-item__time">' + v.time + '</span>' +
+                        '<span class="version-item__time">' + escapeHtml(v.time) + '</span>' +
                     '</div>' +
-                    '<p class="version-item__desc">' + v.desc + '</p>' +
-                    '<span class="version-item__author">操作人：' + v.author + '</span>' +
-                    (!v.isCurrent ? '<br><button class="version-item__rollback" data-version="' + v.version + '">回滚至此版本</button>' : '') +
+                    '<p class="version-item__desc">' + escapeHtml(v.desc) + '</p>' +
+                    '<span class="version-item__author">操作人：' + escapeHtml(v.author) + '</span>' +
+                    (!v.isCurrent ? '<br><button class="version-item__rollback" data-version="' + escapeHtml(v.version) + '">回滚至此版本</button>' : '') +
                 '</div>' +
             '</div>';
         }).join('');
@@ -635,24 +611,21 @@
 
     function initVersionControl() {
         els.createVersionBtn.addEventListener('click', function () {
-            var now = new Date();
-            var timeStr = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
-            var major = 2;
+            var timeStr = getCurrentTimeStr();
             var minor = state.versions.length;
-            var newVersion = 'v' + major + '.' + (minor + 1);
+            var newVersion = 'v2.' + (minor + 1);
 
             // 取消当前版本标记
             state.versions.forEach(function (v) { v.isCurrent = false; });
 
             state.versions.unshift({
                 version: newVersion,
-                desc: '手动发布新版本，包含 ' + state.questions.length + ' 道题目',
-                author: '陈管理',
+                desc: '手动发布新版本，包含 ' + state.total + ' 道题目',
+                author: '管理员',
                 time: timeStr,
                 isCurrent: true
             });
 
-            saveVersions();
             renderVersions();
             showToast('新版本 ' + newVersion + ' 已发布');
             trackEvent('version_publish', { version: newVersion });
@@ -660,7 +633,7 @@
     }
 
     // ========================================================
-    // 11. 灰度发布配置
+    // 11. 灰度发布配置（本地配置）
     // ========================================================
     function initGrayscale() {
         // 加载已保存的灰度比例
@@ -670,7 +643,7 @@
             try {
                 var config = JSON.parse(savedGrayscale);
                 grayscaleValue = config.percentage || 15;
-            } catch (e) {}
+            } catch (e) { /* 忽略解析失败 */ }
         }
         els.grayscaleSlider.value = grayscaleValue;
         els.grayscaleValue.textContent = grayscaleValue + '%';
@@ -688,7 +661,9 @@
             });
 
             var config = { percentage: percentage, groups: groups, savedAt: getCurrentTimeStr() };
-            localStorage.setItem(CONFIG.grayscaleKey, JSON.stringify(config));
+            try {
+                localStorage.setItem(CONFIG.grayscaleKey, JSON.stringify(config));
+            } catch (e) { /* 忽略存储失败 */ }
 
             showToast('灰度配置已保存：' + percentage + '% 流量');
             trackEvent('grayscale_save', { percentage: percentage, groups: groups });
@@ -696,21 +671,21 @@
     }
 
     // ========================================================
-    // 12. 分页
+    // 12. 分页（服务端分页）
     // ========================================================
     function initPagination() {
         els.prevPage.addEventListener('click', function () {
             if (state.currentPage > 1) {
                 state.currentPage--;
-                renderTable();
+                loadQuestions();
             }
         });
 
         els.nextPage.addEventListener('click', function () {
-            var total = Math.ceil(getFilteredQuestions().length / CONFIG.pageSize);
-            if (state.currentPage < total) {
+            var totalPages = Math.ceil(state.total / CONFIG.pageSize) || 1;
+            if (state.currentPage < totalPages) {
                 state.currentPage++;
-                renderTable();
+                loadQuestions();
             }
         });
     }
@@ -723,20 +698,11 @@
             if (confirm('确认退出登录？')) {
                 showToast('已退出登录');
                 setTimeout(function () {
-                    window.location.href = 'index.html';
+                    window.location.href = '/';
                 }, 1000);
             }
         });
-
-        // 侧边栏菜单切换
-        document.querySelectorAll('.admin-menu__item').forEach(function (item) {
-            item.addEventListener('click', function (e) {
-                e.preventDefault();
-                var page = item.getAttribute('data-page');
-                if (page === 'questions') return;
-                showToast('「' + item.querySelector('span').textContent + '」页面开发中');
-            });
-        });
+        // 侧边栏菜单导航（通过 href 属性实现跳转，无需 JS 拦截）
     }
 
     // ========================================================
@@ -765,7 +731,7 @@
     // 工具函数
     // ========================================================
     function findQuestion(id) {
-        return state.questions.find(function (q) { return q.id === id; });
+        return state.questions.find(function (q) { return String(q.id) === String(id); });
     }
 
     function getRadioValue(name) {
@@ -780,7 +746,7 @@
 
     function escapeHtml(str) {
         if (!str) return '';
-        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     function pad(n) {
@@ -793,7 +759,9 @@
     }
 
     function trackEvent(eventName, data) {
-        console.log('[Admin Track]', eventName, data || {});
+        if (window.API && typeof API.trackEvent === 'function') {
+            API.trackEvent(eventName, data || {});
+        }
     }
 
     var toastTimer = null;
@@ -811,9 +779,6 @@
     // ========================================================
     function init() {
         loadQuestions();
-        loadVersions();
-
-        renderTable();
         renderVersions();
 
         initFilters();

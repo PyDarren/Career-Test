@@ -11,12 +11,14 @@
     var CONFIG = {
         navbarHeight: 56,           // 固定导航栏高度（px）
         actionbarShowOffset: 400,   // 底部操作栏出现的滚动阈值（px）
+        // 以下 key 会在 loadReport 后追加 assessment_id 后缀
         scrollRestoreKey: 'deep_report_scroll',  // 阅读进度 localStorage key
         checklistKey: 'deep_report_checklist',   // 清单状态 localStorage key
         readStartKey: 'deep_report_read_start',  // 阅读开始时间 localStorage key
         durationKey: 'deep_report_duration',     // 累计阅读时长 localStorage key
-        code: 'INTJ-A-C',
-        title: '战略师'
+        // 从 API 返回数据填充
+        code: '',
+        title: ''
     };
 
     // ============== DOM 元素引用 ==============
@@ -45,7 +47,9 @@
         readStart: null,
         accumulatedDuration: 0,
         bottomTracked: false,
-        activeChapter: null
+        activeChapter: null,
+        assessmentId: null,
+        reportLoaded: false
     };
 
     // ========================================================
@@ -223,7 +227,7 @@
             if (window.history.length > 1) {
                 window.history.back();
             } else {
-                window.location.href = 'result-free.html';
+                window.location.href = '/result-free/';
             }
         });
     }
@@ -461,13 +465,9 @@
     // 工具函数
     // ========================================================
     function trackEvent(eventName, data) {
-        console.log('[Track]', eventName, data || {});
-        // 后端接入后替换为真实埋点 API
-        // fetch('/api/stats/track/', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ event: eventName, ...data })
-        // });
+        if (typeof API !== 'undefined' && API.trackEvent) {
+            API.trackEvent(eventName, data || {}, 'deep_report');
+        }
     }
 
     function showToast(message) {
@@ -498,9 +498,173 @@
     }
 
     // ========================================================
-    // 初始化
+    // 报告加载（检查付费状态，动态填充数据）
     // ========================================================
-    function init() {
+
+    // 从 URL 参数获取 assessment_id
+    function getAssessmentId() {
+        var params = new URLSearchParams(window.location.search);
+        var id = params.get('assessment_id') || params.get('session_token') || '';
+        if (id) return id;
+
+        // 从 localStorage 获取
+        if (typeof API !== 'undefined' && API.getSessionToken) {
+            id = API.getSessionToken();
+            if (id) return id;
+        }
+        try {
+            id = localStorage.getItem('last_assessment_id') || '';
+        } catch (e) {
+            id = '';
+        }
+        return id;
+    }
+
+    // 刷新 DOM 引用（动态渲染后需要重新查询）
+    function refreshEls() {
+        els.tocLinks = document.querySelectorAll('.toc-link');
+        els.tocModuleLinks = document.querySelectorAll('.toc-module-link');
+        els.chapters = document.querySelectorAll('.report-chapter');
+        els.actionItems = document.querySelectorAll('.action-item input[type="checkbox"]');
+        els.reportEnd = document.querySelector('.report-end');
+    }
+
+    // 更新 localStorage key 为按 assessment_id 区分
+    function updateStorageKeys() {
+        var suffix = state.assessmentId ? '_' + state.assessmentId : '';
+        CONFIG.scrollRestoreKey = 'deep_report_scroll' + suffix;
+        CONFIG.checklistKey = 'deep_report_checklist' + suffix;
+        CONFIG.readStartKey = 'deep_report_read_start' + suffix;
+        CONFIG.durationKey = 'deep_report_duration' + suffix;
+    }
+
+    // 动态渲染报告标题区
+    function renderReportHeader(data) {
+        // 填充画像名和 RIASEC 码
+        var codeEl = document.querySelector('.report-header__code');
+        var titleEl = document.querySelector('.report-header__title');
+        var sloganEl = document.querySelector('.report-header__slogan');
+
+        if (data.code) {
+            CONFIG.code = data.code;
+            if (codeEl) codeEl.textContent = data.code;
+        }
+        if (data.title || data.archetype_name) {
+            CONFIG.title = data.title || data.archetype_name;
+            if (titleEl) titleEl.textContent = CONFIG.title;
+        }
+        if (data.slogan && sloganEl) {
+            sloganEl.textContent = data.slogan;
+        }
+
+        // 更新页面标题
+        if (data.code) {
+            document.title = '深度报告 · ' + data.code + ' | 画己职测';
+        }
+    }
+
+    // 根据 API 返回的 chapters 动态生成目录导航
+    function renderTocNav(chapters) {
+        if (!chapters || !chapters.length) return;
+        var navEl = document.querySelector('.report-toc-drawer__nav');
+        if (!navEl) return;
+
+        var html = chapters.map(function (ch, i) {
+            var num = String(ch.number || (i + 1)).padStart(2, '0');
+            var title = ch.title || ('第 ' + (i + 1) + ' 章');
+            var highlight = ch.highlight ? ' toc-link--highlight' : '';
+            return '<a href="#chapter-' + (ch.number || (i + 1)) + '" class="toc-link' + highlight + '" data-chapter="' + (ch.number || (i + 1)) + '">' +
+                '<span class="toc-link__num">' + num + '</span>' +
+                '<span class="toc-link__text">' + title + '</span>' +
+                '</a>';
+        }).join('');
+
+        navEl.innerHTML = html;
+    }
+
+    // 根据 API 返回的 chapters 动态更新章节标题
+    function renderChapters(chapters) {
+        if (!chapters || !chapters.length) return;
+
+        chapters.forEach(function (ch, i) {
+            var num = ch.number || (i + 1);
+            var chapterEl = document.getElementById('chapter-' + num);
+            if (!chapterEl) return;
+
+            // 更新章节标题
+            if (ch.title) {
+                var titleEl = chapterEl.querySelector('.chapter-marker__title');
+                if (titleEl) titleEl.textContent = ch.title;
+            }
+
+            // 如果有 HTML 内容，替换章节正文
+            if (ch.html) {
+                var bodyEl = chapterEl.querySelector('.chapter-body');
+                if (bodyEl) bodyEl.innerHTML = ch.html;
+            }
+        });
+    }
+
+    function loadReport() {
+        state.assessmentId = getAssessmentId();
+
+        if (!state.assessmentId) {
+            // 没有找到 assessment_id，跳转到首页
+            showToast('未找到测评记录，请先完成测评');
+            setTimeout(function () {
+                window.location.href = '/';
+            }, 2000);
+            return;
+        }
+
+        // 更新 localStorage key
+        updateStorageKeys();
+
+        // 如果 API 不可用，使用静态内容初始化
+        if (typeof API === 'undefined' || !API.getDeepReport) {
+            initInteractions();
+            return;
+        }
+
+        API.getDeepReport(state.assessmentId).then(function (data) {
+            if (!data) {
+                initInteractions();
+                return;
+            }
+
+            // 检查付费状态
+            if (data.is_paid === false) {
+                // 未付费，重定向到支付页
+                showToast('请先解锁深度报告');
+                setTimeout(function () {
+                    window.location.href = '/payment/?assessment_id=' + encodeURIComponent(state.assessmentId);
+                }, 1500);
+                return;
+            }
+
+            // 已付费，渲染报告
+            state.reportLoaded = true;
+            renderReportHeader(data);
+
+            // 动态渲染目录和章节
+            if (data.chapters && data.chapters.length) {
+                renderTocNav(data.chapters);
+                renderChapters(data.chapters);
+            }
+
+            // 刷新 DOM 引用并初始化交互
+            refreshEls();
+            initInteractions();
+        }).catch(function () {
+            // API 失败时使用静态内容初始化（降级）
+            initInteractions();
+        });
+    }
+
+    // ========================================================
+    // 初始化交互（报告加载后调用）
+    // ========================================================
+    function initInteractions() {
         initTocDrawer();
         initAnchorNav();
         initChapterHighlight();
@@ -518,6 +682,13 @@
 
         // 页面加载埋点
         trackEvent('report_page_view', { code: CONFIG.code });
+    }
+
+    // ========================================================
+    // 初始化入口
+    // ========================================================
+    function init() {
+        loadReport();
     }
 
     if (document.readyState === 'loading') {

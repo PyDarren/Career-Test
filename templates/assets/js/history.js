@@ -10,49 +10,15 @@
     // ============== 配置 ==============
     var CONFIG = {
         maxRecords: 3,
-        storageKey: 'career_test_history',
+        storageKey: 'career_test_history_cache',
         versionKey: 'career_test_history_version',
-        dataVersion: '2.0',  // 数据版本：升级测评体系后递增，触发旧数据清除
+        dataVersion: '3.0',  // 数据版本：升级测评体系后递增，触发缓存清除
         badgeColors: {
             // RIASEC 首字母 → 徽标颜色
             'R': 'gold', 'I': 'blue', 'A': 'purple',
             'S': 'green', 'E': 'gold', 'C': 'green'
         }
     };
-
-    // ============== 模拟数据（静态页面演示用，后端接入后替换为 API） ==============
-    var MOCK_RECORDS = [
-        {
-            id: 'rec_001',
-            date: '2026-07-12',
-            dateLabel: '07月12日',
-            code: '沉稳架构师·IRC',
-            baseCode: 'IRC',
-            typeName: '沉稳架构师',
-            isPaid: true,
-            reportUrl: 'deep-report.html'
-        },
-        {
-            id: 'rec_002',
-            date: '2026-06-28',
-            dateLabel: '06月28日',
-            code: '灵感传播者·AES',
-            baseCode: 'AES',
-            typeName: '灵感传播者',
-            isPaid: false,
-            reportUrl: 'result-free.html'
-        },
-        {
-            id: 'rec_003',
-            date: '2026-05-15',
-            dateLabel: '05月15日',
-            code: '沉稳架构师·IRC',
-            baseCode: 'IRC',
-            typeName: '沉稳架构师',
-            isPaid: true,
-            reportUrl: 'deep-report.html'
-        }
-    ];
 
     // ============== DOM 元素引用 ==============
     var els = {
@@ -87,35 +53,55 @@
     };
 
     // ========================================================
-    //  1. 数据加载（localStorage → 降级到 Mock 数据）
+    //  1. 数据加载（从后端 API 获取，localStorage 用于缓存）
     // ========================================================
     function loadRecords() {
-        // 版本检测：数据版本不匹配时清除旧数据
+        // 版本检测：数据版本不匹配时清除缓存
         var savedVersion = localStorage.getItem(CONFIG.versionKey);
         if (savedVersion !== CONFIG.dataVersion) {
             localStorage.removeItem(CONFIG.storageKey);
             localStorage.setItem(CONFIG.versionKey, CONFIG.dataVersion);
         }
 
-        var saved = localStorage.getItem(CONFIG.storageKey);
-        if (saved) {
+        // 先尝试从缓存加载（快速渲染）
+        var cached = localStorage.getItem(CONFIG.storageKey);
+        if (cached) {
             try {
-                var parsed = JSON.parse(saved);
-                if (Array.isArray(parsed) && parsed.length > 0) {
+                var parsed = JSON.parse(cached);
+                if (Array.isArray(parsed)) {
                     state.records = parsed;
-                    return;
+                    renderRecords();
                 }
             } catch (e) {
                 // ignore
             }
         }
-        // 首次访问使用 Mock 数据
-        state.records = MOCK_RECORDS.slice();
-        saveRecords();
+
+        // 从后端 API 获取最新数据
+        if (typeof API === 'undefined' || !API.getAssessmentHistory) {
+            return;
+        }
+
+        API.getAssessmentHistory().then(function (res) {
+            var records = (res && res.list) || [];
+            state.records = records;
+            saveRecords();
+            renderRecords();
+        }).catch(function () {
+            // API 失败时使用缓存数据（已在上面的缓存逻辑中处理）
+            if (state.records.length === 0) {
+                renderRecords();
+            }
+        });
     }
 
     function saveRecords() {
-        localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.records));
+        // 用于缓存
+        try {
+            localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.records));
+        } catch (e) {
+            // ignore
+        }
     }
 
     // ========================================================
@@ -262,12 +248,21 @@
             isPaid: record.isPaid
         });
 
+        // 根据付费状态跳转，并带 assessment_id 参数
+        var assessmentId = record.assessment_id || record.session_token || record.id || '';
         if (record.isPaid) {
-            // 付费报告跳转深度报告页
-            window.location.href = record.reportUrl;
+            var url = record.reportUrl || '/deep-report/';
+            if (assessmentId) {
+                url += '?assessment_id=' + encodeURIComponent(assessmentId);
+            }
+            window.location.href = url;
         } else {
-            // 免费报告跳转结果页
-            window.location.href = record.reportUrl;
+            // 未付费，跳转到支付页
+            var payUrl = '/payment/';
+            if (assessmentId) {
+                payUrl += '?assessment_id=' + encodeURIComponent(assessmentId);
+            }
+            window.location.href = payUrl;
         }
     }
 
@@ -388,24 +383,36 @@
             }
         });
 
-        // 动画结束后移除数据
-        setTimeout(function () {
-            state.records = state.records.filter(function (r) {
-                return !state.selectedIds.has(r.id);
-            });
-            state.selectedIds.clear();
-            saveRecords();
-            renderRecords();
-            updateBatchUI();
-
-            // 如果删除后没有记录，退出编辑模式
-            if (state.records.length === 0) {
-                toggleEditMode();
+        // 调用 API 删除（如果后端已实现）
+        var deletePromises = idsToDelete.map(function (id) {
+            if (typeof API !== 'undefined' && API.deleteAssessment) {
+                return API.deleteAssessment(id).catch(function () {
+                    // API 失败时静默处理，后续本地删除
+                });
             }
+            return Promise.resolve();
+        });
 
-            showToast('已删除 ' + count + ' 条记录');
-            trackEvent('history_delete', { count: count });
-        }, 300);
+        Promise.all(deletePromises).then(function () {
+            // 动画结束后移除数据
+            setTimeout(function () {
+                state.records = state.records.filter(function (r) {
+                    return !state.selectedIds.has(r.id);
+                });
+                state.selectedIds.clear();
+                saveRecords();
+                renderRecords();
+                updateBatchUI();
+
+                // 如果删除后没有记录，退出编辑模式
+                if (state.records.length === 0) {
+                    toggleEditMode();
+                }
+
+                showToast('已删除 ' + count + ' 条记录');
+                trackEvent('history_delete', { count: count });
+            }, 300);
+        });
     }
 
     // ========================================================
@@ -430,7 +437,7 @@
             if (window.history.length > 1) {
                 window.history.back();
             } else {
-                window.location.href = 'index.html';
+                window.location.href = '/';
             }
         });
     }
@@ -455,13 +462,9 @@
     }
 
     function trackEvent(eventName, data) {
-        console.log('[Track]', eventName, data || {});
-        // 后端接入后替换为真实埋点 API
-        // fetch('/api/stats/track/', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ event: eventName, ...data })
-        // });
+        if (typeof API !== 'undefined' && API.trackEvent) {
+            API.trackEvent(eventName, data || {}, 'history');
+        }
     }
 
     var toastTimer = null;
@@ -483,7 +486,6 @@
     // ========================================================
     function init() {
         loadRecords();
-        renderRecords();
         initBackBtn();
         initManageBtn();
         initSelectAll();

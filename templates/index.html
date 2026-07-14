@@ -8,13 +8,13 @@
     <title>职业测评 · 发现你的职业天赋 | 画己职测</title>
 
     <!-- 复用 16personalities 本地资源 -->
-    <link rel="stylesheet" href="16p-assets/css/styles-core.css" />
-    <link rel="stylesheet" href="16p-assets/css/styles-fonts.css" />
-    <link rel="stylesheet" href="16p-assets/css/homepage.css" />
-    <link rel="stylesheet" href="assets/css/career-home.css" />
+    <link rel="stylesheet" href="/static/16p-assets/css/styles-core.css" />
+    <link rel="stylesheet" href="/static/16p-assets/css/styles-fonts.css" />
+    <link rel="stylesheet" href="/static/16p-assets/css/homepage.css" />
+    <link rel="stylesheet" href="/static/assets/css/career-home.css" />
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,440..770;1,440..770&display=swap">
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,700..800;1,700..800&display=swap">
-    <link rel="icon" type="image/png" href="assets/images/职业测评 LOGO 透明.png">
+    <link rel="icon" type="image/png" href="/static/assets/images/职业测评 LOGO 透明.png">
 
     <style>[v-cloak] {display: none !important;}</style>
 </head>
@@ -25,8 +25,8 @@
         <div class="navbar navbar--sticky" id="js-navbar" data-testid="top-nav" ref="navbar">
 
             <app-logo class="logo">
-                <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-                    <img src="assets/images/职业测评 LOGO 透明.png" width="36" height="36" alt="画己职测 Logo" style="object-fit:cover;width:36px !important;height:36px !important;flex-shrink:0;">
+                <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+                    <img src="/static/assets/images/职业测评 LOGO 透明.png" width="36" height="36" alt="画己职测 Logo" style="object-fit:cover;width:36px !important;height:36px !important;flex-shrink:0;">
                     <span style="font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-weight:700;font-size:18px;color:#2d3436;letter-spacing:1px;">画己职测</span>
                 </a>
             </app-logo>
@@ -37,7 +37,7 @@
                         <a href="#be-understood" class="link--quiz">开始测评</a>
                     </li>
                     <li class="">
-                        <a href="#understand-others" class="">人格类型</a>
+                        <a href="/result-free/" class="">人格类型</a>
                     </li>
                     <li class="">
                         <a href="#core-features" class="">核心优势</a>
@@ -69,7 +69,7 @@
                     <h1 id="main-content" tabindex="-1">发现你的职业天赋</h1>
                     <p class="p-lg">80 道题 · 约 10 分钟 · 免登录 · 打开即用</p>
 
-                    <a href="#go" class="sp-action sp-button button--purple button--lg button--pill button--auto button--icon-rt">
+                    <a href="/guide/" class="sp-action sp-button button--purple button--lg button--pill button--auto button--icon-rt">
                         <span class="button__text">立即开始测评</span>
                         <span class="sp-icon size--inherit color--inherit icon--rotatable icon--dir-rt icon--arrow">
                             <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 48 48" style="display:block;">
@@ -93,7 +93,7 @@
 
                 <div class="resource__inner sp-wrap">
                     <div class="resource__scene resource__scene--right resource__scene--white flex-center dark:tw-bg-ds-dark-2">
-                        <img width="300" height="140" src="assets/images/undraw_solution-mindset_5xp7.svg" loading="lazy" alt="职业性格分析示意图">
+                        <img width="300" height="140" src="/static/assets/images/undraw_solution-mindset_5xp7.svg" loading="lazy" alt="职业性格分析示意图">
                     </div>
                     <div class="resource__text">
                         <p class="resource__tag text--green p-tn text-bold tw-uppercase">核心优势</p>
@@ -166,7 +166,7 @@
                 </svg>
 
                 <div class="resource__inner sp-wrap flex-center">
-                    <img src="assets/images/undraw_comment-sent_8c4r.svg" alt="用户评价装饰图" style="width:160px;height:auto;margin-bottom:20px;">
+                    <img src="/static/assets/images/undraw_comment-sent_8c4r.svg" alt="用户评价装饰图" style="width:160px;height:auto;margin-bottom:20px;">
                     <p class="resource__tag text--yellow p-tn text-bold tw-uppercase">用户评价</p>
                     <h2 class="section__title text--bal">看看大家怎么说</h2>
                     <p class="p-sm tw-text-gray-rgb-12 sp-wrap tw-mb-20 tw-text-center dark:tw-text-ds-text -tw-mt-30 medium:tw-mb-40">
@@ -183,7 +183,7 @@
                                 <div class="card__text">
                                     <div class="user">
                                         <div class="user__photo">
-                                            <img src="16p-assets/images/testimonials/9a36c734fd5153a751507032b8c5e6ef.webp" width="60" height="60" loading="lazy" alt="林同学头像">
+                                            <img src="/static/16p-assets/images/testimonials/9a36c734fd5153a751507032b8c5e6ef.webp" width="60" height="60" loading="lazy" alt="林同学头像">
                                             <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
                                                 <div class="testimonials__quote flex-center">
                                                     <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
@@ -213,7 +213,7 @@
                                 <div class="card__text">
                                     <div class="user">
                                         <div class="user__photo">
-                                            <img src="16p-assets/images/testimonials/380acfc6f7efc4b7f32c520f33ad93d2.webp" width="60" height="60" loading="lazy" alt="王女士头像">
+                                            <img src="/static/16p-assets/images/testimonials/380acfc6f7efc4b7f32c520f33ad93d2.webp" width="60" height="60" loading="lazy" alt="王女士头像">
                                             <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
                                                 <div class="testimonials__quote flex-center">
                                                     <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
@@ -243,7 +243,7 @@
                                 <div class="card__text">
                                     <div class="user">
                                         <div class="user__photo">
-                                            <img src="16p-assets/images/testimonials/c5afeb9270c5b0b88d3e5b1c9abbd9b2.webp" width="60" height="60" loading="lazy" alt="张同学头像">
+                                            <img src="/static/16p-assets/images/testimonials/c5afeb9270c5b0b88d3e5b1c9abbd9b2.webp" width="60" height="60" loading="lazy" alt="张同学头像">
                                             <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
                                                 <div class="testimonials__quote flex-center">
                                                     <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
@@ -273,7 +273,7 @@
                                 <div class="card__text">
                                     <div class="user">
                                         <div class="user__photo">
-                                            <img src="16p-assets/images/testimonials/95fe2ca2636012c4f7388027d248d4c0.webp" width="60" height="60" loading="lazy" alt="陈先生头像">
+                                            <img src="/static/16p-assets/images/testimonials/95fe2ca2636012c4f7388027d248d4c0.webp" width="60" height="60" loading="lazy" alt="陈先生头像">
                                             <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
                                                 <div class="testimonials__quote flex-center">
                                                     <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
@@ -303,7 +303,7 @@
                                 <div class="card__text">
                                     <div class="user">
                                         <div class="user__photo">
-                                            <img src="16p-assets/images/testimonials/8d5c9fc43aa1ca84f7bba2d26e4c3f43.webp" width="60" height="60" loading="lazy" alt="赵女士头像">
+                                            <img src="/static/16p-assets/images/testimonials/8d5c9fc43aa1ca84f7bba2d26e4c3f43.webp" width="60" height="60" loading="lazy" alt="赵女士头像">
                                             <div class="testimonials__quote-wrapper flex-center dark:tw-bg-ds-dark-2">
                                                 <div class="testimonials__quote flex-center">
                                                     <svg width="10" height="10" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
@@ -339,16 +339,16 @@
                     <h3 class="font-body p-sm tw-m-0 tw-font-semibold">产品</h3>
                     <ul class="tw-m-0 tw-list-none tw-p-0">
                         <li class="tw-mt-10"><a href="#be-understood">免费测评</a></li>
-                        <li class="tw-mt-10"><a href="#go">深度报告</a></li>
-                        <li class="tw-mt-10"><a href="#go">人格认证卡</a></li>
+                        <li class="tw-mt-10"><a href="/payment/">深度报告</a></li>
+                        <li class="tw-mt-10"><a href="/result-free/">人格认证卡</a></li>
                         <li class="tw-mt-10"><a href="#testimonials">用户评价</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="font-body p-sm tw-m-0 tw-font-semibold">资源</h3>
                     <ul class="tw-m-0 tw-list-none tw-p-0">
-                        <li class="tw-mt-10"><a href="#understand-others">人格测试</a></li>
-                        <li class="tw-mt-10"><a href="#understand-others">人格类型</a></li>
+                        <li class="tw-mt-10"><a href="/guide/">人格测试</a></li>
+                        <li class="tw-mt-10"><a href="/result-free/">人格类型</a></li>
                         <li class="tw-mt-10"><a href="#core-features">核心优势</a></li>
                         <li class="tw-mt-10"><a href="#core-features">理论框架</a></li>
                     </ul>
@@ -356,19 +356,19 @@
                 <div>
                     <h3 class="font-body p-sm tw-m-0 tw-font-semibold">帮助</h3>
                     <ul class="tw-m-0 tw-list-none tw-p-0">
-                        <li class="tw-mt-10"><a href="#">联系我们</a></li>
-                        <li class="tw-mt-10"><a href="#">常见问题</a></li>
-                        <li class="tw-mt-10"><a href="#">反馈问题</a></li>
-                        <li class="tw-mt-10"><a href="#">订单查询</a></li>
+                        <li class="tw-mt-10"><a href="/account/">联系我们</a></li>
+                        <li class="tw-mt-10"><a href="/faq/">常见问题</a></li>
+                        <li class="tw-mt-10"><a href="/feedback/">反馈问题</a></li>
+                        <li class="tw-mt-10"><a href="/orders/">订单查询</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="font-body p-sm tw-m-0 tw-font-semibold">关注我们</h3>
                     <ul class="tw-m-0 tw-list-none tw-p-0">
-                        <li class="tw-mt-10"><a href="#">微信公众号</a></li>
-                        <li class="tw-mt-10"><a href="#">微博</a></li>
-                        <li class="tw-mt-10"><a href="#">QQ 群</a></li>
-                        <li class="tw-mt-10"><a href="#">邮箱订阅</a></li>
+                        <li class="tw-mt-10"><a href="javascript:void(0)" onclick="alert('暂未开通，敬请期待')">微信公众号</a></li>
+                        <li class="tw-mt-10"><a href="javascript:void(0)" onclick="alert('暂未开通，敬请期待')">微博</a></li>
+                        <li class="tw-mt-10"><a href="javascript:void(0)" onclick="alert('暂未开通，敬请期待')">QQ 群</a></li>
+                        <li class="tw-mt-10"><a href="javascript:void(0)" onclick="alert('暂未开通，敬请期待')">邮箱订阅</a></li>
                     </ul>
                 </div>
             </nav>
@@ -376,9 +376,9 @@
             <div id="copyright" class="sp-wrap tw-text-center p-sm">
                 <ul class="tw-list-none tw-p-0 tw-m-0 tw-flex tw-justify-center tw-gap-20 tw-flex-wrap">
                     <li>&copy; 2026 画己职测. 保留所有权利</li>
-                    <li><a href="#">隐私政策</a></li>
-                    <li><a href="#">用户协议</a></li>
-                    <li><a href="#">无障碍声明</a></li>
+                    <li><a href="/privacy/">隐私政策</a></li>
+                    <li><a href="/terms/">用户协议</a></li>
+                    <li><a href="/accessibility/">无障碍声明</a></li>
                 </ul>
             </div>
         </footer>
@@ -386,6 +386,6 @@
     </div>
 
     <!-- 轮播脚本 -->
-    <script src="assets/js/testimonials.js"></script>
+    <script src="/static/assets/js/testimonials.js"></script>
 </body>
 </html>

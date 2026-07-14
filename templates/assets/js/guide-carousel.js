@@ -195,13 +195,8 @@
     var skipGuideBtn = document.getElementById('skipGuide');
     if (skipGuideBtn) {
         skipGuideBtn.addEventListener('click', function (e) {
-            // 直接跳转到测评页（这里用首页 CTA 区作演示）
-            // 实际项目中应跳转到答题页
             e.preventDefault();
-            var ctaSection = document.getElementById('go');
-            if (ctaSection) {
-                ctaSection.scrollIntoView({ behavior: 'smooth' });
-            }
+            window.location.href = '/question/';
         });
     }
 
@@ -210,9 +205,7 @@
     if (startTestBtn) {
         startTestBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            // 实际项目中跳转到答题页
-            // window.location.href = 'question.html';
-            alert('即将进入答题页（演示）');
+            window.location.href = '/question/';
         });
     }
 

@@ -29,41 +29,7 @@
     };
 
     // ============== 模拟数据 ==============
-    var MOCK_KPI = {
-        dau: { label: 'DAU', value: '4,283', change: '+12.5%', direction: 'up', icon: 'purple', sparkline: [3200, 3400, 3100, 3800, 4200, 4100, 4283] },
-        completionRate: { label: '完成率', value: '68.4%', change: '+3.2%', direction: 'up', icon: 'green', sparkline: [60, 62, 63, 65, 64, 66, 68.4] },
-        conversionRate: { label: '付费转化率', value: '15.7%', change: '-1.3%', direction: 'down', icon: 'blue', sparkline: [18, 17.5, 17, 16.8, 16.5, 16, 15.7] },
-        avgOrder: { label: '客单价', value: '¥2.99', change: '0%', direction: 'flat', icon: 'gold', sparkline: [2.99, 2.99, 2.99, 2.99, 2.99, 2.99, 2.99] },
-        shareRate: { label: '分享率', value: '23.1%', change: '+5.8%', direction: 'up', icon: 'teal', sparkline: [15, 16, 17, 18, 20, 22, 23.1] },
-        d7Retention: { label: 'D7 留存', value: '31.2%', change: '+2.1%', direction: 'up', icon: 'red', sparkline: [26, 27, 28, 29, 30, 30.5, 31.2] }
-    };
-
-    var MOCK_TREND = {
-        labels: ['07-06', '07-07', '07-08', '07-09', '07-10', '07-11', '07-12'],
-        dau: [3200, 3450, 3100, 3800, 4200, 4100, 4283],
-        newUsers: [1850, 1920, 1680, 2100, 2350, 2280, 2400],
-        completions: [2180, 2360, 2120, 2600, 2870, 2790, 2930]
-    };
-
-    var MOCK_BAR = {
-        labels: ['微信支付', '支付宝'],
-        values: [186, 134],
-        colors: [CONFIG.colors.green, CONFIG.colors.blue]
-    };
-
-    var MOCK_FUNNEL = [
-        { name: '访问页面', value: 12450, color: '1' },
-        { name: '开始测评', value: 8520, color: '2' },
-        { name: '完成测评', value: 5830, color: '3' },
-        { name: '付费解锁', value: 916, color: '4' },
-        { name: '分享结果', value: 212, color: '5' }
-    ];
-
-    var MOCK_ALERTS = [
-        { level: 'critical', title: '付费转化率下降', desc: '付费转化率从 17.2% 降至 15.7%，低于阈值 16%', time: '2026-07-12 10:30' },
-        { level: 'warning', title: '完成率波动', desc: '07-08 完成率突降至 63%，疑似题目加载异常', time: '2026-07-08 14:15' },
-        { level: 'info', title: 'DAU 创新高', desc: '07-10 DAU 达到 4200，较上周增长 18%', time: '2026-07-10 09:00' }
-    ];
+    // （已移除 MOCK 数据，改为通过 API.getDashboardData 获取真实数据）
 
     // ============== DOM 引用 ==============
     var els = {
@@ -102,21 +68,34 @@
         timeRange: '7d',
         currentMetric: 'dau',
         lastRefreshTime: Date.now(),
-        refreshTimer: null
+        refreshTimer: null,
+        dashboardData: {
+            kpi: {},
+            trend: { labels: [], dau: [], newUsers: [], completions: [] },
+            bar: { labels: [], values: [], colors: [] },
+            funnel: [],
+            alerts: []
+        }
     };
 
     // ========================================================
     //  1. KPI 卡片渲染
     // ========================================================
     function renderKPI() {
+        var kpiData = state.dashboardData.kpi || {};
         var kpis = [
-            MOCK_KPI.dau,
-            MOCK_KPI.completionRate,
-            MOCK_KPI.conversionRate,
-            MOCK_KPI.avgOrder,
-            MOCK_KPI.shareRate,
-            MOCK_KPI.d7Retention
-        ];
+            kpiData.dau,
+            kpiData.completionRate,
+            kpiData.conversionRate,
+            kpiData.avgOrder,
+            kpiData.shareRate,
+            kpiData.d7Retention
+        ].filter(Boolean);
+
+        if (kpis.length === 0) {
+            els.kpiGrid.innerHTML = '<div class="alert-empty">暂无 KPI 数据</div>';
+            return;
+        }
 
         els.kpiGrid.innerHTML = kpis.map(function (kpi, i) {
             var iconClass = 'kpi-card__icon--' + kpi.icon;
@@ -223,8 +202,18 @@
         var h = canvas.height;
         ctx.clearRect(0, 0, w, h);
 
-        var data = MOCK_TREND[state.currentMetric] || MOCK_TREND.dau;
-        var labels = MOCK_TREND.labels;
+        var trend = state.dashboardData.trend || { labels: [], dau: [], newUsers: [], completions: [] };
+        var data = trend[state.currentMetric] || trend.dau || [];
+        var labels = trend.labels || [];
+
+        if (data.length < 2) {
+            ctx.fillStyle = CONFIG.colors.textLight;
+            ctx.font = '13px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('暂无趋势数据', w / 2, h / 2);
+            return;
+        }
+
         var color = state.currentMetric === 'dau' ? CONFIG.colors.purple
                    : state.currentMetric === 'newUsers' ? CONFIG.colors.blue
                    : CONFIG.colors.green;
@@ -335,7 +324,14 @@
         var h = canvas.height;
         ctx.clearRect(0, 0, w, h);
 
-        var data = MOCK_BAR;
+        var data = state.dashboardData.bar || { labels: [], values: [], colors: [] };
+        if (!data.values || data.values.length === 0) {
+            ctx.fillStyle = CONFIG.colors.textLight;
+            ctx.font = '13px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('暂无支付渠道数据', w / 2, h / 2);
+            return;
+        }
         var padding = { top: 20, right: 20, bottom: 50, left: 50 };
         var chartW = w - padding.left - padding.right;
         var chartH = h - padding.top - padding.bottom;
@@ -409,12 +405,17 @@
     //  5. 转化漏斗
     // ========================================================
     function renderFunnel() {
-        var max = MOCK_FUNNEL[0].value;
+        var funnel = state.dashboardData.funnel || [];
+        if (funnel.length === 0) {
+            els.funnelContainer.innerHTML = '<div class="alert-empty">暂无漏斗数据</div>';
+            return;
+        }
+        var max = funnel[0].value;
         var html = '';
 
-        MOCK_FUNNEL.forEach(function (step, i) {
+        funnel.forEach(function (step, i) {
             var pct = (step.value / max) * 100;
-            var prevValue = i > 0 ? MOCK_FUNNEL[i - 1].value : step.value;
+            var prevValue = i > 0 ? funnel[i - 1].value : step.value;
             var convRate = i > 0 ? ((step.value / prevValue) * 100).toFixed(1) : '100.0';
             var convClass = i > 0 && parseFloat(convRate) < 50 ? 'funnel-step__conv--drop' : '';
 
@@ -439,7 +440,7 @@
     //  6. 异常告警面板
     // ========================================================
     function renderAlerts() {
-        var alerts = MOCK_ALERTS;
+        var alerts = state.dashboardData.alerts || [];
 
         if (alerts.length === 0) {
             els.alertList.innerHTML = '<div class="alert-empty">暂无异常告警，系统运行正常</div>';
@@ -585,17 +586,15 @@
         });
 
         els.screenshotDownload.addEventListener('click', function () {
-            // 模拟下载
-            var blob = new Blob(['画己职测 数据看板截图\n生成时间：' + getCurrentTimeStr()], { type: 'text/plain' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'dashboard_' + new Date().toISOString().substring(0, 10) + '.png';
-            a.click();
-            URL.revokeObjectURL(url);
-
-            els.screenshotModal.classList.remove('modal--open');
-            showToast('截图已下载');
+            var range = state.timeRange === 'custom' ? '7d' : state.timeRange;
+            API.exportDashboard(range).then(function (blob) {
+                API.downloadBlob(blob, 'dashboard_' + new Date().toISOString().substring(0, 10) + '.csv');
+                els.screenshotModal.classList.remove('modal--open');
+                showToast('看板数据已导出');
+                trackEvent('dashboard_export', { range: range });
+            }).catch(function (err) {
+                showToast('导出失败：' + (err.message || '未知错误'));
+            });
         });
     }
 
@@ -628,12 +627,25 @@
 
     function refreshData() {
         state.lastRefreshTime = Date.now();
-        renderKPI();
-        drawTrendChart();
-        drawBarChart();
-        renderFunnel();
-        renderAlerts();
-        updateSyncTime();
+        var range = state.timeRange === 'custom' ? '7d' : state.timeRange;
+        API.getDashboardData(range).then(function (data) {
+            state.dashboardData = data || state.dashboardData;
+            renderKPI();
+            drawTrendChart();
+            drawBarChart();
+            renderFunnel();
+            renderAlerts();
+            updateSyncTime();
+        }).catch(function (err) {
+            showToast('数据加载失败：' + (err.message || '未知错误'));
+            // 降级渲染（使用空数据）
+            renderKPI();
+            drawTrendChart();
+            drawBarChart();
+            renderFunnel();
+            renderAlerts();
+            updateSyncTime();
+        });
     }
 
     // ========================================================
@@ -644,19 +656,12 @@
             if (confirm('确认退出登录？')) {
                 showToast('已退出登录');
                 setTimeout(function () {
-                    window.location.href = 'index.html';
+                    window.location.href = '/';
                 }, 1000);
             }
         });
 
-        document.querySelectorAll('.admin-menu__item').forEach(function (item) {
-            item.addEventListener('click', function (e) {
-                e.preventDefault();
-                var page = item.getAttribute('data-page');
-                if (page === 'dashboard') return;
-                showToast('「' + item.querySelector('span').textContent + '」页面开发中');
-            });
-        });
+        // 侧边栏菜单导航（通过 href 属性实现跳转，无需 JS 拦截）
     }
 
     // ========================================================
@@ -690,7 +695,9 @@
     }
 
     function trackEvent(eventName, data) {
-        console.log('[Admin Track]', eventName, data || {});
+        if (window.API && typeof API.trackEvent === 'function') {
+            API.trackEvent(eventName, data || {});
+        }
     }
 
     var toastTimer = null;
@@ -707,11 +714,7 @@
     // 初始化
     // ========================================================
     function init() {
-        renderKPI();
-        drawTrendChart();
-        drawBarChart();
-        renderFunnel();
-        renderAlerts();
+        refreshData();
 
         initTimeRange();
         initChartToggles();

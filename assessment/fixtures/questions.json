@@ -1,0 +1,1202 @@
+[
+  {
+    "model": "assessment.question",
+    "pk": 1,
+    "fields": {
+      "question_text": "我喜欢思考新的想法和可能性",
+      "dimension_prefix": "BO",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 1,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 2,
+    "fields": {
+      "question_text": "我对艺术、文学或音乐有浓厚的兴趣",
+      "dimension_prefix": "BO",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 2,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 3,
+    "fields": {
+      "question_text": "我更倾向于按部就班，而非尝试新方法",
+      "dimension_prefix": "BO",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 3,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 4,
+    "fields": {
+      "question_text": "我喜欢探索抽象的概念和理论",
+      "dimension_prefix": "BO",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 4,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 5,
+    "fields": {
+      "question_text": "我经常反思人生的意义和价值观",
+      "dimension_prefix": "BO",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 5,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 6,
+    "fields": {
+      "question_text": "我愿意挑战传统观念和权威",
+      "dimension_prefix": "BO",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 6,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 7,
+    "fields": {
+      "question_text": "我对不同的文化、思想和观点充满好奇",
+      "dimension_prefix": "BO",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 7,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 8,
+    "fields": {
+      "question_text": "我觉得丰富的想象力是浪费时间",
+      "dimension_prefix": "BO",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 8,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 9,
+    "fields": {
+      "question_text": "我喜欢涉猎广泛的书籍和文章",
+      "dimension_prefix": "BO",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 9,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 10,
+    "fields": {
+      "question_text": "我乐于接受不熟悉的新鲜事物",
+      "dimension_prefix": "BO",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 10,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 11,
+    "fields": {
+      "question_text": "我会提前制定计划并按计划执行",
+      "dimension_prefix": "BC",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 11,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 12,
+    "fields": {
+      "question_text": "我总是说到做到，从不食言",
+      "dimension_prefix": "BC",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 12,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 13,
+    "fields": {
+      "question_text": "我做事注重细节，力求完美",
+      "dimension_prefix": "BC",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 13,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 14,
+    "fields": {
+      "question_text": "我经常把该做的事拖延到最后一刻",
+      "dimension_prefix": "BC",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 14,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 15,
+    "fields": {
+      "question_text": "我能长期坚持为既定目标努力",
+      "dimension_prefix": "BC",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 15,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 16,
+    "fields": {
+      "question_text": "我会按时完成承诺的任务",
+      "dimension_prefix": "BC",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 16,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 17,
+    "fields": {
+      "question_text": "我保持工作和生活环境的整洁有序",
+      "dimension_prefix": "BC",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 17,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 18,
+    "fields": {
+      "question_text": "面对困难任务我能专注直到完成",
+      "dimension_prefix": "BC",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 18,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 19,
+    "fields": {
+      "question_text": "我常常半途而废，难以坚持到底",
+      "dimension_prefix": "BC",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 19,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 20,
+    "fields": {
+      "question_text": "我对自己的责任和义务认真负责",
+      "dimension_prefix": "BC",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 20,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 21,
+    "fields": {
+      "question_text": "在社交场合中我通常是主动交谈的人",
+      "dimension_prefix": "BE",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 21,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 22,
+    "fields": {
+      "question_text": "我从与他人互动中获得能量",
+      "dimension_prefix": "BE",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 22,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 23,
+    "fields": {
+      "question_text": "我喜欢成为团队或活动的组织者",
+      "dimension_prefix": "BE",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 23,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 24,
+    "fields": {
+      "question_text": "我在人群中感到自在和充满活力",
+      "dimension_prefix": "BE",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 24,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 25,
+    "fields": {
+      "question_text": "我更喜欢独处，而非与人交往",
+      "dimension_prefix": "BE",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 25,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 26,
+    "fields": {
+      "question_text": "我乐于结识新朋友",
+      "dimension_prefix": "BE",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 26,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 27,
+    "fields": {
+      "question_text": "我说话做事节奏明快、充满热情",
+      "dimension_prefix": "BE",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 27,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 28,
+    "fields": {
+      "question_text": "我在会议或聚会中倾向于主动发言",
+      "dimension_prefix": "BE",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 28,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 29,
+    "fields": {
+      "question_text": "我享受成为众人关注的焦点",
+      "dimension_prefix": "BE",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 29,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 30,
+    "fields": {
+      "question_text": "我倾向于安静地待在角落，不引人注意",
+      "dimension_prefix": "BE",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 30,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 31,
+    "fields": {
+      "question_text": "即使意见不同，我也能理解对方的立场",
+      "dimension_prefix": "BA",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 31,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 32,
+    "fields": {
+      "question_text": "我乐于帮助他人解决困难",
+      "dimension_prefix": "BA",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 32,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 33,
+    "fields": {
+      "question_text": "我相信大多数人本质上是善良的",
+      "dimension_prefix": "BA",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 33,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 34,
+    "fields": {
+      "question_text": "我在合作中愿意妥协以达成共识",
+      "dimension_prefix": "BA",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 34,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 35,
+    "fields": {
+      "question_text": "我经常与他人产生争执和冲突",
+      "dimension_prefix": "BA",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 35,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 36,
+    "fields": {
+      "question_text": "我从未对他人产生过嫉妒心理",
+      "dimension_prefix": "BA",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 36,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 37,
+    "fields": {
+      "question_text": "我对他人的感受很敏感",
+      "dimension_prefix": "BA",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 37,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 38,
+    "fields": {
+      "question_text": "我宁愿合作，也不愿竞争",
+      "dimension_prefix": "BA",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 38,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 39,
+    "fields": {
+      "question_text": "我容易原谅他人的过错",
+      "dimension_prefix": "BA",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 39,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 40,
+    "fields": {
+      "question_text": "我倾向于批评，而非包容他人的不足",
+      "dimension_prefix": "BA",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 40,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 41,
+    "fields": {
+      "question_text": "我经常感到焦虑或不安",
+      "dimension_prefix": "BN",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 41,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 42,
+    "fields": {
+      "question_text": "小挫折也会让我情绪低落较长时间",
+      "dimension_prefix": "BN",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 42,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 43,
+    "fields": {
+      "question_text": "我容易因压力而感到紧张",
+      "dimension_prefix": "BN",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 43,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 44,
+    "fields": {
+      "question_text": "我时常担心事情会出问题",
+      "dimension_prefix": "BN",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 44,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 45,
+    "fields": {
+      "question_text": "我情绪起伏较大，容易波动",
+      "dimension_prefix": "BN",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 45,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 46,
+    "fields": {
+      "question_text": "我很少感到紧张或担忧",
+      "dimension_prefix": "BN",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 46,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 47,
+    "fields": {
+      "question_text": "面对不确定性我会感到不安",
+      "dimension_prefix": "BN",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 47,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 48,
+    "fields": {
+      "question_text": "我在任何情况下都能保持冷静，从不紧张",
+      "dimension_prefix": "BN",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 48,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 49,
+    "fields": {
+      "question_text": "我容易被负面情绪困扰",
+      "dimension_prefix": "BN",
+      "is_reverse": false,
+      "question_type": "ocean",
+      "order": 49,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 50,
+    "fields": {
+      "question_text": "即使面对重大变故我也能泰然处之",
+      "dimension_prefix": "BN",
+      "is_reverse": true,
+      "question_type": "ocean",
+      "order": 50,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 51,
+    "fields": {
+      "question_text": "我喜欢使用工具、机械或设备进行实际操作",
+      "dimension_prefix": "RR",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 51,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 52,
+    "fields": {
+      "question_text": "我享受动手修理或制作实物",
+      "dimension_prefix": "RR",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 52,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 53,
+    "fields": {
+      "question_text": "我偏好在户外或实地环境中工作",
+      "dimension_prefix": "RR",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 53,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 54,
+    "fields": {
+      "question_text": "我对机械原理和工程结构感兴趣",
+      "dimension_prefix": "RR",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 54,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 55,
+    "fields": {
+      "question_text": "我愿意从事需要体力和动手能力的工作",
+      "dimension_prefix": "RR",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 55,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 56,
+    "fields": {
+      "question_text": "我喜欢分析复杂的问题并寻找答案",
+      "dimension_prefix": "RI",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 56,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 57,
+    "fields": {
+      "question_text": "我享受进行科学探索和实验",
+      "dimension_prefix": "RI",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 57,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 58,
+    "fields": {
+      "question_text": "我对探究事物背后的原理充满热情",
+      "dimension_prefix": "RI",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 58,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 59,
+    "fields": {
+      "question_text": "我倾向于用逻辑和数据解决难题",
+      "dimension_prefix": "RI",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 59,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 60,
+    "fields": {
+      "question_text": "我喜欢阅读学术或专业领域的研究成果",
+      "dimension_prefix": "RI",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 60,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 61,
+    "fields": {
+      "question_text": "我喜欢通过艺术、音乐或写作表达自己",
+      "dimension_prefix": "RA",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 61,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 62,
+    "fields": {
+      "question_text": "我享受创意性的、不受拘束的工作",
+      "dimension_prefix": "RA",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 62,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 63,
+    "fields": {
+      "question_text": "我对美感和形式有敏锐的感知",
+      "dimension_prefix": "RA",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 63,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 64,
+    "fields": {
+      "question_text": "我倾向于用独特的方式解决问题",
+      "dimension_prefix": "RA",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 64,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 65,
+    "fields": {
+      "question_text": "我喜欢参与设计、表演或创作类活动",
+      "dimension_prefix": "RA",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 65,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 66,
+    "fields": {
+      "question_text": "我喜欢帮助他人成长和发展",
+      "dimension_prefix": "RS",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 66,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 67,
+    "fields": {
+      "question_text": "我享受与人合作完成共同目标",
+      "dimension_prefix": "RS",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 67,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 68,
+    "fields": {
+      "question_text": "我善于倾听并理解他人的需求",
+      "dimension_prefix": "RS",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 68,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 69,
+    "fields": {
+      "question_text": "我愿意从事教育、辅导或服务类工作",
+      "dimension_prefix": "RS",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 69,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 70,
+    "fields": {
+      "question_text": "我在团队中常扮演协调和支持的角色",
+      "dimension_prefix": "RS",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 70,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 71,
+    "fields": {
+      "question_text": "我喜欢带领团队达成目标",
+      "dimension_prefix": "RE",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 71,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 72,
+    "fields": {
+      "question_text": "我享受说服他人接受我的观点",
+      "dimension_prefix": "RE",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 72,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 73,
+    "fields": {
+      "question_text": "我善于发现商业机会并付诸行动",
+      "dimension_prefix": "RE",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 73,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 74,
+    "fields": {
+      "question_text": "我愿意承担风险以追求更大回报",
+      "dimension_prefix": "RE",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 74,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 75,
+    "fields": {
+      "question_text": "我喜欢在竞争环境中展现领导力",
+      "dimension_prefix": "RE",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 75,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 76,
+    "fields": {
+      "question_text": "我喜欢按既定流程和规范完成任务",
+      "dimension_prefix": "RC",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 76,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 77,
+    "fields": {
+      "question_text": "我享受整理和归档信息使井井有条",
+      "dimension_prefix": "RC",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 77,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 78,
+    "fields": {
+      "question_text": "我对数据和细节的准确性有较高要求",
+      "dimension_prefix": "RC",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 78,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 79,
+    "fields": {
+      "question_text": "我偏好稳定、可预期的工作环境",
+      "dimension_prefix": "RC",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 79,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  },
+  {
+    "model": "assessment.question",
+    "pk": 80,
+    "fields": {
+      "question_text": "我善于处理报表、记录和行政事务",
+      "dimension_prefix": "RC",
+      "is_reverse": false,
+      "question_type": "riasec",
+      "order": 80,
+      "is_active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    },
+    "updated_at": "2026-07-13T11:15:36Z"
+  }
+]

@@ -8,57 +8,12 @@
 
     // ============== 配置 ==============
     var CONFIG = {
-        storageKey: 'career_test_orders',
+        storageKey: 'career_test_orders_cache',
         versionKey: 'career_test_orders_version',
-        dataVersion: '2.0',
+        dataVersion: '3.0',
         exportSteps: ['正在收集订单数据...', '正在生成账单...', '正在渲染 PDF...', '导出完成'],
         refundableDays: 7  // 7 天内可退款
     };
-
-    // ============== 模拟订单数据 ==============
-    var MOCK_ORDERS = [
-        {
-            id: 'CT202607120001',
-            date: '2026-07-12',
-            dateLabel: '2026-07-12 14:32',
-            productName: '职业人格深度报告',
-            amount: 2.99,
-            originalAmount: 9.90,
-            payMethod: '微信支付',
-            status: 'completed',
-            invoiceStatus: 'none',
-            reportUrl: 'deep-report.html',
-            typeCode: '沉稳架构师·IRC'
-        },
-        {
-            id: 'CT202606280002',
-            date: '2026-06-28',
-            dateLabel: '2026-06-28 09:15',
-            productName: '职业人格深度报告',
-            amount: 2.99,
-            originalAmount: 9.90,
-            payMethod: '支付宝',
-            status: 'refunding',
-            refundReason: '重复购买',
-            refundTime: '2026-07-01 10:00',
-            invoiceStatus: 'none',
-            reportUrl: 'deep-report.html',
-            typeCode: '灵感传播者·AES'
-        },
-        {
-            id: 'CT202605150003',
-            date: '2026-05-15',
-            dateLabel: '2026-05-15 16:48',
-            productName: '职业人格深度报告',
-            amount: 2.99,
-            originalAmount: 9.90,
-            payMethod: '微信支付',
-            status: 'completed',
-            invoiceStatus: 'issued',
-            reportUrl: 'deep-report.html',
-            typeCode: '沉稳架构师·IRC'
-        }
-    ];
 
     // ============== DOM 元素引用 ==============
     var els = {
@@ -117,32 +72,55 @@
     };
 
     // ========================================================
-    //  1. 数据加载
+    //  1. 数据加载（从后端 API 获取，localStorage 用于缓存）
     // ========================================================
     function loadOrders() {
+        // 版本检测：用于缓存管理
         var savedVersion = localStorage.getItem(CONFIG.versionKey);
         if (savedVersion !== CONFIG.dataVersion) {
             localStorage.removeItem(CONFIG.storageKey);
             localStorage.setItem(CONFIG.versionKey, CONFIG.dataVersion);
         }
-        var saved = localStorage.getItem(CONFIG.storageKey);
-        if (saved) {
+
+        // 先尝试从缓存加载（快速渲染）
+        var cached = localStorage.getItem(CONFIG.storageKey);
+        if (cached) {
             try {
-                var parsed = JSON.parse(saved);
-                if (Array.isArray(parsed) && parsed.length > 0) {
+                var parsed = JSON.parse(cached);
+                if (Array.isArray(parsed)) {
                     state.orders = parsed;
-                    return;
+                    renderOrders();
                 }
             } catch (e) {
                 // ignore
             }
         }
-        state.orders = MOCK_ORDERS.slice();
-        saveOrders();
+
+        // 从后端 API 获取最新数据
+        if (typeof API === 'undefined' || !API.getOrderList) {
+            return;
+        }
+
+        API.getOrderList().then(function (res) {
+            var orders = (res && res.list) || [];
+            state.orders = orders;
+            saveOrders();
+            renderOrders();
+        }).catch(function () {
+            // API 失败时使用缓存数据（已在上面的缓存逻辑中处理）
+            if (state.orders.length === 0) {
+                renderOrders();
+            }
+        });
     }
 
     function saveOrders() {
-        localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.orders));
+        // 用于缓存，而非降级
+        try {
+            localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.orders));
+        } catch (e) {
+            // ignore
+        }
     }
 
     // ========================================================
@@ -311,50 +289,72 @@
     }
 
     // ========================================================
-    //  6. 订单详情
+    //  6. 订单详情（调用 API 获取详情）
     // ========================================================
     function openDetail(id) {
-        var order = findOrder(id);
-        if (!order) return;
-
         state.currentDetailId = id;
 
+        // 先用本地数据快速渲染
+        var order = findOrder(id);
+        if (order) {
+            renderDetail(order);
+        }
+
+        // 调用 API 获取最新详情
+        if (typeof API !== 'undefined' && API.getOrderDetail) {
+            API.getOrderDetail(id).then(function (detail) {
+                if (detail) {
+                    // 合并 API 返回的详情数据
+                    renderDetail(detail);
+                }
+            }).catch(function () {
+                // API 失败时使用本地数据（已渲染）
+            });
+        }
+
+        openModal(els.detailModal);
+        trackEvent('order_detail_view', { id: id });
+    }
+
+    function renderDetail(order) {
         var statusText = {
             'completed': '已完成',
             'refunding': '退款中',
-            'refunded': '已退款'
-        }[order.status];
+            'refunded': '已退款',
+            'pending': '待支付',
+            'expired': '已过期'
+        }[order.status] || order.status;
 
         var html = '';
 
         // 订单信息
         html += '<div class="detail-section">';
         html += '<h4 class="detail-section__title">订单信息</h4>';
-        html += detailRow('订单编号', order.id, 'mono');
-        html += detailRow('下单时间', order.dateLabel);
-        html += detailRow('商品名称', order.productName);
+        html += detailRow('订单编号', order.id || order.order_id, 'mono');
+        html += detailRow('下单时间', order.dateLabel || order.created_at || '—');
+        html += detailRow('商品名称', order.productName || order.product_name || '职业人格深度报告');
         html += detailRow('订单状态', statusText);
         html += '</div>';
 
         // 支付信息
         html += '<div class="detail-section">';
         html += '<h4 class="detail-section__title">支付信息</h4>';
-        html += detailRow('支付方式', order.payMethod);
-        html += detailRow('原价', '¥' + order.originalAmount.toFixed(2));
-        html += detailRow('实付金额', '¥' + order.amount.toFixed(2), 'price');
+        html += detailRow('支付方式', order.payMethod || order.pay_method || '—');
+        html += detailRow('原价', '¥' + (order.originalAmount || order.original_amount || 9.90).toFixed(2));
+        html += detailRow('实付金额', '¥' + (order.amount || order.paid_amount || 0).toFixed(2), 'price');
         html += '</div>';
 
         // 退款信息（如有）
         if (order.status === 'refunding' || order.status === 'refunded') {
             html += '<div class="detail-section">';
             html += '<h4 class="detail-section__title">退款信息</h4>';
-            html += detailRow('退款原因', order.refundReason || '—');
-            html += detailRow('申请时间', order.refundTime || '—');
+            html += detailRow('退款原因', order.refundReason || order.refund_reason || '—');
+            html += detailRow('申请时间', order.refundTime || order.refund_time || '—');
             if (order.status === 'refunding') {
                 html += detailRow('预计到账', '1-3 个工作日');
             }
             if (order.status === 'refunded') {
-                html += detailRow('退款金额', '¥' + order.amount.toFixed(2), 'price');
+                html += detailRow('退款金额', '¥' + (order.amount || 0).toFixed(2), 'price');
             }
             html += '</div>';
         }
@@ -362,7 +362,7 @@
         // 发票信息
         html += '<div class="detail-section">';
         html += '<h4 class="detail-section__title">发票信息</h4>';
-        var invoiceText = order.invoiceStatus === 'issued' ? '已开具' : '未申领';
+        var invoiceText = (order.invoiceStatus || order.invoice_status) === 'issued' ? '已开具' : '未申领';
         html += detailRow('发票状态', invoiceText);
         html += '</div>';
 
@@ -370,7 +370,7 @@
         html += '<div class="detail-actions">';
         if (order.status === 'completed') {
             html += detailAction('purple', '查看深度报告', '跳转至报告阅读页', 'view-report');
-            html += detailAction('gold', order.invoiceStatus === 'issued' ? '查看发票' : '申领发票', '电子发票 PDF', 'invoice');
+            html += detailAction('gold', (order.invoiceStatus || order.invoice_status) === 'issued' ? '查看发票' : '申领发票', '电子发票 PDF', 'invoice');
             html += detailAction('danger', '申请退款', '7 天内可退款', 'refund');
         }
         html += '</div>';
@@ -384,18 +384,20 @@
                 closeModal(els.detailModal);
                 setTimeout(function () {
                     if (action === 'view-report') {
-                        window.location.href = order.reportUrl;
+                        var reportUrl = order.reportUrl || '/deep-report/';
+                        var assessmentId = order.assessment_id || order.assessmentId || '';
+                        if (assessmentId) {
+                            reportUrl += '?assessment_id=' + encodeURIComponent(assessmentId);
+                        }
+                        window.location.href = reportUrl;
                     } else if (action === 'invoice') {
-                        openInvoice(id);
+                        openInvoice(order.id || order.order_id);
                     } else if (action === 'refund') {
-                        openRefund(id);
+                        openRefund(order.id || order.order_id);
                     }
                 }, 200);
             });
         });
-
-        openModal(els.detailModal);
-        trackEvent('order_detail_view', { id: id });
     }
 
     function detailRow(label, value, modifier) {
@@ -466,22 +468,59 @@
                 return;
             }
 
-            var order = findOrder(state.currentRefundId);
-            if (!order) return;
+            var desc = els.refundDesc.value.trim();
+            var orderId = state.currentRefundId;
 
-            order.status = 'refunding';
-            order.refundReason = reason;
-            order.refundTime = new Date().toISOString().substring(0, 16).replace('T', ' ');
-            saveOrders();
-            renderOrders();
-            closeModal(els.refundModal);
+            // 禁用按钮防止重复提交
+            els.refundConfirm.disabled = true;
+            els.refundConfirm.textContent = '提交中…';
 
-            showToast('退款申请已提交');
-            trackEvent('refund_submit', {
-                id: order.id,
-                reason: reason,
-                amount: order.amount
-            });
+            // 调用 API 申请退款
+            if (typeof API !== 'undefined' && API.requestRefund) {
+                API.requestRefund(orderId, reason, desc).then(function () {
+                    // 更新本地状态
+                    var order = findOrder(orderId);
+                    if (order) {
+                        order.status = 'refunding';
+                        order.refundReason = reason;
+                        order.refundTime = new Date().toISOString().substring(0, 16).replace('T', ' ');
+                    }
+                    saveOrders();
+                    renderOrders();
+                    closeModal(els.refundModal);
+
+                    showToast('退款申请已提交');
+                    trackEvent('refund_submit', {
+                        id: orderId,
+                        reason: reason
+                    });
+                }).catch(function (err) {
+                    showToast('退款申请失败：' + (err.message || '请重试'));
+                }).then(function () {
+                    // 恢复按钮状态
+                    els.refundConfirm.disabled = false;
+                    els.refundConfirm.textContent = '提交申请';
+                });
+            } else {
+                // 后端未实现：保留前端验证 + Toast 提示
+                var order = findOrder(orderId);
+                if (order) {
+                    order.status = 'refunding';
+                    order.refundReason = reason;
+                    order.refundTime = new Date().toISOString().substring(0, 16).replace('T', ' ');
+                }
+                saveOrders();
+                renderOrders();
+                closeModal(els.refundModal);
+
+                showToast('退款申请已提交');
+                trackEvent('refund_submit', {
+                    id: orderId,
+                    reason: reason
+                });
+                els.refundConfirm.disabled = false;
+                els.refundConfirm.textContent = '提交申请';
+            }
         });
 
         els.refundCancel.addEventListener('click', function () {
@@ -566,22 +605,49 @@
                 return;
             }
 
-            var order = findOrder(state.currentInvoiceId);
-            if (!order) return;
-
-            order.invoiceStatus = 'issued';
-            order.invoiceTitle = title;
-            order.invoiceType = type;
-            saveOrders();
-            renderOrders();
-            closeModal(els.invoiceModal);
-
-            showToast('发票申领成功，PDF 将发送至邮箱');
-            trackEvent('invoice_submit', {
-                id: order.id,
+            var orderId = state.currentInvoiceId;
+            var invoiceData = {
+                title: title,
                 type: type,
-                title: title
-            });
+                email: email,
+                tax_number: type === 'enterprise' ? els.taxNumber.value.trim() : ''
+            };
+
+            // 禁用按钮
+            els.invoiceConfirm.disabled = true;
+            els.invoiceConfirm.textContent = '提交中…';
+
+            // 调用 API 申领发票
+            if (typeof API !== 'undefined' && API.requestInvoice) {
+                API.requestInvoice(orderId, invoiceData).then(function () {
+                    var order = findOrder(orderId);
+                    if (order) {
+                        order.invoiceStatus = 'issued';
+                        order.invoiceTitle = title;
+                        order.invoiceType = type;
+                    }
+                    saveOrders();
+                    renderOrders();
+                    closeModal(els.invoiceModal);
+
+                    showToast('发票申领成功，PDF 将发送至邮箱');
+                    trackEvent('invoice_submit', {
+                        id: orderId,
+                        type: type,
+                        title: title
+                    });
+                }).catch(function (err) {
+                    showToast('发票申领失败：' + (err.message || '请重试'));
+                }).then(function () {
+                    els.invoiceConfirm.disabled = false;
+                    els.invoiceConfirm.textContent = '提交申领';
+                });
+            } else {
+                // 后端未实现：Toast 提示功能开发中
+                showToast('功能开发中，敬请期待');
+                els.invoiceConfirm.disabled = false;
+                els.invoiceConfirm.textContent = '提交申领';
+            }
         });
 
         els.invoiceCancel.addEventListener('click', function () {
@@ -706,7 +772,7 @@
             if (window.history.length > 1) {
                 window.history.back();
             } else {
-                window.location.href = 'index.html';
+                window.location.href = '/';
             }
         });
     }
@@ -748,13 +814,9 @@
     }
 
     function trackEvent(eventName, data) {
-        console.log('[Track]', eventName, data || {});
-        // 后端接入后替换为真实埋点 API
-        // fetch('/api/stats/track/', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ event: eventName, ...data })
-        // });
+        if (typeof API !== 'undefined' && API.trackEvent) {
+            API.trackEvent(eventName, data || {}, 'orders');
+        }
     }
 
     var toastTimer = null;
@@ -776,7 +838,6 @@
     // ========================================================
     function init() {
         loadOrders();
-        renderOrders();
         initTabs();
         initDetailClose();
         initRefund();

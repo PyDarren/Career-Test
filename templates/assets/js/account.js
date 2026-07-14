@@ -20,7 +20,7 @@
         nickname: '画己职测 用户',
         avatar: null,           // base64 或 null
         phone: '138****6789',
-        typeCode: 'INTJ-A-C',
+        typeCode: '',  // 从测评结果动态获取
         registerDate: '2026-07-12'
     };
 
@@ -103,7 +103,65 @@
                 state.user[keys[i]] = DEFAULT_USER[keys[i]];
             }
         }
+
+        // 从最近的测评结果动态获取人格类型标签
+        if (!state.user.typeCode) {
+            state.user.typeCode = getLatestTypeCode();
+        }
+
         renderUser();
+
+        // 尝试从 API 获取（异步，不阻塞渲染）
+        if (typeof API !== 'undefined' && API.getAssessmentHistory) {
+            API.getAssessmentHistory().then(function (res) {
+                var list = (res && res.list) || [];
+                if (list.length > 0) {
+                    var latest = list[0];
+                    var code = latest.code || latest.baseCode || latest.type_code || '';
+                    if (code && code !== state.user.typeCode) {
+                        state.user.typeCode = code;
+                        state.user.assessmentCount = list.length;
+                        state.user.reportCount = list.filter(function (r) { return r.isPaid; }).length;
+                        saveUser();
+                        renderUser();
+                    }
+                }
+            }).catch(function () {
+                // API 失败时使用 localStorage 数据
+            });
+        }
+    }
+
+    // 从 localStorage 获取最近一次测评的类型码
+    function getLatestTypeCode() {
+        // 尝试从历史记录缓存获取
+        try {
+            var historyCache = localStorage.getItem('career_test_history_cache');
+            if (historyCache) {
+                var records = JSON.parse(historyCache);
+                if (Array.isArray(records) && records.length > 0) {
+                    var latest = records[0];
+                    return latest.code || latest.baseCode || latest.type_code || '';
+                }
+            }
+        } catch (e) {
+            // ignore
+        }
+
+        // 尝试从测评结果缓存获取
+        try {
+            var resultCache = localStorage.getItem('assessment_result');
+            if (resultCache) {
+                var result = JSON.parse(resultCache);
+                if (result && (result.code || result.archetype_code)) {
+                    return result.code || result.archetype_code;
+                }
+            }
+        } catch (e) {
+            // ignore
+        }
+
+        return '';
     }
 
     function saveUser() {
@@ -140,7 +198,12 @@
     function renderUser() {
         els.nicknameDisplay.textContent = state.user.nickname;
         els.phoneDisplay.textContent = state.user.phone;
-        els.typeBadge.textContent = state.user.typeCode;
+        els.typeBadge.textContent = state.user.typeCode || '未测评';
+        if (!state.user.typeCode) {
+            els.typeBadge.classList.add('type-badge--empty');
+        } else {
+            els.typeBadge.classList.remove('type-badge--empty');
+        }
         els.registerDate.textContent = state.user.registerDate;
 
         // 渲染头像
@@ -157,7 +220,7 @@
             if (window.history.length > 1) {
                 window.history.back();
             } else {
-                window.location.href = 'index.html';
+                window.location.href = '/';
             }
         });
     }
@@ -474,7 +537,7 @@
 
             // 3 秒后跳转首页
             setTimeout(function () {
-                window.location.href = 'index.html';
+                window.location.href = '/';
             }, 3000);
         });
 
@@ -496,7 +559,7 @@
                 trackEvent('logout');
                 showToast('已退出登录');
                 setTimeout(function () {
-                    window.location.href = 'index.html';
+                    window.location.href = '/';
                 }, 1000);
             }
         });
@@ -533,13 +596,9 @@
     }
 
     function trackEvent(eventName, data) {
-        console.log('[Track]', eventName, data || {});
-        // 后端接入后替换为真实埋点 API
-        // fetch('/api/stats/track/', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ event: eventName, ...data })
-        // });
+        if (typeof API !== 'undefined' && API.trackEvent) {
+            API.trackEvent(eventName, data || {}, 'account');
+        }
     }
 
     var toastTimer = null;

@@ -8,15 +8,15 @@
     <title>你的测试结果 | 画己职测</title>
 
     <!-- 复用 16personalities 本地资源 -->
-    <link rel="stylesheet" href="16p-assets/css/styles-core.css" />
-    <link rel="stylesheet" href="16p-assets/css/styles-fonts.css" />
-    <link rel="stylesheet" href="16p-assets/css/homepage.css" />
-    <link rel="stylesheet" href="assets/css/result-free.css" />
+    <link rel="stylesheet" href="/static/16p-assets/css/styles-core.css" />
+    <link rel="stylesheet" href="/static/16p-assets/css/styles-fonts.css" />
+    <link rel="stylesheet" href="/static/16p-assets/css/homepage.css" />
+    <link rel="stylesheet" href="/static/assets/css/result-free.css" />
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,440..770;1,440..770&display=swap">
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,700..800;1,700..800&display=swap">
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-    <link rel="icon" type="image/png" href="assets/images/职业测评 LOGO 透明.png">
+    <link rel="icon" type="image/png" href="/static/assets/images/职业测评 LOGO 透明.png">
 
     <style>[v-cloak] {display: none !important;}</style>
 </head>
@@ -26,21 +26,21 @@
         <!-- ============== 顶部导航栏 ============== -->
         <div class="navbar navbar--sticky" id="js-navbar" data-testid="top-nav">
             <app-logo class="logo">
-                <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
-                    <img src="assets/images/职业测评 LOGO 透明.png" width="36" height="36" alt="画己职测 Logo" style="object-fit:cover;width:36px !important;height:36px !important;flex-shrink:0;">
+                <a href="/" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+                    <img src="/static/assets/images/职业测评 LOGO 透明.png" width="36" height="36" alt="画己职测 Logo" style="object-fit:cover;width:36px !important;height:36px !important;flex-shrink:0;">
                     <span style="font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-weight:700;font-size:18px;color:#2d3436;letter-spacing:1px;">画己职测</span>
                 </a>
             </app-logo>
             <nav class="sp-nav__topmiddle middle-section items--4 anonymous">
                 <ul>
-                    <li class=""><a href="index.html#be-understood" class="link--quiz">开始测评</a></li>
-                    <li class=""><a href="index.html#understand-others" class="">人格类型</a></li>
-                    <li class=""><a href="index.html#core-features" class="">核心优势</a></li>
-                    <li class=""><a href="index.html#testimonials" class="">用户评价</a></li>
+                    <li class=""><a href="/#be-understood" class="link--quiz">开始测评</a></li>
+                    <li class=""><a href="/result-free/" class="">人格类型</a></li>
+                    <li class=""><a href="/#core-features" class="">核心优势</a></li>
+                    <li class=""><a href="/#testimonials" class="">用户评价</a></li>
                 </ul>
             </nav>
             <div class="right-section">
-                <a href="guide.html" class="sp-action sp-button button--purple button--md button--pill button--auto test-button tw-hidden medium:tw-flex">
+                <a href="/guide/" class="sp-action sp-button button--purple button--md button--pill button--auto test-button tw-hidden medium:tw-flex">
                     <span class="button__text">开始测试</span>
                 </a>
             </div>
@@ -377,7 +377,7 @@
                         <span class="feature-pill">职业匹配</span>
                         <span class="feature-pill">恋爱指南</span>
                     </div>
-                    <a href="payment.html" class="deep-cta__btn">
+                    <a href="/payment/" class="deep-cta__btn">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                         <span>解锁完整报告 · ¥2.99</span>
                     </a>
@@ -387,8 +387,8 @@
 
             <!-- ============== 底部导航 ============== -->
             <section class="result-footer-nav">
-                <a href="index.html" class="footer-nav__link">返回首页</a>
-                <a href="question.html" class="footer-nav__link">重新测试</a>
+                <a href="/" class="footer-nav__link">返回首页</a>
+                <a href="/question/" class="footer-nav__link">重新测试</a>
             </section>
 
         </main>
@@ -399,53 +399,57 @@
                 <div>
                     <h3 class="font-body p-sm tw-m-0 tw-font-semibold">产品</h3>
                     <ul class="tw-m-0 tw-list-none tw-p-0">
-                        <li class="tw-mt-10"><a href="index.html#be-understood">免费测评</a></li>
-                        <li class="tw-mt-10"><a href="payment.html">深度报告</a></li>
-                        <li class="tw-mt-10"><a href="result-free.html">人格认证卡</a></li>
-                        <li class="tw-mt-10"><a href="index.html#testimonials">用户评价</a></li>
+                        <li class="tw-mt-10"><a href="/#be-understood">免费测评</a></li>
+                        <li class="tw-mt-10"><a href="/payment/">深度报告</a></li>
+                        <li class="tw-mt-10"><a href="/result-free/">人格认证卡</a></li>
+                        <li class="tw-mt-10"><a href="/#testimonials">用户评价</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="font-body p-sm tw-m-0 tw-font-semibold">资源</h3>
                     <ul class="tw-m-0 tw-list-none tw-p-0">
-                        <li class="tw-mt-10"><a href="index.html#understand-others">人格测试</a></li>
-                        <li class="tw-mt-10"><a href="index.html#understand-others">人格类型</a></li>
-                        <li class="tw-mt-10"><a href="index.html#core-features">核心优势</a></li>
-                        <li class="tw-mt-10"><a href="index.html#core-features">理论框架</a></li>
+                        <li class="tw-mt-10"><a href="/guide/">人格测试</a></li>
+                        <li class="tw-mt-10"><a href="/result-free/">人格类型</a></li>
+                        <li class="tw-mt-10"><a href="/#core-features">核心优势</a></li>
+                        <li class="tw-mt-10"><a href="/#core-features">理论框架</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="font-body p-sm tw-m-0 tw-font-semibold">帮助</h3>
                     <ul class="tw-m-0 tw-list-none tw-p-0">
-                        <li class="tw-mt-10"><a href="account.html">联系我们</a></li>
-                        <li class="tw-mt-10"><a href="#">常见问题</a></li>
-                        <li class="tw-mt-10"><a href="#">反馈问题</a></li>
-                        <li class="tw-mt-10"><a href="orders.html">订单查询</a></li>
+                        <li class="tw-mt-10"><a href="/account/">联系我们</a></li>
+                        <li class="tw-mt-10"><a href="/faq/">常见问题</a></li>
+                        <li class="tw-mt-10"><a href="/feedback/">反馈问题</a></li>
+                        <li class="tw-mt-10"><a href="/orders/">订单查询</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="font-body p-sm tw-m-0 tw-font-semibold">关注我们</h3>
                     <ul class="tw-m-0 tw-list-none tw-p-0">
-                        <li class="tw-mt-10"><a href="#">微信公众号</a></li>
-                        <li class="tw-mt-10"><a href="#">微博</a></li>
-                        <li class="tw-mt-10"><a href="#">QQ 群</a></li>
-                        <li class="tw-mt-10"><a href="#">邮箱订阅</a></li>
+                        <li class="tw-mt-10"><a href="javascript:void(0)" onclick="alert('暂未开通，敬请期待')">微信公众号</a></li>
+                        <li class="tw-mt-10"><a href="javascript:void(0)" onclick="alert('暂未开通，敬请期待')">微博</a></li>
+                        <li class="tw-mt-10"><a href="javascript:void(0)" onclick="alert('暂未开通，敬请期待')">QQ 群</a></li>
+                        <li class="tw-mt-10"><a href="javascript:void(0)" onclick="alert('暂未开通，敬请期待')">邮箱订阅</a></li>
                     </ul>
                 </div>
             </nav>
             <div id="copyright" class="sp-wrap tw-text-center p-sm">
                 <ul class="tw-list-none tw-p-0 tw-m-0 tw-flex tw-justify-center tw-gap-20 tw-flex-wrap">
                     <li>&copy; 2026 画己职测. 保留所有权利</li>
-                    <li><a href="#">隐私政策</a></li>
-                    <li><a href="#">用户协议</a></li>
-                    <li><a href="#">无障碍声明</a></li>
+                    <li><a href="/privacy/">隐私政策</a></li>
+                    <li><a href="/terms/">用户协议</a></li>
+                    <li><a href="/accessibility/">无障碍声明</a></li>
                 </ul>
             </div>
         </footer>
 
     </div>
 
+    <!-- API 请求封装 -->
+    <script src="/static/assets/js/api.js"></script>
     <!-- 结果页脚本 -->
-    <script src="assets/js/result-free.js"></script>
+    <script src="/static/assets/js/result-free.js"></script>
+    <!-- 分享功能 -->
+    <script src="/static/assets/js/share.js"></script>
 </body>
 </html>

@@ -1,7 +1,9 @@
 /**
  * admin-content.js — 后台内容配置交互脚本
- * 功能：模板列表、富文本编辑器、推荐职位管理、CTA 文案配置、
+ * 功能：画像列表、富文本编辑器、推荐职业管理、CTA 文案配置、
  *       A/B 测试配置、版本历史回滚、审批流程
+ * 数据来源：API.getAdminArchetypes / API.updateAdminArchetype /
+ *           API.getAdminCareers / API.updateAdminCareer
  */
 
 (function () {
@@ -9,45 +11,10 @@
 
     // ============== 配置 ==============
     var CONFIG = {
-        storageKey: 'admin_content_templates',
-        versionKey: 'admin_content_versions',
-        abTestKey: 'admin_ab_test_config'
-    };
-
-    // ============== 模拟模板数据 ==============
-    var MOCK_TEMPLATES = [
-        { id: 'TPL-001', name: '你的人格画像', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>你的人格画像：沉稳架构师·IRC</h3><p>作为 <strong>沉稳架构师·IRC</strong>，你属于较为稀有的人格原型，约占人群的约 <strong>3.13%</strong>。你天生具有战略思维，善于将抽象概念转化为可执行的计划。</p><p>你的核心特质包括：</p><ul><li>独立思考，追求知识与能力的极致</li><li>善于长期规划，对未来有清晰的愿景</li><li>对效率和逻辑有极高的要求</li><li>在社交中偏内向，但能在关键时刻展现领导力</li></ul><p>这份深度报告将帮助你更全面地了解自己的人格特质，发掘潜在优势，并给出针对性的成长建议。</p>' },
-        { id: 'TPL-002', name: '人格特征分析', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>人格特征深度分析</h3><p>你的大五人格维度组合为 <strong>O↑C↑E↓A↑N↓</strong>（高开放性、高尽责性、低外向性、高宜人性、低神经质），这一独特的组合赋予了你独特的思维模式与行为倾向。</p><p>主导维度 <strong>开放性(O)</strong> 使你能够洞察事物的内在规律，预见未来趋势。辅助维度 <strong>尽责性(C)</strong> 则帮助你将洞察转化为系统化的执行方案。</p>' },
-        { id: 'TPL-003', name: '人格优势', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>你的核心优势</h3><ul><li><strong>战略思维</strong>：能够从宏观角度审视问题，制定长远规划</li><li><strong>独立自主</strong>：不依赖他人认可，有强大的内在驱动力</li><li><strong>高效执行</strong>：善于将复杂目标分解为可操作的步骤</li><li><strong>深度专注</strong>：对感兴趣的领域有极强的钻研精神</li></ul>' },
-        { id: 'TPL-004', name: '人格劣势', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>需要注意的方面</h3><ul><li><strong>过度完美主义</strong>：对自己和他人要求过高，容易造成压力</li><li><strong>情感表达不足</strong>：可能被误解为冷漠或缺乏同理心</li><li><strong>社交倦怠</strong>：长时间社交后会感到精力耗尽</li></ul>' },
-        { id: 'TPL-005', name: '深度职业专题', type: 'chapter', typeLabel: '报告章节', status: 'draft', content: '<h3>职业发展深度解读</h3><p>基于你的人格特质，你在以下职业方向有天然优势：</p>' },
-        { id: 'TPL-006', name: '解锁报告 CTA', type: 'cta', typeLabel: 'CTA 文案', status: 'published', content: '' },
-        { id: 'TPL-007', name: '推荐职位 - 沉稳架构师', type: 'job', typeLabel: '推荐职位', status: 'published', content: '' },
-        { id: 'TPL-008', name: '分享引导文案', type: 'cta', typeLabel: 'CTA 文案', status: 'review', content: '' },
-        { id: 'TPL-009', name: '大五人格五维度深度解读', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>大五人格五维度深度解读</h3><p>你的大五人格维度排序为：<strong>开放性(O) &gt; 尽责性(C) &gt; 宜人性(A) &gt; 稳定性(N↓) &gt; 外向性(E)</strong></p>' },
-        { id: 'TPL-010', name: '人格恋爱专题', type: 'chapter', typeLabel: '报告章节', status: 'published', content: '<h3>恋爱关系中的你</h3><p>在亲密关系中，你追求深度连接与精神共鸣...</p>' }
-    ];
-
-    var MOCK_JOBS = [
-        { name: '战略咨询顾问', desc: '企业战略规划与商业分析', match: 96 },
-        { name: '数据科学家', desc: '数据挖掘与机器学习建模', match: 93 },
-        { name: '产品经理', desc: '产品规划与用户体验设计', match: 91 },
-        { name: '投资分析师', desc: '行业研究与投资决策支持', match: 89 },
-        { name: '系统架构师', desc: '技术架构设计与技术选型', match: 88 }
-    ];
-
-    var MOCK_VERSIONS = [
-        { version: 'v3.2.1', time: '2026-07-12 10:30', author: '陈编辑', note: '优化人格画像描述文案，增加核心特质要点列表', status: 'current', statusLabel: '当前版本', diff: { add: 45, del: 12 } },
-        { version: 'v3.2.0', time: '2026-07-10 14:20', author: '陈编辑', note: '补充大五人格五维度说明，调整段落顺序', status: 'published', statusLabel: '已发布', diff: { add: 78, del: 23 } },
-        { version: 'v3.1.0', time: '2026-07-08 09:15', author: '王主管', note: '审批通过并发布，修正统计数据来源', status: 'published', statusLabel: '已发布', diff: { add: 15, del: 8 } },
-        { version: 'v3.0.0', time: '2026-07-05 16:40', author: '陈编辑', note: '大规模重写报告结构，按12章节模板重新组织内容', status: 'published', statusLabel: '已发布', diff: { add: 320, del: 180 } },
-        { version: 'v2.4.3', time: '2026-06-28 11:00', author: '陈编辑', note: '微调措辞，优化阅读体验', status: 'published', statusLabel: '已发布', diff: { add: 8, del: 12 } }
-    ];
-
-    var MOCK_AB_TEST = {
-        control: { label: 'A 版本', tag: 'control', content: '立即解锁深度报告，了解你的完整职业发展路径', ctr: '12.3%', conv: '15.7%' },
-        test: { label: 'B 版本', tag: 'test', content: '限时 ¥2.99 解锁万字深度报告，发现你的职业优势', ctr: '14.1%', conv: '17.2%' },
-        trafficSplit: 50
+        storageKey: 'admin_content_cache',      // 缓存键（仅用于网络异常时的降级缓存）
+        versionKey: 'admin_content_version',
+        dataVersion: '3.0',                      // 数据版本：升级测评体系后递增，触发旧缓存清除
+        abTestKey: 'admin_ab_test_config'        // A/B 测试配置（本地配置，无 API）
     };
 
     var STATUS_MAP = {
@@ -117,39 +84,121 @@
 
     // ============== 状态 ==============
     var state = {
-        templates: [],
-        currentTemplateId: 'TPL-001',
-        jobs: [],
-        versions: [],
-        abTest: null,
+        templates: [],           // 画像列表（来自 API）
+        currentTemplateId: null,
+        jobs: [],                // 职业列表（来自 API）
+        versions: [],            // 版本历史（本地内存）
+        abTest: {
+            control: { label: 'A 版本', tag: 'control', content: '立即解锁深度报告，了解你的完整职业发展路径', ctr: '12.3%', conv: '15.7%' },
+            test: { label: 'B 版本', tag: 'test', content: '限时 ¥2.99 解锁万字深度报告，发现你的职业优势', ctr: '14.1%', conv: '17.2%' },
+            trafficSplit: 50
+        },
         rollbackTarget: null
     };
 
     // ========================================================
-    //  1. 数据加载
+    //  1. 数据加载（调用 API 获取画像列表 + 职业列表）
     // ========================================================
     function loadData() {
-        var saved = localStorage.getItem(CONFIG.storageKey);
-        if (saved) {
-            try {
-                var parsed = JSON.parse(saved);
-                if (Array.isArray(parsed) && parsed.length > 0) {
-                    state.templates = parsed;
+        // 版本检测：缓存版本不匹配时清除旧缓存
+        var savedVersion = localStorage.getItem(CONFIG.versionKey);
+        if (savedVersion !== CONFIG.dataVersion) {
+            localStorage.removeItem(CONFIG.storageKey);
+            localStorage.setItem(CONFIG.versionKey, CONFIG.dataVersion);
+        }
+
+        // 加载 A/B 测试本地配置
+        var savedAb = null;
+        try {
+            savedAb = JSON.parse(localStorage.getItem(CONFIG.abTestKey) || 'null');
+        } catch (e) { savedAb = null; }
+        if (savedAb && savedAb.control && savedAb.test) {
+            state.abTest = savedAb;
+        }
+
+        // 并行请求画像列表和职业列表
+        Promise.all([
+            API.getAdminArchetypes().catch(function () { return null; }),
+            API.getAdminCareers().catch(function () { return null; })
+        ]).then(function (results) {
+            var archetypeData = results[0];
+            var careerData = results[1];
+
+            // 画像列表
+            if (archetypeData && archetypeData.list && archetypeData.list.length > 0) {
+                state.templates = archetypeData.list.map(function (item) {
+                    return {
+                        id: String(item.id),
+                        name: item.name,
+                        code: item.code,
+                        type: 'chapter',
+                        typeLabel: item.typeLabel || '人格画像',
+                        status: item.status || 'published',
+                        content: item.content || '<p>暂无内容</p>',
+                        // 扩展配置字段
+                        slogan: item.slogan,
+                        rarity: item.rarity,
+                        rarityPercent: item.rarityPercent,
+                        famous: item.famous,
+                        partners: item.partners,
+                        careers: item.careers,
+                        dimensions: item.dimensions,
+                        dimensionText: item.dimensionText,
+                        mascot: item.mascot
+                    };
+                });
+                // 写入降级缓存
+                try {
+                    localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.templates));
+                } catch (e) { /* 忽略缓存写入失败 */ }
+            } else {
+                // 降级：尝试读取缓存
+                var cached = null;
+                try {
+                    cached = JSON.parse(localStorage.getItem(CONFIG.storageKey) || '[]');
+                } catch (e) { cached = null; }
+                if (Array.isArray(cached) && cached.length > 0) {
+                    state.templates = cached;
+                    showToast('网络异常，已显示缓存数据');
+                } else {
+                    state.templates = [];
+                    showToast('画像列表加载失败');
                 }
-            } catch (e) {}
-        }
-        if (state.templates.length === 0) {
-            state.templates = MOCK_TEMPLATES.slice();
-            saveTemplates();
-        }
+            }
 
-        state.jobs = MOCK_JOBS.slice();
-        state.versions = MOCK_VERSIONS.slice();
-        state.abTest = MOCK_AB_TEST;
-    }
+            // 职业列表
+            if (careerData && careerData.list) {
+                state.jobs = careerData.list.map(function (item) {
+                    return {
+                        id: item.id,
+                        name: item.name,
+                        desc: item.desc,
+                        category: item.category,
+                        match: item.match || 0,
+                        salary: item.salary,
+                        growth: item.growth,
+                        active: item.active
+                    };
+                });
+            } else {
+                state.jobs = [];
+            }
 
-    function saveTemplates() {
-        localStorage.setItem(CONFIG.storageKey, JSON.stringify(state.templates));
+            // 选中第一个模板
+            if (state.templates.length > 0 && !state.currentTemplateId) {
+                state.currentTemplateId = state.templates[0].id;
+            }
+
+            renderTemplateList();
+            if (state.currentTemplateId) {
+                selectTemplate(state.currentTemplateId);
+            }
+            renderJobs();
+        }).catch(function (err) {
+            showToast('数据加载失败：' + (err.message || '未知错误'));
+            renderTemplateList();
+            renderJobs();
+        });
     }
 
     // ========================================================
@@ -209,7 +258,7 @@
     //  3. 选择模板
     // ========================================================
     function selectTemplate(id) {
-        var template = state.templates.find(function (t) { return t.id === id; });
+        var template = findTemplate(id);
         if (!template) return;
 
         state.currentTemplateId = id;
@@ -263,19 +312,6 @@
         // 字数统计
         els.editorContent.addEventListener('input', updateCharCount);
         els.editorContent.addEventListener('keyup', updateCharCount);
-
-        // 内容变化自动保存到当前模板
-        var saveTimer = null;
-        els.editorContent.addEventListener('input', function () {
-            if (saveTimer) clearTimeout(saveTimer);
-            saveTimer = setTimeout(function () {
-                var template = getCurrentTemplate();
-                if (template) {
-                    template.content = els.editorContent.innerHTML;
-                    saveTemplates();
-                }
-            }, 1000);
-        });
     }
 
     function updateCharCount() {
@@ -284,7 +320,7 @@
     }
 
     // ========================================================
-    //  5. 推荐职位列表
+    //  5. 推荐职业列表
     // ========================================================
     function renderJobs() {
         if (state.jobs.length === 0) {
@@ -299,7 +335,7 @@
                     '<div class="job-item__name">' + escapeHtml(job.name) + '</div>' +
                     '<div class="job-item__desc">' + escapeHtml(job.desc) + '</div>' +
                 '</div>' +
-                '<span class="job-item__match">' + job.match + '%</span>' +
+                '<span class="job-item__match">' + (job.match || 0) + '%</span>' +
                 '<div class="job-item__actions">' +
                     '<button class="job-item__btn" data-action="edit"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>' +
                     '<button class="job-item__btn job-item__btn--delete" data-action="delete"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg></button>' +
@@ -319,9 +355,22 @@
             });
 
             item.querySelector('[data-action="delete"]').addEventListener('click', function () {
-                state.jobs.splice(index, 1);
-                renderJobs();
-                showToast('职位已删除');
+                var job = state.jobs[index];
+                if (!job) return;
+                // 从本地列表移除（不调用 API 删除，仅标记 inactive）
+                if (job.id) {
+                    API.updateAdminCareer(job.id, { active: false }).then(function () {
+                        state.jobs.splice(index, 1);
+                        renderJobs();
+                        showToast('职位已停用');
+                    }).catch(function (err) {
+                        showToast('停用失败：' + (err.message || '未知错误'));
+                    });
+                } else {
+                    state.jobs.splice(index, 1);
+                    renderJobs();
+                    showToast('职位已删除');
+                }
                 trackEvent('job_delete', { index: index });
             });
         });
@@ -335,7 +384,7 @@
         if (name === null) return;
         var desc = prompt('职位描述：', job.desc);
         if (desc === null) return;
-        var matchStr = prompt('匹配度（0-100）：', String(job.match));
+        var matchStr = prompt('匹配度（0-100）：', String(job.match || 0));
         if (matchStr === null) return;
         var match = parseInt(matchStr, 10);
         if (isNaN(match) || match < 0 || match > 100) {
@@ -343,11 +392,23 @@
             return;
         }
 
+        // 本地更新
         job.name = name || job.name;
         job.desc = desc || job.desc;
         job.match = match;
-        renderJobs();
-        showToast('职位已更新');
+
+        // 调用 API 持久化
+        if (job.id) {
+            API.updateAdminCareer(job.id, { name: job.name, desc: job.desc }).then(function () {
+                renderJobs();
+                showToast('职位已更新');
+            }).catch(function (err) {
+                showToast('更新失败：' + (err.message || '未知错误'));
+            });
+        } else {
+            renderJobs();
+            showToast('职位已更新');
+        }
         trackEvent('job_edit', { index: index });
     }
 
@@ -361,9 +422,9 @@
             var match = parseInt(matchStr, 10);
             if (isNaN(match) || match < 0 || match > 100) match = 85;
 
-            state.jobs.push({ name: name, desc: desc, match: match });
+            state.jobs.push({ name: name, desc: desc, match: match, id: null });
             renderJobs();
-            showToast('职位已添加');
+            showToast('职位已添加（需通过 API 保存生效）');
             trackEvent('job_add', { name: name });
         });
     }
@@ -383,7 +444,7 @@
     }
 
     // ========================================================
-    //  7. A/B 测试配置
+    //  7. A/B 测试配置（本地配置，无 API）
     // ========================================================
     function renderABTest() {
         var ab = state.abTest;
@@ -468,7 +529,9 @@
             var duration = document.getElementById('abDuration');
             if (slider && duration) {
                 state.abTest.trafficSplit = parseInt(slider.value, 10);
-                localStorage.setItem(CONFIG.abTestKey, JSON.stringify(state.abTest));
+                try {
+                    localStorage.setItem(CONFIG.abTestKey, JSON.stringify(state.abTest));
+                } catch (e) { /* 忽略 */ }
             }
             closeABDrawer();
             showToast('A/B 测试已启动，预计 ' + (duration ? duration.value : 7) + ' 天后出结果');
@@ -481,9 +544,14 @@
     }
 
     // ========================================================
-    //  8. 版本历史
+    //  8. 版本历史（本地内存）
     // ========================================================
     function renderVersions() {
+        if (state.versions.length === 0) {
+            els.historyBody.innerHTML = '<div class="job-empty">暂无版本历史记录</div>';
+            return;
+        }
+
         els.historyBody.innerHTML = '<div class="version-timeline">' +
             state.versions.map(function (v) {
                 var isCurrent = v.status === 'current';
@@ -552,7 +620,6 @@
         els.rollbackConfirm.addEventListener('click', function () {
             if (!state.rollbackTarget) return;
 
-            // 模拟回滚
             var version = state.rollbackTarget;
             els.rollbackModal.classList.remove('modal--open');
 
@@ -560,7 +627,7 @@
             state.versions.unshift({
                 version: 'v3.2.2',
                 time: getCurrentTimeStr(),
-                author: '陈编辑',
+                author: '管理员',
                 note: '回滚至 ' + version + ' 版本',
                 status: 'current',
                 statusLabel: '当前版本',
@@ -577,7 +644,7 @@
 
             els.historyDrawer.classList.remove('drawer--open');
             showToast('已回滚至 ' + version);
-            trackEvent('version_rollback', { from: 'v3.2.1', to: version });
+            trackEvent('version_rollback', { to: version });
             state.rollbackTarget = null;
         });
     }
@@ -600,7 +667,7 @@
                 '<div class="approval-step__icon approval-step__icon--current"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>' +
                 '<div class="approval-step__body">' +
                     '<div class="approval-step__title">一级审批：内容主管</div>' +
-                    '<div class="approval-step__desc">王主管审核中</div>' +
+                    '<div class="approval-step__desc">等待审核中</div>' +
                     '<div class="approval-step__time">预计 2 小时内完成</div>' +
                 '</div>' +
                 '<span class="approval-step__status approval-step__status--current">审核中</span>' +
@@ -609,7 +676,7 @@
                 '<div class="approval-step__icon approval-step__icon--pending"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12" y2="16"/></svg></div>' +
                 '<div class="approval-step__body">' +
                     '<div class="approval-step__title">二级审批：产品总监</div>' +
-                    '<div class="approval-step__desc">李总监待审</div>' +
+                    '<div class="approval-step__desc">待审</div>' +
                     '<div class="approval-step__time">一级审批通过后开始</div>' +
                 '</div>' +
                 '<span class="approval-step__status approval-step__status--pending">待审</span>' +
@@ -657,7 +724,6 @@
             var template = getCurrentTemplate();
             if (template) {
                 template.status = 'review';
-                saveTemplates();
                 selectTemplate(template.id);
             }
 
@@ -667,7 +733,7 @@
     }
 
     // ========================================================
-    // 11. 顶部操作按钮
+    // 11. 顶部操作按钮（调用 API 保存画像内容）
     // ========================================================
     function initTopActions() {
         els.previewBtn.addEventListener('click', function () {
@@ -677,15 +743,25 @@
 
         els.saveDraftBtn.addEventListener('click', function () {
             var template = getCurrentTemplate();
-            if (template) {
-                template.content = els.editorContent.innerHTML;
+            if (!template) {
+                showToast('请先选择一个画像');
+                return;
+            }
+
+            var htmlContent = els.editorContent.innerHTML;
+            template.content = htmlContent;
+
+            // 调用 API 保存画像内容
+            API.updateAdminArchetype(template.id, { content: htmlContent }).then(function () {
                 if (template.status === 'published') {
                     template.status = 'draft';
                 }
-                saveTemplates();
                 selectTemplate(template.id);
-            }
-            showToast('草稿已保存');
+                showToast('草稿已保存');
+            }).catch(function (err) {
+                showToast('保存失败：' + (err.message || '未知错误'));
+            });
+
             trackEvent('content_save_draft');
         });
     }
@@ -702,7 +778,7 @@
     }
 
     // ========================================================
-    // 13. 新增模板
+    // 13. 新增模板（本地内存，无 API 新增画像）
     // ========================================================
     function initAddTemplate() {
         els.addTemplateBtn.addEventListener('click', function () {
@@ -715,7 +791,7 @@
             var typeIdx = parseInt(typeStr, 10) - 1;
             if (typeIdx < 0 || typeIdx >= types.length) typeIdx = 0;
 
-            var newId = 'TPL-' + String(state.templates.length + 1).padStart(3, '0');
+            var newId = 'LOCAL-' + String(state.templates.length + 1).padStart(3, '0');
             var newTemplate = {
                 id: newId,
                 name: name,
@@ -726,10 +802,9 @@
             };
 
             state.templates.push(newTemplate);
-            saveTemplates();
             renderTemplateList();
             selectTemplate(newId);
-            showToast('新模板已创建');
+            showToast('新模板已创建（本地，需通过 API 同步）');
             trackEvent('template_add', { id: newId, type: types[typeIdx] });
         });
     }
@@ -742,19 +817,12 @@
             if (confirm('确认退出登录？')) {
                 showToast('已退出登录');
                 setTimeout(function () {
-                    window.location.href = 'index.html';
+                    window.location.href = '/';
                 }, 1000);
             }
         });
 
-        document.querySelectorAll('.admin-menu__item').forEach(function (item) {
-            item.addEventListener('click', function (e) {
-                e.preventDefault();
-                var page = item.getAttribute('data-page');
-                if (page === 'content') return;
-                showToast('「' + item.querySelector('span').textContent + '」页面开发中');
-            });
-        });
+        // 侧边栏菜单导航（通过 href 属性实现跳转，无需 JS 拦截）
     }
 
     // ========================================================
@@ -787,12 +855,16 @@
     // 工具函数
     // ========================================================
     function getCurrentTemplate() {
-        return state.templates.find(function (t) { return t.id === state.currentTemplateId; });
+        return findTemplate(state.currentTemplateId);
+    }
+
+    function findTemplate(id) {
+        return state.templates.find(function (t) { return String(t.id) === String(id); });
     }
 
     function escapeHtml(str) {
         if (!str) return '';
-        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
     function getCurrentTimeStr() {
@@ -802,7 +874,9 @@
     }
 
     function trackEvent(eventName, data) {
-        console.log('[Admin Track]', eventName, data || {});
+        if (typeof API !== 'undefined' && API.trackEvent) {
+            API.trackEvent(eventName, data || {}, 'admin-content');
+        }
     }
 
     var toastTimer = null;
@@ -820,9 +894,6 @@
     // ========================================================
     function init() {
         loadData();
-        renderTemplateList();
-        selectTemplate(state.currentTemplateId);
-        renderJobs();
 
         initEditor();
         initJobs();

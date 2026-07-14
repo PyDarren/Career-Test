@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>数据看板 — 画己职测 后台</title>
 
-    <link rel="stylesheet" href="assets/css/admin-dashboard.css" />
+    <link rel="stylesheet" href="/static/assets/css/admin-dashboard.css" />
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,440..770;1,440..770&display=swap">
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,700..800;1,700..800&display=swap">
     <link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
-    <link rel="icon" type="image/png" href="assets/images/职业测评 LOGO 透明.png">
+    <link rel="icon" type="image/png" href="/static/assets/images/职业测评 LOGO 透明.png">
 </head>
 <body class="admin-body">
 
@@ -20,7 +20,7 @@
         <header class="admin-topbar">
             <div class="admin-topbar__left">
                 <div class="admin-logo">
-                    <img src="assets/images/职业测评 LOGO 透明.png" width="32" height="32" alt="画己职测 Logo" style="object-fit:cover;flex-shrink:0;">
+                    <img src="/static/assets/images/职业测评 LOGO 透明.png" width="32" height="32" alt="画己职测 Logo" style="object-fit:cover;flex-shrink:0;">
                     <span class="admin-logo__text">画己职测 <em>后台管理</em></span>
                 </div>
             </div>
@@ -46,19 +46,19 @@
             <!-- ============== 左侧菜单栏 ============== -->
             <aside class="admin-sidebar" id="adminSidebar">
                 <nav class="admin-menu">
-                    <a class="admin-menu__item" data-page="questions">
+                    <a class="admin-menu__item" data-page="questions" href="/admin-questions/">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                         <span>题库管理</span>
                     </a>
-                    <a class="admin-menu__item" data-page="orders">
+                    <a class="admin-menu__item" data-page="orders" href="/admin-orders/">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
                         <span>订单管理</span>
                     </a>
-                    <a class="admin-menu__item admin-menu__item--active" data-page="dashboard">
+                    <a class="admin-menu__item admin-menu__item--active" data-page="dashboard" href="/admin-dashboard/">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
                         <span>数据看板</span>
                     </a>
-                    <a class="admin-menu__item" data-page="content">
+                    <a class="admin-menu__item" data-page="content" href="/admin-content/">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
                         <span>内容配置</span>
                     </a>
@@ -210,6 +210,7 @@
 
     </div>
 
-    <script src="assets/js/admin-dashboard.js"></script>
+    <script src="/static/assets/js/api.js"></script>
+    <script src="/static/assets/js/admin-dashboard.js"></script>
 </body>
 </html>
