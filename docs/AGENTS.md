@@ -1,4 +1,4 @@
-# AGENTS.md - 画己职测 AI 协作指南
+# AGENTS.md - Anchor AI 协作指南
 
 > 本文件是所有 AI 编程助手（Cursor / Claude Code / Cline / Copilot 等）在本项目中工作的**唯一权威指令集**。开始任何代码修改前，必须完整阅读本文件。
 
@@ -8,7 +8,7 @@
 
 **一句话描述**：面向大学生与职场新人的职业人格测评 Web 应用，采用 IPIP 大五人格（OCEAN）+ 霍兰德 RIASEC 职业兴趣理论双框架，"免费人格认证卡 + 付费深度报告"的 Freemium 模式，用户打开即测、无需登录。
 
-**品牌名称**：画己职测
+**品牌名称**：Anchor
 
 **核心技术栈**：
 
@@ -27,15 +27,16 @@
 - 测评流程**免登录**，用户打开应用直接开始测试
 - 测评体系采用 **IPIP 大五人格（OCEAN）+ 霍兰德 RIASEC** 双理论框架，**禁止使用 MBTI**（商标侵权风险）
 - 测评题目共 **80 题**：IPIP-50（大五人格 50 题，每维度 10 题）+ RIASEC-30（职业兴趣 30 题，每类型 5 题）
-- 量表格式为 **5 点李克特量表**（1=非常不符合 ~ 5=非常符合），**禁止使用 6 点强制选择**
+- 量表格式为 **7 点李克特量表**（1=完全不符合 ~ 7=非常符合），**禁止使用 6 点强制选择**
 - 大五人格每维度含 2-3 道反向计分题，用于检测作答一致性
-- 人格画像原型为 **32 种**（大五五维度高/低二分组合 2^5=32），**禁止使用 16 种 MBTI 类型**
+- 人格画像原型为 **243 种**（大五五维度高/中/低三分组合 3^5=243），**禁止使用 16 种 MBTI 类型**
 - RIASEC 职业兴趣码为 **3 字母**（六维度取前三，并列时按 R>I>A>S>E>C 字母顺序优先）
-- 三层人格标签：画像名（如"沉稳架构师"）+ RIASEC 码（如"IRC"）+ 色彩光谱（5 色圆点）
+- 三层人格标签：画像名（如"VSN-SRN"）+ RIASEC 码（如"IRC"）+ 色彩光谱（5 色圆点）
 - 深度报告定价为 **2.99 元**（非 9.90 元，非 49-99 元）
 - 免费结果页采用"人格认证卡"格式，包含 3D 黏土风格吉祥物
 - 网页风格**对标 https://www.16personalities.com**
 - 色彩光谱 5 色固定映射：O=#9B7ED8 / C=#5a96b1 / E=#5ea67e / A=#deb45c / N=#e17055
+- 夜览模式：全站通过 `data-theme` 属性 + CSS `[data-theme="dark"]` 选择器实现，`dark-mode.js` 管理切换逻辑，`dark-mode.css` 包含所有暗色覆盖样式。用户偏好持久化于 `localStorage`（key: `anchor-theme`）。
 
 ---
 
@@ -68,7 +69,7 @@ Career_Test/
 │   │   ├── engine.py             # 评分引擎入口
 │   │   ├── calculators.py        # 各维度计算器（OCEAN + RIASEC）
 │   │   ├── normalizer.py         # 常模归一化（百分位标准化）
-│   │   ├── archetype_matcher.py  # 32 种画像匹配
+│   │   ├── archetype_matcher.py  # 243 种画像匹配
 │   │   ├── color_spectrum.py     # 色彩光谱生成
 │   │   └── validity.py           # 效度检测与置信度计算
 │   └── services/                 # 业务逻辑层
@@ -119,7 +120,7 @@ Career_Test/
 │   ├── css/
 │   ├── js/
 │   └── images/
-│   └── mascots/                  # 3D 黏土风格吉祥物图片（32 种）
+│   └── mascots/                  # 3D 黏土风格吉祥物图片（243 种）
 └── tests/                        # 测试目录
     ├── test_scoring.py
     ├── test_payment.py
@@ -137,7 +138,7 @@ Career_Test/
 
 | 表名 | 所属 App | 说明 |
 |------|---------|------|
-| `personality_archetype` | personality | 32 种人格画像原型配置（14 字段） |
+| `personality_archetype` | personality | 243 种人格画像原型配置（14 字段） |
 | `question` | assessment | 测评题库（80 题：50 大五 + 30 RIASEC） |
 | `career` | careers | 职业推荐数据 |
 | `assessment` | assessment | 用户测评记录 |
@@ -151,9 +152,9 @@ Career_Test/
 
 | 字段名 | 类型 | 说明 | 示例 |
 |--------|------|------|------|
-| `archetype_id` | int | 原型编号 (1-32) | 5 |
+| `archetype_id` | int | 原型编号 (1-243) | 5 |
 | `archetype_code` | string | 维度组合码 | OHCHEHLNAHLN |
-| `archetype_name` | string | 中文画像名 | 沉稳架构师 |
+| `archetype_name` | string | 英文标签画像名 | VSN-SRN |
 | `archetype_slogan` | string | 一句话描述 | 深思熟虑的系统设计者 |
 | `rarity` | string | 稀有度标签 | 稀有 |
 | `rarity_percentage` | float | 人口占比 | 3.2% |
@@ -229,25 +230,25 @@ Career_Test/
   ```python
   # scoring/engine.py
   def calculate_assessment_result(
-      answers: list[AnswerInput],  # 80 题原始答题数据（1-5 分）
+      answers: list[AnswerInput],  # 80 题原始答题数据（1-7 分）
       norm_data: NormData,          # 常模数据
   ) -> AssessmentResult:
       """
       返回结构化结果，不访问数据库、不产生副作用。
       包含：OCEAN 五维度百分位、RIASEC 六维度得分与 3 字母码、
-            32 画像匹配、色彩光谱、置信度。
+            243 画像匹配、色彩光谱、置信度。
       """
   ```
 - **大五人格评分流程（IPIP-50）**：
-  1. 收集 50 道大五题项的原始作答（1-5 分）
-  2. 对反向计分题进行翻转（1↔5, 2↔4, 3↔3）
-  3. 计算每个维度的总分（10 题之和，范围 10-50）
+  1. 收集 50 道大五题项的原始作答（1-7 分）
+  2. 对反向计分题进行翻转（1↔7, 2↔6, 3↔5, 4↔4）
+  3. 计算每个维度的总分（10 题之和，范围 10-70）
   4. 转换为百分位数（基于常模数据）
-  5. 以中位数（50 百分位）为界划分高(H)/低(L)两档
-  6. 将五维度高低组合映射到 32 种原型之一
+  5. 按三分位划分高(H)/中(M)/低(L)三档
+  6. 将五维度高中低组合映射到 243 种原型之一
 - **RIASEC 评分流程（RIASEC-30）**：
-  1. 收集 30 道 RIASEC 题项的原始作答（1-5 分）
-  2. 计算每个类型的总分（5 题之和，范围 5-25）
+  1. 收集 30 道 RIASEC 题项的原始作答（1-7 分）
+  2. 计算每个类型的总分（5 题之和，范围 5-35）
   3. 按总分降序排列六个类型
   4. 取前三名生成三字母职业兴趣码（如 IRC）
   5. 前三名中如有并列分，按 **R > I > A > S > E > C** 字母顺序优先
@@ -260,7 +261,7 @@ Career_Test/
 - **效度检测**：测谎题（3 道）/ 矛盾题对（3 对）/ 直线作答检测（全选同一值）/ 响应时间异常。
 - **置信度计算**：各异常项扣分，≥0.8 正常 / 0.5-0.8 仅供参考 / <0.5 建议重测。
 - **计分确定性**：相同输入必须产生相同输出，禁止在计分过程中引入随机数或时间因子。
-- **测试覆盖**：计分引擎必须有 >= 95% 的单元测试覆盖率，包含边界值测试（全选 1、全选 5、平局、极端比例、反向题验证等）。
+- **测试覆盖**：计分引擎必须有 >= 95% 的单元测试覆盖率，包含边界值测试（全选 1、全选 7、平局、极端比例、反向题验证等）。
 
 #### 3.3.2 隐私数据保护
 
@@ -333,7 +334,7 @@ def handle_payment_callback(raw_callback: dict, channel: str) -> CallbackResult:
 | 5 | **Never** 在数据库事务中调用外部 HTTP 服务 | 会导致事务长时间占用连接 |
 | 6 | **Never** 硬编码定价、题目数量、维度定义等业务常量 | 统一在 `common/constants.py` 管理 |
 | 7 | **Never** 使用 MBTI 理论、INTJ 等类型码、四维八极模型 | MBTI 商标侵权风险，项目已切换至 IPIP+RIASEC |
-| 8 | **Never** 使用 6 点强制选择量表 | 项目硬约束：5 点李克特量表（1-5 分） |
+| 8 | **Never** 使用 6 点强制选择量表 | 项目硬约束：7 点李克特量表（1-7 分） |
 | 9 | **Never** 将深度报告定价改为非 2.99 元 | 项目硬约束 |
 | 10 | **Never** 在支付回调中跳过签名验证或金额校验 | 支付安全六道防线不可省略 |
 | 11 | **Never** 使用 `print()` 输出调试信息 | 必须使用 `logging` 模块 |
@@ -359,7 +360,7 @@ pip install -r requirements.txt
 # 数据库迁移
 python manage.py makemigrations --check          # 检查是否有未生成的迁移
 python manage.py migrate                          # 执行迁移
-python manage.py loaddata initial_data.json       # 加载初始数据（32 画像 + 80 题 + 职业数据）
+python manage.py loaddata initial_data.json       # 加载初始数据（243 画像 + 80 题 + 职业数据）
 
 # 本地开发
 python manage.py runserver 0.0.0.0:8000           # 启动开发服务器
@@ -441,10 +442,10 @@ coverage run --source='.' manage.py test && coverage report  # 覆盖率报告
 
 | 维度 | 定义 |
 |------|------|
-| **职责范围** | `assessment/scoring/` 计分引擎、常模数据处理、深度报告 12 章节内容生成、32 种人格画像配置数据 |
+| **职责范围** | `assessment/scoring/` 计分引擎、常模数据处理、深度报告 12 章节内容生成、243 种人格画像配置数据 |
 | **深度报告 12 章结构** | 1.你的人格画像 2.人格特征分析 3.人口比例 4.相同人格名人 5.人格优势 6.人格劣势 7.成长建议 8.大五人格五维度深度解读 9.人格恋爱专题 10.最佳恋爱对象 11.深度职业专题 12.合适的职业（以 `docs/人格测试报告.md` 为权威模板）|
-| **输入** | IPIP 大五人格量表规范、霍兰德 RIASEC 理论、竞品调研报告、32 种画像描述素材 |
-| **输出** | 计分引擎代码（纯函数，无 Django 依赖）、深度报告内容模板（JSON/HTML 片段）、初始数据 fixture（32 画像 + 80 题 + 职业数据） |
+| **输入** | IPIP 大五人格量表规范、霍兰德 RIASEC 理论、竞品调研报告、243 种画像描述素材 |
+| **输出** | 计分引擎代码（纯函数，无 Django 依赖）、深度报告内容模板（JSON/HTML 片段）、初始数据 fixture（243 画像 + 80 题 + 职业数据） |
 | **禁止触碰** | Django views/models、前端模板、支付逻辑 |
 | **交接物** | 计分引擎的输入输出接口定义（供后端 Agent 集成）、报告内容结构（供前端 Agent 渲染） |
 
@@ -498,44 +499,37 @@ PRD 需求
 
 | 层级 | 标签类型 | 生成逻辑 | 示例 | 数量 |
 |------|---------|---------|------|------|
-| 第一层 | 人格画像名 | 大五五维度高/低二分组合映射 | 沉稳架构师 | 32 种原型 |
+| 第一层 | 人格画像名 | 大五五维度高/中/低三分组合映射 | VSN-SRN | 243 种原型 |
 | 第二层 | RIASEC 职业兴趣码 | 六维度得分取前三，降序排列 | IRC | 120 种组合 |
 | 第三层 | 色彩光谱码 | 五维度得分映射为渐变色点序列 | ●●●●● | 连续唯一 |
 
-### 7.4 32 种人格画像原型速查
+### 7.4 243 种人格画像原型速查
 
-大五人格五维度各分为高(H)/低(L)两档，组合产生 2^5 = 32 种原型。完整配置见 `PRD.md` 7.4 节。
+大五人格五维度各分为高(H)/中(M)/低(L)三档，组合产生 3^5 = 243 种原型。采用「族群码-修饰词码」英文大写两段式标签。完整列表见 `人格原型扩展方案-243型.md`。
 
-| 编号 | 维度组合 | 画像名 | 编号 | 维度组合 | 画像名 |
-|------|---------|--------|------|---------|--------|
-| 01 | O↑C↑E↑A↑N↓ | 创意倡导者 | 17 | O↓C↑E↑A↑N↓ | 稳健协调者 |
-| 02 | O↑C↑E↑A↑N↑ | 共情先锋 | 18 | O↓C↑E↑A↑N↑ | 温暖守护者 |
-| 03 | O↑C↑E↑A↓N↓ | 自信开拓者 | 19 | O↓C↑E↑A↓N↓ | 果断执行者 |
-| 04 | O↑C↑E↑A↓N↑ | 锐意进取者 | 20 | O↓C↑E↑A↓N↑ | 务实竞争者 |
-| 05 | O↑C↑E↓A↑N↓ | 沉稳架构师 | 21 | O↓C↑E↓A↑N↓ | 可靠支持者 |
-| 06 | O↑C↑E↓A↑N↑ | 深思关怀者 | 22 | O↓C↑E↓A↑N↑ | 忠诚守卫者 |
-| 07 | O↑C↑E↓A↓N↓ | 独立工程师 | 23 | O↓C↑E↓A↓N↓ | 冷静分析者 |
-| 08 | O↑C↑E↓A↓N↑ | 完美探索者 | 24 | O↓C↑E↓A↓N↑ | 严谨审查者 |
-| 09 | O↑C↓E↑A↑N↓ | 灵感传播者 | 25 | O↓C↓E↑A↑N↓ | 活跃助人者 |
-| 10 | O↑C↓E↑A↑N↑ | 热情联结者 | 26 | O↓C↓E↑A↑N↑ | 热心社交者 |
-| 11 | O↑C↓E↑A↓N↓ | 自由探索者 | 27 | O↓C↓E↑A↓N↓ | 自在行动者 |
-| 12 | O↑C↓E↑A↓N↑ | 冒险创新者 | 28 | O↓C↓E↑A↓N↑ | 冲动冒险者 |
-| 13 | O↑C↓E↓A↑N↓ | 随性梦想家 | 29 | O↓C↓E↓A↑N↓ | 轻松陪伴者 |
-| 14 | O↑C↓E↓A↑N↑ | 敏感艺术家 | 30 | O↓C↓E↓A↑N↑ | 友善观察者 |
-| 15 | O↑C↓E↓A↓N↓ | 独立思考者 | 31 | O↓C↓E↓A↓N↓ | 洒脱自由人 |
-| 16 | O↑C↓E↓A↓N↑ | 叛逆创作者 | 32 | O↓C↓E↓A↓N↑ | 随性体验者 |
+| 族群码 | 全称 | O | C | 中文名 | 亚型数 |
+|--------|------|---|---|--------|--------|
+| VSN | VISIONARY | H | H | 战略家 | 27 |
+| INS | INSPIRED | H | M | 创想家 | 27 |
+| AER | AERIAL | H | L | 探索者 | 27 |
+| PRG | PRAGMATIC | M | H | 执行者 | 27 |
+| BAL | BALANCED | M | M | 协调者 | 27 |
+| ADP | ADAPTIVE | M | L | 适应者 | 27 |
+| STD | STEADY | L | H | 守护者 | 27 |
+| GRD | GROUNDED | L | M | 务实者 | 27 |
+| CTN | CONTENT | L | L | 安然者 | 27 |
 
 ---
 
 ## 8. 📄 前端页面清单（13 个，已全部完成）
 
-以下页面已全部完成静态开发，品牌统一为"画己职测"：
+以下页面已全部完成静态开发，品牌统一为"Anchor"：
 
 | 序号 | 页面 | 文件名 | 说明 |
 |------|------|--------|------|
 | 1 | 首页 | `index.html` | Hero + 核心优势 + 用户评价 |
 | 2 | 测评引导页 | `guide.html` | 三步引导 + CTA |
-| 3 | 答题页 | `question.html` | 5 点李克特量表 + 进度条 |
+| 3 | 答题页 | `question.html` | 7 点李克特量表 + 进度条 |
 | 4 | 免费结果页 | `result-free.html` | 三层标签 + 雷达图 + 认证卡 |
 | 5 | 深度报告页 | `deep-report.html` | 12 章目录导航 + 内容展示 |
 | 6 | 支付页 | `payment.html` | 微信/支付宝 + 订单摘要 |
@@ -555,7 +549,7 @@ PRD 需求
 
 | 常量 | 值 | 定义位置 |
 |------|-----|---------|
-| 品牌名称 | 画己职测 | 全站统一 |
+| 品牌名称 | Anchor | 全站统一 |
 | 深度报告价格 | 2.99 元 | `common/constants.py: DEEP_REPORT_PRICE` |
 | 题目总量 | 80 题 | `common/constants.py: QUESTION_COUNT` |
 | 大五人格题量 | 50 题（每维度 10 题） | `common/constants.py: IPIP_QUESTION_COUNT` |
@@ -563,8 +557,8 @@ PRD 需求
 | 大五维度 | O/C/E/A/N | `common/constants.py: OCEAN_DIMENSIONS` |
 | RIASEC 类型 | R/I/A/S/E/C | `common/constants.py: RIASEC_DIMENSIONS` |
 | 维度编码前缀 | BO/BC/BE/BA/BN + RR/RI/RA/RS/RE/RC | `common/constants.py` |
-| 量表格式 | 5 点李克特量表（1=非常不符合 ~ 5=非常符合） | `common/constants.py: SCALE_TYPE` |
-| 人格画像数量 | 32 种（2^5） | `common/constants.py: ARCHETYPE_COUNT` |
+| 量表格式 | 7 点李克特量表（1=完全不符合 ~ 7=非常符合） | `common/constants.py: SCALE_TYPE` |
+| 人格画像数量 | 243 种（3^5） | `common/constants.py: ARCHETYPE_COUNT` |
 | RIASEC 码长度 | 3 字母 | `common/constants.py: RIASEC_CODE_LENGTH` |
 | RIASEC 并列优先级 | R > I > A > S > E > C | `common/constants.py` |
 | 深度报告章节数 | 12 章 | `common/constants.py: REPORT_CHAPTER_COUNT` |

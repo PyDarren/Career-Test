@@ -45,3 +45,8 @@ coverage.xml
 
 # Logs
 *.log
+
+# Frontend build artifacts
+static/dist/
+frontend/node_modules/
+frontend/dist/
